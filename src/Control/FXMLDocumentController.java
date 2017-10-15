@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package insta_col_final;
+package Control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
