@@ -197,6 +197,31 @@ public class BaseDatos {
 
         return arrElementos;
     }
+    public byte[] buscarImagen(int buscarImagen) throws IOException {
+        BufferedImage img = null;
+        Blob imagenB = null;
+        byte[] blobAsBytes = null;
+        try {
+            ResultSet rs = st.executeQuery("SELECT imagen FROM imagen WHERE id_imagen ='" + buscarImagen + "'");
+
+            System.out.println("sql");
+            while (rs.next()) {
+                imagenB = rs.getBlob("imagen");
+
+                int blobLength = (int) imagenB.length();
+                blobAsBytes = imagenB.getBytes(1, blobLength);
+
+//release the blob and free up memory. (since JDBC 4.0)
+                imagenB.free();
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return blobAsBytes;
+        //return img;
+    }
     
      public void sqlDeleteUsuario(String eliminar) throws IOException{
         String sql = "DELETE FROM usuarios WHERE id_usuario=" + eliminar +"";

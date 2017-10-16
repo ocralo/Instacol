@@ -5,13 +5,20 @@
  */
 package Modelo;
 
+import Control.BaseDatos;
+import java.awt.Image;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Momo
  */
 public class imagen {
     
-    private String imagen;
+    private Image imagen;
     private String me_gusta;
     private String id_imagen;
     private String cod_perfil_imagen;
@@ -19,14 +26,14 @@ public class imagen {
     public imagen() {
     }
 
-    public imagen(String imagen, String me_gusta, String id_imagen, String cod_perfil_imagen) {
+    public imagen(Image imagen, String me_gusta, String id_imagen, String cod_perfil_imagen) {
         this.imagen = imagen;
         this.me_gusta = me_gusta;
         this.id_imagen = id_imagen;
         this.cod_perfil_imagen = cod_perfil_imagen;
     }
 
-    public String getImagen() {
+    public Image getImagen() {
         return imagen;
     }
 
@@ -42,7 +49,7 @@ public class imagen {
         return cod_perfil_imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(Image imagen) {
         this.imagen = imagen;
     }
 
@@ -63,6 +70,36 @@ public class imagen {
         return "imagen{" + "imagen=" + imagen + ", me_gusta=" + me_gusta + ", id_imagen=" + id_imagen + ", cod_perfil_imagen=" + cod_perfil_imagen + '}';
     }
     
-    
+        public boolean insertarImagen(LinkedList<imagen> imagen,String ruta) throws SQLException, FileNotFoundException{
+        
+        String sql;
+        BaseDatos objBases=new BaseDatos();
+        boolean conexion;
+        boolean insertar=false;
+        
+        sql="insert into imagen "
+                + "(imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) values(?,?,?,?)";
+        for (imagen imagen1 : imagen) {
+            conexion=objBases.crearConexion();
+            if (conexion) {                
+                
+                /*insertar = objBases.sqlInsertImagen(sql,
+                        ruta,
+                        imagen1.getMegusta(),
+                        imagen1.getId(),
+                        imagen1.getCodimagen_Perfil());*/
+                
+                
+            }
+        }
+      
+        System.out.println(imagen);
+        System.out.println(ruta);
+        return true;
+    }
+         public static ImageIcon byteAImagen(byte[] imagenbyte){
+             ImageIcon imageIcon = new ImageIcon(imagenbyte);
+            return imageIcon;   
+    }
     
 }
