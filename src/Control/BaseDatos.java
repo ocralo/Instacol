@@ -6,7 +6,7 @@ package Control;
  */
 //import Controller.Imagen;
 import Modelo.perfil;
-import java.awt.Image;
+import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javax.imageio.ImageIO;
 
 public class BaseDatos {
@@ -245,9 +246,9 @@ public class BaseDatos {
      */
     public LinkedList buscarPerfil(String buscarId) throws IOException {
         LinkedList<perfil> listaUsuario = new LinkedList();
-        BufferedImage img = null;
+        BufferedImage img;
         Blob imagenB;
-        byte[] blobAsBytes = null;
+        byte[] blobAsBytes;
         int contador=0;
 
         try {
@@ -255,9 +256,9 @@ public class BaseDatos {
             while (rs.next()) {
                 contador++;
                 String nombrePerfil = rs.getString("nombre_perfil");
-                String codUsuario = rs.getString("id_usuario");
-                String idPerfil = rs.getString("id_usuario");
-                imagenB = rs.getBlob("imagen");
+                String codUsuario = rs.getString("cod_usuario");
+                String idPerfil = rs.getString("id_perfil");
+                imagenB = rs.getBlob("foto_perfil");
 
                 int blobLength = (int) imagenB.length();
                 blobAsBytes = imagenB.getBytes(1, blobLength);
@@ -266,8 +267,9 @@ public class BaseDatos {
                 File destino = new File("src/imagenes/foto_perfil"+contador+".jpg");
                 Files.write(destino.toPath(),blobAsBytes );
                 
-                //image = new javafx.scene.image.Image(destino.toURI().toString());
-
+                Image image = new Image(destino.toURI().toString());
+                img = SwingFXUtils.fromFXImage(image, null);
+                
                 perfil us = new perfil(nombrePerfil, img, idPerfil, codUsuario);
 
                 listaUsuario.add(us);

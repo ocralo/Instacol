@@ -45,7 +45,7 @@ public class PERFILController implements Initializable {
         conexion = objBases.crearConexion();
         if (conexion) {
             try {
-                LinkedList<perfil> usuarioB = objBases.buscarPerfil(idBuscar);
+                LinkedList<perfil> perfil = objBases.buscarPerfil(idBuscar);
                 destino = new File("src/imagenes/foto_perfil1.jpg");
                 image = new javafx.scene.image.Image(destino.toURI().toString());
                 imagenPerfil.setImage(image);
