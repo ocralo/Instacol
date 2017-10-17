@@ -15,11 +15,11 @@ import javafx.stage.Stage;
  *
  * @author rodrigoescobarlopez
  */
-public class Insta_col_Final extends Application {
+public class Picr extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Vista/FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Vista/Inicio.fxml"));
         
         Scene scene = new Scene(root);
         
