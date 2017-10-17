@@ -3,17 +3,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="344.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.InicioController">
     <children>
-        <Label fx:id="label" layoutX="105.0" layoutY="1.0" minHeight="16" minWidth="69" prefHeight="76.0" prefWidth="110.0" text="Picr">
-         <font>
-            <Font name="Tahoma" size="60.0" />
-         </font></Label>
-      <Pane fx:id="inicio" layoutX="3.0" layoutY="77.0" prefHeight="350.0" prefWidth="307.0">
+      <Pane fx:id="inicio" layoutX="3.0" layoutY="131.0" prefHeight="296.0" prefWidth="307.0">
          <children>
             <TextField layoutX="79.0" layoutY="47.0" />
             <PasswordField layoutX="78.0" layoutY="119.0" prefHeight="25.0" prefWidth="149.0" />
@@ -29,5 +26,6 @@
             <Label layoutX="98.0" layoutY="228.0" text="Olvide su contraseña" />
          </children>
       </Pane>
+      <ImageView fitHeight="116.0" fitWidth="200.0" layoutX="57.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>

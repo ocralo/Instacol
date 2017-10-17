@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,18 +18,22 @@ import javafx.scene.control.Label;
  */
 public class InicioController implements Initializable {
     
-    @FXML
-    private Label label;
+   
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+            BaseDatos objBases = new BaseDatos();
+            boolean conexion;
+            conexion = objBases.crearConexion();
+        if (conexion) {
+            System.out.println("se hizo conexion");
+        } else {
+            JOptionPane.showMessageDialog(null,"no se pudo realizar la conexión");
+        }
+    }
     
 }
