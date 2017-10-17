@@ -5,11 +5,14 @@
  */
 package Control;
 
+import Modelo.perfil;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -22,23 +25,47 @@ import javax.swing.JOptionPane;
  * @author rodrigoescobarlopez
  */
 public class PERFILController implements Initializable {
-    
-   @FXML
+
+    @FXML
     private ImageView imagenPerfil;
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        String idBuscar = "2";
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
+        Image image;
+        File destino;
         conexion = objBases.crearConexion();
         if (conexion) {
-            
+            try {
+                LinkedList<perfil> usuarioB = objBases.buscarPerfil(idBuscar);
+                destino = new File("src/imagenes/foto_perfil1.jpg");
+                image = new javafx.scene.image.Image(destino.toURI().toString());
+                imagenPerfil.setImage(image);
+            } catch (IOException ex) {
+                Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (!idBuscar.isEmpty()) {
+                
+                
+
+            }
+
         } else {
-            JOptionPane.showInputDialog("no se pudo realizar la conexión");
+            JOptionPane.showMessageDialog(null, "no se pudo realizar la conexión");
         }
-    }    
-    
+    }
+
+    public String traerNombrePerfil(String idBuscar) {
+
+        return "";
+    }
+
 }

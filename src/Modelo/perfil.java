@@ -5,6 +5,8 @@
  */
 package Modelo;
 
+import java.awt.Image;
+
 /**
  *
  * @author Momo
@@ -12,14 +14,14 @@ package Modelo;
 public class perfil {
     
     private String nombre_perfil;
-    private String foto_perfil;
+    private Image foto_perfil;
     private String id_perfil;
     private String cod_usuario;
 
     public perfil() {
     }
 
-    public perfil(String nombre_perfil, String foto_perfil, String id_perfil, String cod_usuario) {
+    public perfil(String nombre_perfil, Image foto_perfil, String id_perfil, String cod_usuario) {
         this.nombre_perfil = nombre_perfil;
         this.foto_perfil = foto_perfil;
         this.id_perfil = id_perfil;
@@ -30,7 +32,7 @@ public class perfil {
         return nombre_perfil;
     }
 
-    public String getFoto_perfil() {
+    public Image getFoto_perfil() {
         return foto_perfil;
     }
 
@@ -46,7 +48,7 @@ public class perfil {
         this.nombre_perfil = nombre_perfil;
     }
 
-    public void setFoto_perfil(String foto_perfil) {
+    public void setFoto_perfil(Image foto_perfil) {
         this.foto_perfil = foto_perfil;
     }
 

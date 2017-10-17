@@ -5,6 +5,7 @@ package Control;
  * @author Momo
  */
 //import Controller.Imagen;
+import Modelo.perfil;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -13,8 +14,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -230,5 +233,52 @@ public class BaseDatos {
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * Método utilizado para establecer la conexión con la base de datos
+     * insta_col
+     *
+     * @param buscarId
+     * @return estado regresa el estado de la conexión, true si se estableció la
+     * conexión, falso en caso contrario
+     */
+    public LinkedList buscarPerfil(String buscarId) throws IOException {
+        LinkedList<perfil> listaUsuario = new LinkedList();
+        BufferedImage img = null;
+        Blob imagenB;
+        byte[] blobAsBytes = null;
+        int contador=0;
+
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM perfil WHERE id_perfil ='" + buscarId + "'");
+            while (rs.next()) {
+                contador++;
+                String nombrePerfil = rs.getString("nombre_perfil");
+                String codUsuario = rs.getString("id_usuario");
+                String idPerfil = rs.getString("id_usuario");
+                imagenB = rs.getBlob("imagen");
+
+                int blobLength = (int) imagenB.length();
+                blobAsBytes = imagenB.getBytes(1, blobLength);
+                imagenB.free();
+                
+                File destino = new File("src/imagenes/foto_perfil"+contador+".jpg");
+                Files.write(destino.toPath(),blobAsBytes );
+                
+                //image = new javafx.scene.image.Image(destino.toURI().toString());
+
+                perfil us = new perfil(nombrePerfil, img, idPerfil, codUsuario);
+
+                listaUsuario.add(us);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listaUsuario;
+
     }
 }
