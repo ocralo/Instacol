@@ -5,9 +5,16 @@
  */
 package Control;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -15,13 +22,23 @@ import javafx.fxml.Initializable;
  * @author rodrigoescobarlopez
  */
 public class PERFILController implements Initializable {
+    
+   @FXML
+    private ImageView imagenPerfil;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        BaseDatos objBases = new BaseDatos();
+        boolean conexion;
+        conexion = objBases.crearConexion();
+        if (conexion) {
+            
+        } else {
+            JOptionPane.showInputDialog("no se pudo realizar la conexión");
+        }
     }    
     
 }

@@ -21,8 +21,6 @@ import javax.imageio.ImageIO;
 
 public class BaseDatos {
 
-     
-
     Connection conexion;
     Statement st;
 
@@ -41,7 +39,7 @@ public class BaseDatos {
      * conexión, falso en caso contrario
      */
     public boolean crearConexion() {
-      try {
+        try {
             String usuario = "crud";
             String clave = "12345";
             String bd = "insta_col";
@@ -62,8 +60,8 @@ public class BaseDatos {
      * @param sql Cadena que contiene la instrucción SQL a ejecutar
      * @return estado regresa el estado de la ejecución, true(éxito) o
      * false(error)
-     *     
-*/
+     *
+     */
     public boolean ejecutarSQL(String sql) {
         try {
             Statement sentencia = conexion.createStatement();
@@ -82,8 +80,8 @@ public class BaseDatos {
      *
      * @param sql Cadena que contiene la instrucción SQL a ejecutar
      * @return resultado regresa los registros generados por la consulta
-     *     
-*/
+     *
+     */
     public String ejecutarSQLSelect(String sql) {
         ResultSet rs;
         int id;
@@ -112,7 +110,7 @@ public class BaseDatos {
         return concatenar;
     }
 
-    public boolean sqlInsertUsuario(String insert,String Nombre_usuario, String Apellido_usuario, String Correo, String Clave, String Fecha_nacimiento) {
+    public boolean sqlInsertUsuario(String insert, String Nombre_usuario, String Apellido_usuario, String Correo, String Clave, String Fecha_nacimiento) {
         // String insert = "insert into Imagenes(imagen,nombre) values(?,?)";
         PreparedStatement ps = null;
         try {
@@ -138,7 +136,7 @@ public class BaseDatos {
         }
         return false;
     }
-    
+
     public boolean sqlInsertWithImage(String ruta, String insert) {
         // String insert = "insert into Imagenes(imagen,nombre) values(?,?)";
         FileInputStream fis = null;
@@ -196,6 +194,7 @@ public class BaseDatos {
 
         return arrElementos;
     }
+
     public byte[] buscarImagen(int buscarImagen) throws IOException {
         BufferedImage img = null;
         Blob imagenB = null;
@@ -221,16 +220,15 @@ public class BaseDatos {
         return blobAsBytes;
         //return img;
     }
-    
-     public void sqlDeleteUsuario(String eliminar) throws IOException{
-        String sql = "DELETE FROM usuarios WHERE id_usuario=" + eliminar +"";
+
+    public void sqlDeleteUsuario(String eliminar) throws IOException {
+        String sql = "DELETE FROM usuarios WHERE id_usuario=" + eliminar + "";
         PreparedStatement ps;
-        try{
-            ps=conexion.prepareStatement(sql);
+        try {
+            ps = conexion.prepareStatement(sql);
             ps.execute();
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
-     }
+    }
 }

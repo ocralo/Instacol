@@ -19,7 +19,7 @@ public class Picr extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Vista/Inicio.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Vista/PERFIL.fxml"));
         
         Scene scene = new Scene(root);
         
