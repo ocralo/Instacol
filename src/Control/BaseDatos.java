@@ -8,11 +8,9 @@ package Control;
 import Modelo.perfil;
 import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.*;
@@ -243,6 +241,7 @@ public class BaseDatos {
      * @param buscarId
      * @return estado regresa el estado de la conexión, true si se estableció la
      * conexión, falso en caso contrario
+     * @throws java.io.IOException
      */
     public LinkedList buscarPerfil(String buscarId) throws IOException {
         LinkedList<perfil> listaUsuario = new LinkedList();
@@ -250,10 +249,12 @@ public class BaseDatos {
         Blob imagenB;
         byte[] blobAsBytes;
         int contador=0;
+        File destino;
 
         try {
             ResultSet rs = st.executeQuery("SELECT * FROM perfil WHERE id_perfil ='" + buscarId + "'");
             while (rs.next()) {
+                
                 contador++;
                 String nombrePerfil = rs.getString("nombre_perfil");
                 String codUsuario = rs.getString("cod_usuario");
@@ -264,11 +265,8 @@ public class BaseDatos {
                 blobAsBytes = imagenB.getBytes(1, blobLength);
                 imagenB.free();
                 
-                File destino = new File("src/imagenes/foto_perfil"+contador+".jpg");
-                Files.write(destino.toPath(),blobAsBytes );
-                
-                Image image = new Image(destino.toURI().toString());
-                img = SwingFXUtils.fromFXImage(image, null);
+               
+                img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
                 
                 perfil us = new perfil(nombrePerfil, img, idPerfil, codUsuario);
 

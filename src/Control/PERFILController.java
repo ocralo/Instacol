@@ -6,6 +6,7 @@
 package Control;
 
 import Modelo.perfil;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -13,8 +14,10 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
@@ -28,6 +31,8 @@ public class PERFILController implements Initializable {
 
     @FXML
     private ImageView imagenPerfil;
+    @FXML
+    private Label nombrePerfil;
 
     /**
      * Initializes the controller class.
@@ -40,15 +45,17 @@ public class PERFILController implements Initializable {
         String idBuscar = "2";
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
-        Image image;
-        File destino;
         conexion = objBases.crearConexion();
         if (conexion) {
             try {
                 LinkedList<perfil> perfil = objBases.buscarPerfil(idBuscar);
-                destino = new File("src/imagenes/foto_perfil1.jpg");
-                image = new javafx.scene.image.Image(destino.toURI().toString());
-                imagenPerfil.setImage(image);
+                
+                
+                Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
+                
+                imagenPerfil.setPreserveRatio(true);
+                imagenPerfil.setImage(imageB);
+                nombrePerfil.setText(perfil.get(0).getNombre_perfil());
             } catch (IOException ex) {
                 Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
             }
