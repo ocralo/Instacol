@@ -49,8 +49,6 @@ public class PERFILController implements Initializable {
         if (conexion) {
             try {
                 LinkedList<perfil> perfil = objBases.buscarPerfil(idBuscar);
-                
-                
                 Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
                 
                 imagenPerfil.setPreserveRatio(true);
