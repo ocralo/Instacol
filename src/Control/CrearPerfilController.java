@@ -81,7 +81,7 @@ public class CrearPerfilController implements Initializable {
     private void subirPerfil(ActionEvent event) throws IOException, SQLException {
 
         BaseDatos objBases = new BaseDatos();
-        String nombre = nombrePTex.getText().toUpperCase().trim();
+        String nombre = nombrePTex.getText();
         BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
         String codUsuario= "1";//cambiar
         perfil perfil = new perfil(nombre, imageB, codUsuario);

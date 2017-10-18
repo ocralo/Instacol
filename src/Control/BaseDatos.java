@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.*;
@@ -199,9 +200,9 @@ public class BaseDatos {
 
     public BufferedImage buscarImagen(int buscarImagen) throws IOException {
         BufferedImage img = null;
-        Blob imagenB ;
+        Blob imagenB;
         byte[] blobAsBytes;
-        String nombre; 
+        String nombre;
         try {
             ResultSet rs = st.executeQuery("SELECT imagen FROM imagen WHERE id_imagen ='" + buscarImagen + "'");
 
@@ -209,16 +210,13 @@ public class BaseDatos {
             while (rs.next()) {
                 imagenB = rs.getBlob("imagen");
                 nombre = rs.getString("me_gusta_imagen");
-                
 
                 int blobLength = (int) imagenB.length();
                 blobAsBytes = imagenB.getBytes(1, blobLength);
                 imagenB.free();
-                
+
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                
-                
-                
+
             }
 
         } catch (SQLException ex) {
@@ -257,7 +255,7 @@ public class BaseDatos {
         try {
             ResultSet rs = st.executeQuery("SELECT * FROM perfil WHERE id_perfil ='" + buscarId + "'");
             while (rs.next()) {
-                
+
                 String nombrePerfil = rs.getString("nombre_perfil");
                 String codUsuario = rs.getString("cod_usuario");
                 String idPerfil = rs.getString("id_perfil");
@@ -266,10 +264,9 @@ public class BaseDatos {
                 int blobLength = (int) imagenB.length();
                 blobAsBytes = imagenB.getBytes(1, blobLength);
                 imagenB.free();
-                
-               
+
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                
+
                 perfil us = new perfil(nombrePerfil, img, idPerfil, codUsuario);
 
                 listaUsuario.add(us);
@@ -283,15 +280,38 @@ public class BaseDatos {
         return listaUsuario;
 
     }
-    
-    public boolean insertarPerfil(perfil perfilU,String ruta){
-        
-        String sql="insert into imagen "
-                + "(imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) "
-                + "values(?,?,?,?)";
-        
-        
-        return true;
-        
+
+    public boolean insertarPerfil(perfil perfilU, String ruta) throws FileNotFoundException, IOException {
+
+        String sql = "insert into perfil "
+                + "(nombre_perfil,foto_perfil,cod_usuario) "
+                + "values(?,?,?)";
+        PreparedStatement ps = null;
+        FileInputStream fis  = null;
+        try {
+            conexion.setAutoCommit(false);
+            File file = new File(ruta);
+            fis = new FileInputStream(file);
+            ps = conexion.prepareStatement(sql);
+            System.out.println(ps);
+            ps.setString(1, perfilU.getNombre_perfil());
+            ps.setBinaryStream(2, fis, (int) file.length());
+            ps.setInt(4, Integer.parseInt(perfilU.getCod_usuario()));
+            
+            ps.executeUpdate();
+            conexion.commit();
+
+            System.out.println("lo subi");
+            return true;
+        } catch (SQLException ex) {
+        } finally {
+            try {
+                ps.close();
+                fis.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return false;
+
     }
 }
