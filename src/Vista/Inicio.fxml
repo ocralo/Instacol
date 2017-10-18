@@ -23,12 +23,12 @@
                <font>
                   <Font name="Tahoma" size="20.0" />
                </font></Label>
-            <Label fx:id="LClave" layoutX="130.0" layoutY="80.0" text="Clave">
+            <Label fx:id="LClave" layoutX="107.0" layoutY="82.0" text="Contraseña">
                <font>
                   <Font name="Tahoma" size="20.0" />
                </font></Label>
             <Label fx:id="LOlvido" accessibleRole="HYPERLINK" layoutX="78.0" layoutY="148.0" text="¿Has olvidado tu contraseña?" />
-            <TextField fx:id="TFusuario" layoutX="81.0" layoutY="46.0" />
+            <TextField fx:id="TFcorreo" layoutX="81.0" layoutY="46.0" />
             <Button layoutX="79.0" layoutY="177.0" mnemonicParsing="false" onAction="#InicioSesion" prefHeight="55.0" prefWidth="155.0" text="Iniciar Sesión">
                <font>
                   <Font name="Tahoma" size="18.0" />

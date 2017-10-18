@@ -174,7 +174,7 @@ public class BaseDatos {
         ArrayList arrElementos = new ArrayList();
         String cadena = "";
         try {
-            ResultSet rs = st.executeQuery("SELECT * FROM usuarios WHERE correo='" + buscar + "'");
+            ResultSet rs = st.executeQuery("SELECT * FROM usuario WHERE correo='" + buscar + "'");
             while (rs.next()) {
                 String nombreUsuario = rs.getObject("nombre_usuario").toString();
                 String apellidoUsuario = rs.getObject("apellido_usuario").toString();
