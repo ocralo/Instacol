@@ -63,7 +63,7 @@ public class PERFILController implements Initializable {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "no se pudo realizar la conexión");
+            System.out.println("No se pudo realizar la conexión");
         }
     }
 

@@ -49,7 +49,7 @@ public class InicioController implements Initializable {
             if (conexion) {
             
             } else {
-            JOptionPane.showInputDialog("no se pudo realizar la conexión");
+            System.out.println("No se pudo realizar la conexión");
             }
     }
     
