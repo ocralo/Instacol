@@ -197,29 +197,34 @@ public class BaseDatos {
         return arrElementos;
     }
 
-    public byte[] buscarImagen(int buscarImagen) throws IOException {
+    public BufferedImage buscarImagen(int buscarImagen) throws IOException {
         BufferedImage img = null;
-        Blob imagenB = null;
-        byte[] blobAsBytes = null;
+        Blob imagenB ;
+        byte[] blobAsBytes;
+        String nombre; 
         try {
             ResultSet rs = st.executeQuery("SELECT imagen FROM imagen WHERE id_imagen ='" + buscarImagen + "'");
 
             System.out.println("sql");
             while (rs.next()) {
                 imagenB = rs.getBlob("imagen");
+                nombre = rs.getString("me_gusta_imagen");
+                
 
                 int blobLength = (int) imagenB.length();
                 blobAsBytes = imagenB.getBytes(1, blobLength);
-
-//release the blob and free up memory. (since JDBC 4.0)
                 imagenB.free();
-
+                
+                img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+                
+                
+                
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return blobAsBytes;
+        return img;
         //return img;
     }
 
@@ -248,14 +253,11 @@ public class BaseDatos {
         BufferedImage img;
         Blob imagenB;
         byte[] blobAsBytes;
-        int contador=0;
-        File destino;
 
         try {
             ResultSet rs = st.executeQuery("SELECT * FROM perfil WHERE id_perfil ='" + buscarId + "'");
             while (rs.next()) {
                 
-                contador++;
                 String nombrePerfil = rs.getString("nombre_perfil");
                 String codUsuario = rs.getString("cod_usuario");
                 String idPerfil = rs.getString("id_perfil");
