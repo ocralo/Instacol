@@ -58,7 +58,7 @@ public class RegistrarController implements Initializable {
             System.out.println("No se pudo insertar adecuadamente");
         }
         arrUsuario.clear();
-        
+        Picr.changeScene("CrearPerfil.fxml", event);
     }
     
     @FXML

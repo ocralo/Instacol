@@ -19,17 +19,17 @@
       </ImageView>
       <Pane fx:id="inicio" layoutX="3.0" layoutY="131.0" prefHeight="296.0" prefWidth="307.0">
          <children>
-            <Label fx:id="LUsuario" layoutX="120.0" layoutY="14.0" text="Usuario">
+            <Label fx:id="LUsuario" layoutX="135.0" layoutY="14.0" text="Usuario">
                <font>
                   <Font name="Tahoma" size="20.0" />
                </font></Label>
-            <Label fx:id="LClave" layoutX="130.0" layoutY="80.0" text="Clave">
+            <Label fx:id="LClave" layoutX="144.0" layoutY="82.0" text="Clave">
                <font>
                   <Font name="Tahoma" size="20.0" />
                </font></Label>
             <Label fx:id="LOlvido" accessibleRole="HYPERLINK" layoutX="78.0" layoutY="148.0" text="¿Has olvidado tu contraseña?" />
             <TextField fx:id="TFusuario" layoutX="81.0" layoutY="46.0" />
-            <Button layoutX="79.0" layoutY="177.0" mnemonicParsing="false" onAction="#InicioSesion" prefHeight="55.0" prefWidth="155.0" text="Iniciar Sesión">
+            <Button layoutX="79.0" layoutY="187.0" mnemonicParsing="false" onAction="#InicioSesion" prefHeight="25.0" prefWidth="155.0" text="Iniciar Sesión">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>
@@ -39,7 +39,7 @@
                   <Font name="Tahoma" size="15.0" />
                </font>
             </Button>
-            <PasswordField fx:id="PFclave" layoutX="82.0" layoutY="114.0" />
+            <PasswordField fx:id="PFclave" layoutX="82.0" layoutY="114.0" prefHeight="27.0" prefWidth="167.0" />
          </children>
       </Pane>
     </children>
