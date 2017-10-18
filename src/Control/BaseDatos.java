@@ -5,18 +5,20 @@ package Control;
  * @author Momo
  */
 //import Controller.Imagen;
-import java.awt.Image;
+import Modelo.perfil;
+import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javax.imageio.ImageIO;
 
 public class BaseDatos {
@@ -195,29 +197,34 @@ public class BaseDatos {
         return arrElementos;
     }
 
-    public byte[] buscarImagen(int buscarImagen) throws IOException {
+    public BufferedImage buscarImagen(int buscarImagen) throws IOException {
         BufferedImage img = null;
-        Blob imagenB = null;
-        byte[] blobAsBytes = null;
+        Blob imagenB ;
+        byte[] blobAsBytes;
+        String nombre; 
         try {
             ResultSet rs = st.executeQuery("SELECT imagen FROM imagen WHERE id_imagen ='" + buscarImagen + "'");
 
             System.out.println("sql");
             while (rs.next()) {
                 imagenB = rs.getBlob("imagen");
+                nombre = rs.getString("me_gusta_imagen");
+                
 
                 int blobLength = (int) imagenB.length();
                 blobAsBytes = imagenB.getBytes(1, blobLength);
-
-//release the blob and free up memory. (since JDBC 4.0)
                 imagenB.free();
-
+                
+                img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+                
+                
+                
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return blobAsBytes;
+        return img;
         //return img;
     }
 
@@ -230,5 +237,50 @@ public class BaseDatos {
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * Método utilizado para establecer la conexión con la base de datos
+     * insta_col
+     *
+     * @param buscarId
+     * @return estado regresa el estado de la conexión, true si se estableció la
+     * conexión, falso en caso contrario
+     * @throws java.io.IOException
+     */
+    public LinkedList buscarPerfil(String buscarId) throws IOException {
+        LinkedList<perfil> listaUsuario = new LinkedList();
+        BufferedImage img;
+        Blob imagenB;
+        byte[] blobAsBytes;
+
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM perfil WHERE id_perfil ='" + buscarId + "'");
+            while (rs.next()) {
+                
+                String nombrePerfil = rs.getString("nombre_perfil");
+                String codUsuario = rs.getString("cod_usuario");
+                String idPerfil = rs.getString("id_perfil");
+                imagenB = rs.getBlob("foto_perfil");
+
+                int blobLength = (int) imagenB.length();
+                blobAsBytes = imagenB.getBytes(1, blobLength);
+                imagenB.free();
+                
+               
+                img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+                
+                perfil us = new perfil(nombrePerfil, img, idPerfil, codUsuario);
+
+                listaUsuario.add(us);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listaUsuario;
+
     }
 }

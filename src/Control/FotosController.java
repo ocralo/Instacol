@@ -5,7 +5,10 @@
  */
 package Control;
 
+import Modelo.imagen;
+import Modelo.perfil;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
@@ -21,7 +24,14 @@ public class FotosController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        String idPerfil;
+         BaseDatos objBases = new BaseDatos();
+        boolean conexion;
+        conexion = objBases.crearConexion();
+        if (conexion) {
+            //LinkedList<imagen> perfil = objBases.buscarImagen(idPerfil);
+        }
+        
     }    
     
 }
