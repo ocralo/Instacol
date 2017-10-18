@@ -283,4 +283,15 @@ public class BaseDatos {
         return listaUsuario;
 
     }
+    
+    public boolean insertarPerfil(perfil perfilU,String ruta){
+        
+        String sql="insert into imagen "
+                + "(imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) "
+                + "values(?,?,?,?)";
+        
+        
+        return true;
+        
+    }
 }

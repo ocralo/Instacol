@@ -25,13 +25,13 @@ public class FotosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String idPerfil;
-         BaseDatos objBases = new BaseDatos();
+        BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
             //LinkedList<imagen> perfil = objBases.buscarImagen(idPerfil);
         }
-        
-    }    
-    
+
+    }
+
 }

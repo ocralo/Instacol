@@ -73,12 +73,12 @@ public class InicioController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
-            conexion = objBases.crearConexion();
-            if (conexion) {
-            
-            } else {
+        conexion = objBases.crearConexion();
+        if (conexion) {
+
+        } else {
             System.out.println("No se pudo realizar la conexión");
-            }
+        }
     }
     
 }

@@ -27,6 +27,12 @@ public class perfil {
         this.id_perfil = id_perfil;
         this.cod_usuario = cod_usuario;
     }
+    
+    public perfil(String nombre_perfil, Image foto_perfil, String cod_usuario) {
+        this.nombre_perfil = nombre_perfil;
+        this.foto_perfil = foto_perfil;
+        this.cod_usuario = cod_usuario;
+    }
 
     public String getNombre_perfil() {
         return nombre_perfil;
