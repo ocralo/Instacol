@@ -24,7 +24,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ImageView fx:id="imagenPerfil" fitHeight="150.0" fitWidth="200.0" layoutX="80.0" layoutY="64.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagenPerfil" fitHeight="150.0" fitWidth="164.0" layoutX="80.0" layoutY="64.0" nodeOrientation="INHERIT" pickOnBounds="true">
          <image>
             <Image url="@../Imagenes/icono_en_blanco.png" />
          </image>

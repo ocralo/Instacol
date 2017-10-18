@@ -50,16 +50,14 @@ public class PERFILController implements Initializable {
             try {
                 LinkedList<perfil> perfil = objBases.buscarPerfil(idBuscar);
                 Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
-                
-                imagenPerfil.setPreserveRatio(true);
+
                 imagenPerfil.setImage(imageB);
                 nombrePerfil.setText(perfil.get(0).getNombre_perfil());
+
             } catch (IOException ex) {
                 Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (!idBuscar.isEmpty()) {
-                
-                
 
             }
 
