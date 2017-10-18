@@ -5,12 +5,19 @@
  */
 package Control;
 
+import java.awt.Button;
+import java.awt.Label;
+import java.awt.TextField;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.PasswordField;
+import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
+import sun.security.util.Password;
 
 /**
  *
@@ -18,22 +25,32 @@ import javax.swing.JOptionPane;
  */
 public class InicioController implements Initializable {
     
-   
+    @FXML
+    private ImageView Logo;
+    
     
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void InicioSesion(ActionEvent event) throws IOException {
+       
     }
+    
+    @FXML
+    private void Registrar(ActionEvent event) throws IOException {
+       Picr.changeScene("Registrar.fxml", event);
+    }
+
+   
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-            BaseDatos objBases = new BaseDatos();
-            boolean conexion;
+        BaseDatos objBases = new BaseDatos();
+        boolean conexion;
             conexion = objBases.crearConexion();
-        if (conexion) {
-            System.out.println("se hizo conexion");
-        } else {
-            JOptionPane.showMessageDialog(null,"no se pudo realizar la conexión");
-        }
+            if (conexion) {
+            
+            } else {
+            JOptionPane.showInputDialog("no se pudo realizar la conexión");
+            }
     }
     
 }

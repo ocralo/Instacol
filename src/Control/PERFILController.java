@@ -5,6 +5,7 @@
  */
 package Control;
 
+import java.awt.TextField;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
+import javafx.event.EventHandler;
 
 /**
  * FXML Controller class
@@ -25,6 +27,7 @@ public class PERFILController implements Initializable {
     
    @FXML
     private ImageView imagenPerfil;
+   
 
     /**
      * Initializes the controller class.
