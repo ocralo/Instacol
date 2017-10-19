@@ -7,7 +7,10 @@ package Control;
 
 import Modelo.perfil;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -34,7 +37,8 @@ public class PERFILController implements Initializable {
     private ImageView imagenPerfil;
     @FXML
     private Label nombrePerfil;
-
+    
+    private String idBuscar;
     /**
      * Initializes the controller class.
      *
@@ -43,12 +47,23 @@ public class PERFILController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        String idBuscar = "2";
+        
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
             try {
+                BufferedReader in = null;
+         try {
+             in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
+         } catch (FileNotFoundException ex) {
+             Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         try {
+             idBuscar = in.readLine();
+         } catch (IOException ex) {
+             Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+         }
                 LinkedList<perfil> perfil = objBases.buscarPerfil(idBuscar);
                 Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
 

@@ -8,6 +8,7 @@ package Control;
 
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -35,7 +36,7 @@ public class InicioController implements Initializable {
     
     @FXML
     private void InicioSesion(ActionEvent event) throws IOException {
-        String buscar,asegurar,asegurar2;
+        String buscar,asegurar,asegurar2,idUsuario,correoU;
         buscar = TFcorreo.getText();
         asegurar = PFclave.getText();
         boolean conexion;
@@ -44,11 +45,18 @@ public class InicioController implements Initializable {
             conexion = objbases.crearConexion();
             if (conexion) {
                 arr = objbases.buscarCorreo(buscar);
-                asegurar2 = (arr.get(3).toString());
+                
+                asegurar2 = arr.get(3).toString();
+                idUsuario = arr.get(5).toString();
+                correoU = arr.get(2).toString();
+                
                 if(asegurar.equals(asegurar2)){
                 correcto=true;
                 }
                  if(correcto == true){
+                     PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt","UTF-8");
+                     writer.println(idUsuario+","+correoU);
+                     writer.close();
                       Picr.changeScene("IniciarSesion.fxml", event);
                         }else{
                          System.out.println("Usuario o contraseña incorrecta");
