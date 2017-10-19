@@ -5,8 +5,7 @@
  */
 package Control;
 
-import java.awt.Button;
-import java.awt.Label;
+
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
@@ -19,8 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
-import javax.swing.JOptionPane;
-import sun.security.util.Password;
 
 /**
  *

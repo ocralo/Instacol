@@ -40,10 +40,14 @@ public class CrearPerfilController implements Initializable {
     private String srcimg;
     private Image image;
     private File file;
+    
+    private String idUsuario;
 
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        String idUsuario = "1";
+       
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
@@ -54,10 +58,6 @@ public class CrearPerfilController implements Initializable {
         }
     }
     
-    @FXML
-    private void Registrar(ActionEvent event) throws IOException {
-       Picr.changeScene("Registrar.fxml", event);
-    }
     
     @FXML
     private void fotoPerfil(ActionEvent event) throws IOException {
@@ -84,10 +84,12 @@ public class CrearPerfilController implements Initializable {
         if (conexion) {
         String nombre = nombrePTex.getText();
         BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
-        String codUsuario= "1";//cambiar
+        String codUsuario= idUsuario;//cambiar
         perfil perfil = new perfil(nombre, imageB, codUsuario);
         
         objBases.insertarPerfil(perfil, srcimg);
+        objBases.pedirUsuario(idUsuario);
+        Picr.changeScene("PERFIL.fxml", event);
         }else {
             System.out.println("No se pudo realizar la conexión");
         }

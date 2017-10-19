@@ -54,7 +54,7 @@ public class RegistrarController implements Initializable {
 
         if (insertar) {
             System.out.println("Se han insertado los usuarios correctamente");
-        } else {
+        } else { 
             System.out.println("No se pudo insertar adecuadamente");
         }
         arrUsuario.clear();

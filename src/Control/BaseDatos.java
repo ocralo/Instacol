@@ -140,36 +140,7 @@ public class BaseDatos {
         return false;
     }
 
-    public boolean sqlInsertWithImage(String ruta, String insert) {
-        // String insert = "insert into Imagenes(imagen,nombre) values(?,?)";
-        FileInputStream fis = null;
-        PreparedStatement ps = null;
-        try {
-            conexion.setAutoCommit(false);
-            File file = new File(ruta);
-            fis = new FileInputStream(file);
-            ps = conexion.prepareStatement(insert);
-            ps.setString(1, "1135");
-            ps.setString(2, "David");
-            ps.setString(3, "Benavides");
-            ps.setString(4, "30156");
-            ps.setBinaryStream(5, fis, (int) file.length());
-            //ps.setString(2, nombre);
-            ps.executeUpdate();
-            conexion.commit();
-            return true;
-        } catch (Exception ex) {
-            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                ps.close();
-                fis.close();
-            } catch (Exception ex) {
-                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return false;
-    }
+    
 
     public ArrayList buscarCorreo(String buscar) throws IOException {
         ArrayList arrElementos = new ArrayList();
@@ -311,6 +282,28 @@ public class BaseDatos {
             } 
         }
         return false;
-
     }
-}
+    
+    public String pedirUsuario(String correo){
+        String idUsuario = "";
+ try {
+            ResultSet rs = st.executeQuery("SELECT * FROM usuario WHERE correo='" + correo + "'");
+            while (rs.next()) {
+                String nombreUsuario = rs.getObject("nombre_usuario").toString();
+                String apellidoUsuario = rs.getObject("apellido_usuario").toString();
+                String correoUsuario = rs.getObject("correo").toString();
+                String claveUsuario = rs.getObject("clave").toString();
+                String fechaNacimientoUsuario = rs.getObject("fecha_nacimiento").toString();
+                idUsuario = rs.getObject("id_usuario").toString();
+
+               
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return idUsuario;
+      }
+    
+    }
+
