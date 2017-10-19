@@ -71,7 +71,6 @@ public class CrearPerfilController implements Initializable {
         //trae la ruta del archivo
         file = fileChooser.showOpenDialog(st);
         image = new Image(file.toURI().toString());
-        System.out.println(file.toURI().toString());
 
         fotoPerfil.setImage(image);
         srcimg = file.getAbsolutePath();
@@ -79,15 +78,19 @@ public class CrearPerfilController implements Initializable {
     
     @FXML
     private void subirPerfil(ActionEvent event) throws IOException, SQLException {
-
         BaseDatos objBases = new BaseDatos();
+        boolean conexion;
+        conexion = objBases.crearConexion();
+        if (conexion) {
         String nombre = nombrePTex.getText();
         BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
         String codUsuario= "1";//cambiar
         perfil perfil = new perfil(nombre, imageB, codUsuario);
         
-        objBases.insertarPerfil(perfil, file.getPath());
-        
+        objBases.insertarPerfil(perfil, srcimg);
+        }else {
+            System.out.println("No se pudo realizar la conexión");
+        }
     }
 
 }

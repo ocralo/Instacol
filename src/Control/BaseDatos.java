@@ -283,20 +283,19 @@ public class BaseDatos {
 
     public boolean insertarPerfil(perfil perfilU, String ruta) throws FileNotFoundException, IOException {
 
-        String sql = "insert into perfil "
-                + "(nombre_perfil,foto_perfil,cod_usuario) "
-                + "values(?,?,?)";
+        String sql = "INSERT INTO perfil (nombre_perfil,foto_perfil,cod_usuario) VALUES(?,?,?)";
         PreparedStatement ps = null;
-        FileInputStream fis  = null;
+        System.out.println(ruta);
+        System.out.println(perfilU.getNombre_perfil());
+        System.out.println(Integer.parseInt(perfilU.getCod_usuario()));
         try {
             conexion.setAutoCommit(false);
             File file = new File(ruta);
-            fis = new FileInputStream(file);
+            FileInputStream fis = new FileInputStream(file);
             ps = conexion.prepareStatement(sql);
-            System.out.println(ps);
             ps.setString(1, perfilU.getNombre_perfil());
             ps.setBinaryStream(2, fis, (int) file.length());
-            ps.setInt(4, Integer.parseInt(perfilU.getCod_usuario()));
+            ps.setInt(3, Integer.parseInt(perfilU.getCod_usuario()));
             
             ps.executeUpdate();
             conexion.commit();
@@ -307,9 +306,9 @@ public class BaseDatos {
         } finally {
             try {
                 ps.close();
-                fis.close();
+                
             } catch (SQLException ex) {
-            }
+            } 
         }
         return false;
 
