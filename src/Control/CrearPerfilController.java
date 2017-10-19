@@ -5,7 +5,6 @@
  */
 package Control;
 
-import Control.BaseDatos;
 import Modelo.perfil;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -15,7 +14,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +57,9 @@ public class CrearPerfilController implements Initializable {
              Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
          }
          try {
-             idUsuario = in.readLine();
+             String aux=in.readLine();
+             String[] auxDato = aux.split(",");
+             idUsuario = auxDato[0];
          } catch (IOException ex) {
              Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
          }

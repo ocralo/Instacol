@@ -60,7 +60,10 @@ public class PERFILController implements Initializable {
              Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
          }
          try {
-             idBuscar = in.readLine();
+             String aux = in.readLine();
+             String[] auxDato = aux.split(",");
+
+             idBuscar = auxDato[0];
          } catch (IOException ex) {
              Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
          }

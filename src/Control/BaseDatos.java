@@ -144,7 +144,6 @@ public class BaseDatos {
 
     public ArrayList buscarCorreo(String buscar) throws IOException {
         ArrayList arrElementos = new ArrayList();
-        String cadena = "";
         try {
             ResultSet rs = st.executeQuery("SELECT * FROM usuario WHERE correo='" + buscar + "'");
             while (rs.next()) {
