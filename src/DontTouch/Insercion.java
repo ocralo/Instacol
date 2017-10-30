@@ -1,10 +1,9 @@
-package DataBase;
+package DontTouch;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import modelo.*;
 
 /**
  *
@@ -52,12 +51,12 @@ public class Insercion {
 
                 return true;
             } catch (SQLException ex) {
-                DataBase.Tools.imprimirC(ex.getMessage());
+                DontTouch.Tools.imprimirC(ex.getMessage());
             } finally {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    DataBase.Tools.imprimirC(ex.getMessage());
+                    DontTouch.Tools.imprimirC(ex.getMessage());
                 }
             }
         }
@@ -81,7 +80,7 @@ public class Insercion {
             PreparedStatement ps = null;
             try {
 
-                DataBase.Tools.imprimirC(perfil.toString());
+                DontTouch.Tools.imprimirC(perfil.toString());
 
                 sql = "insert into perfil "
                         + "(nombre_perfil,"
@@ -109,7 +108,7 @@ public class Insercion {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    DataBase.Tools.imprimirC(ex.getMessage());
+                    DontTouch.Tools.imprimirC(ex.getMessage());
                 }
             }
         }
@@ -149,12 +148,12 @@ public class Insercion {
 
                 return true;
             } catch (SQLException ex) {
-                DataBase.Tools.imprimirC(ex.getMessage());
+                DontTouch.Tools.imprimirC(ex.getMessage());
             } finally {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    DataBase.Tools.imprimirC(ex.getMessage());
+                    DontTouch.Tools.imprimirC(ex.getMessage());
                 }
             }
         }
@@ -196,12 +195,12 @@ public class Insercion {
 
                 return true;
             } catch (SQLException ex) {
-                DataBase.Tools.imprimirC(ex.getMessage());
+                DontTouch.Tools.imprimirC(ex.getMessage());
             } finally {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    DataBase.Tools.imprimirC(ex.getMessage());
+                    DontTouch.Tools.imprimirC(ex.getMessage());
                 }
             }
         }
@@ -247,12 +246,12 @@ public class Insercion {
 
                 return true;
             } catch (SQLException | FileNotFoundException ex) {
-                DataBase.Tools.imprimirC(ex.getMessage());
+                DontTouch.Tools.imprimirC(ex.getMessage());
             } finally {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    DataBase.Tools.imprimirC(ex.getMessage());
+                    DontTouch.Tools.imprimirC(ex.getMessage());
                 }
             }
         }

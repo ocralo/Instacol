@@ -1,9 +1,9 @@
-package DataBase;
+package DontTouch;
 
 /**
  *
  * @author Usaka Rokujou
  */
-public class Eliminar {
+public class Actualizacion {
     
 }

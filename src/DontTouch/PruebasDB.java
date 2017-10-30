@@ -1,7 +1,4 @@
-package DataBase;
-
-import DataBase.Tools;
-import modelo.*;
+package DontTouch;
 
 /**
  *
@@ -15,25 +12,25 @@ public class PruebasDB {
 
     //<editor-fold defaultstate="collapsed" desc="Pruebas de insercion">
     public void insertarUsuario() {
-        Tools.imprimirC("" + DataBase.Insercion.sqlInsertUsuario(new Usuario("Breyner", "Albarracin", "basfv@sfitvbrs", "jaja", "1997/09/09")));
+        Tools.imprimirC("" + DontTouch.Insercion.sqlInsertUsuario(new Usuario("Breyner", "Albarracin", "basfv@sfitvbrs", "jaja", "1997/09/09")));
     }
 
     public void insertarPerfil() {
         Imagen img = new Imagen("C:\\Users\\breyn\\Desktop\\Jacob_Frye.jpg");
         Perfil p = new Perfil("UsakaRKJ", 4, img);
 
-        Tools.imprimirC("" + DataBase.Insercion.sqlInsertPerfilIMG(p));
+        Tools.imprimirC("" + DontTouch.Insercion.sqlInsertPerfilIMG(p));
     }
 
     public void insertarIma() {
         Imagen img = new Imagen("C:\\Users\\breyn\\Desktop\\Jacob_Frye.jpg");
-        
-        Tools.imprimirC("" + DataBase.Insercion.sqlInsertImagen(new ImagenPost(img, 0, 1)));
+
+        Tools.imprimirC("" + DontTouch.Insercion.sqlInsertImagen(new ImagenPost(img, 0, 1)));
 
     }
 
     public void insertarComen() {
-        Tools.imprimirC("" + DataBase.Insercion.sqlInsertComentario(new Comentario("FUNCIONA!!!!", 1, 1)));
+        Tools.imprimirC("" + DontTouch.Insercion.sqlInsertComentario(new Comentario("FUNCIONA!!!!", 1, 1)));
     }
     //</editor-fold>
 
