@@ -46,6 +46,14 @@ public class SeleccionarPerfilController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         subir.setVisible(false);
         subir.setDisable(false);
+        
+        BaseDatos objBases = new BaseDatos();
+        boolean conexion;
+        conexion = objBases.crearConexion();
+        if (conexion) {
+        
+        }
+        
     }    
     
     @FXML
