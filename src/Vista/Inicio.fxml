@@ -12,9 +12,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="344.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.InicioController">
     <children>
-        <ImageView fx:id="Logo" fitHeight="117.0" fitWidth="149.0" layoutX="86.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="Logo" fitHeight="126.0" fitWidth="155.0" layoutX="107.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../Imagenes/logo.jpg" />
+                <Image url="@../Imagenes/imagenIcono.png" />
             </image>
         </ImageView>
         <Pane fx:id="inicio" layoutX="3.0" layoutY="131.0" prefHeight="296.0" prefWidth="307.0">

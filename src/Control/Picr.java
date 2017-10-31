@@ -25,7 +25,7 @@ public class Picr extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Vista/Inicio.fxml"));
         stage.setTitle("Picr");
-        Image appIcon = new Image(getClass().getResourceAsStream("/Imagenes/logo.jpg"));
+        Image appIcon = new Image(getClass().getResourceAsStream("/Imagenes/imagenIcono.png"));
         stage.getIcons().add(appIcon);
         Scene scene = new Scene(root);
         stage.setScene(scene);
