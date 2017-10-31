@@ -56,6 +56,8 @@ public class SeleccionarPerfilController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -93,9 +95,20 @@ public class SeleccionarPerfilController implements Initializable {
                 img1.setImage(imagenes.get(0));
                 rPerfil1.setText(perfil.get(0).getNombre_perfil());
                 
+                if(perfil.size()<=1){
+                img2.setDisable(true);
+                img2.setVisible(false);
+                
+                }
+                else{
+                
                 img2.setImage(imagenes.get(1));
                 rPerfil2.setText(perfil.get(1).getNombre_perfil());
                 
+                if(perfil.size()<=2){
+                }else{
+                }
+                }
                 img3.setImage(imagenes.get(2));
                 rPerfil3.setText(perfil.get(2).getNombre_perfil());
                 
@@ -136,14 +149,14 @@ public class SeleccionarPerfilController implements Initializable {
     @FXML
     private void quitarMas(ActionEvent event) throws IOException {
         contPerfil -= 3;
-        img1.setImage(imagenes.get(0));
-        rPerfil1.setText(perfil.get(0).getNombre_perfil());
+        img1.setImage(imagenes.get(contPerfil-2));
+        rPerfil1.setText(perfil.get(contPerfil-2).getNombre_perfil());
         
-        img2.setImage(imagenes.get(1));
-        rPerfil2.setText(perfil.get(1).getNombre_perfil());
+        img2.setImage(imagenes.get(contPerfil-1));
+        rPerfil2.setText(perfil.get(contPerfil-1).getNombre_perfil());
         
-        img3.setImage(imagenes.get(2));
-        rPerfil3.setText(perfil.get(2).getNombre_perfil());
+        img3.setImage(imagenes.get(contPerfil));
+        rPerfil3.setText(perfil.get(contPerfil).getNombre_perfil());
         
         if (contPerfil == 0) {
             
