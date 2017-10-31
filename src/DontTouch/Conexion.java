@@ -31,7 +31,7 @@ public class Conexion {
         try {
             String usuario = "root";
             String clave = "Usaka.mysql2804";
-            String bd = "instacol";
+            String bd = "insta_col";
             Class.forName("com.mysql.jdbc.Driver");                                      //user  //pass
             conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + bd, usuario, clave);
             st = conexion.createStatement();

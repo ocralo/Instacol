@@ -227,7 +227,7 @@ public class Insercion {
 
                 sql = "insert into imagen "
                         + "(imagen,"
-                        + "me_gusta_imagen,"
+                        + "me_gusta,"
                         + "cod_perfil_imagen)"
                         + "values(?,?,?)";
 

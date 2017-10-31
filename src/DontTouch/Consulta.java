@@ -16,28 +16,29 @@ import javax.imageio.ImageIO;
 public class Consulta {
 
     //<editor-fold defaultstate="collapsed" desc="Consultar Imagen Por Perfil">
-    public static LinkedList<ImagenPost> sqlConsultImagePerfil(String id_Perfil) {
+    public static LinkedList<ImagenPost> sqlConsultImagesPerfil(String id_Perfil) {
         LinkedList<ImagenPost> imagenes = new LinkedList<>();
         try {
-            String query = "SELECT imagen FROM imagen WHERE cod_perfil_imagen=" + id_Perfil;
-            ResultSet rs = Conexion.getSt().executeQuery(query);
+            if (Conexion.crearConexion()) {
+                String query = "SELECT imagen FROM imagen WHERE cod_perfil_imagen=" + id_Perfil;
+                ResultSet rs = Conexion.getSt().executeQuery(query);
 
-            while (rs.next()) {
-                int id = rs.getInt("id_imagen");
-                int meGusta = rs.getInt("me_gusta");
-                int codImagenPerfil = rs.getInt("cod_perfil_imagen");
-                Blob blob = rs.getBlob("imagen");
+                while (rs.next()) {
+                    int id = rs.getInt("id_imagen");
+                    int meGusta = rs.getInt("me_gusta");
+                    int codImagenPerfil = rs.getInt("cod_perfil_imagen");
+                    Blob blob = rs.getBlob("imagen");
 
-                int blobLength = (int) blob.length();
-                byte[] blobAsBytes = blob.getBytes(1, blobLength);
-                blob.free();
+                    int blobLength = (int) blob.length();
+                    byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                    blob.free();
 
-                BufferedImage brim = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                Imagen i = new Imagen(brim);
+                    BufferedImage brim = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+                    Imagen i = new Imagen(brim);
 
-                imagenes.add(new ImagenPost(i, id, meGusta, codImagenPerfil));
+                    imagenes.add(new ImagenPost(i, id, meGusta, codImagenPerfil));
+                }
             }
-
         } catch (SQLException | IOException ex) {
         }
 
@@ -45,32 +46,37 @@ public class Consulta {
     }
 //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Consultar Imagen Por Perfil">
-    public static LinkedList<ImagenPost> sqlConsultImagePost(String id_imagen) {
-        LinkedList<ImagenPost> imagenes = new LinkedList<>();
+    //<editor-fold defaultstate="collapsed" desc="Consultar Imagen Por ID">
+    public static ImagenPost sqlConsultImagePost(String id_imagen) {
+        ImagenPost imagen = null;
         try {
-            String query = "SELECT imagen FROM imagen WHERE cod_perfil_imagen=" + id_imagen;
-            ResultSet rs = Conexion.getSt().executeQuery(query);
+            if (Conexion.crearConexion()) {
 
-            while (rs.next()) {
-                int id = rs.getInt("id_imagen");
-                int meGusta = rs.getInt("me_gusta");
-                int codImagenPerfil = rs.getInt("cod_perfil_imagen");
-                Blob blob = rs.getBlob("imagen");
+                String query = "SELECT * FROM imagen WHERE cod_perfil_imagen=" + id_imagen;
+                ResultSet rs = Conexion.getSt().executeQuery(query);
 
-                int blobLength = (int) blob.length();
-                byte[] blobAsBytes = blob.getBytes(1, blobLength);
-                blob.free();
+                while (rs.next()) {
+                    int id = rs.getInt("id_imagen");
+                    int meGusta = rs.getInt("me_gusta");
+                    int codImagenPerfil = rs.getInt("cod_perfil_imagen");
+                    Blob blob = rs.getBlob("imagen");
 
-                BufferedImage brim = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                Imagen i = new Imagen(brim);
+                    int blobLength = (int) blob.length();
+                    byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                    blob.free();
 
-                imagenes.add(new ImagenPost(i, id, meGusta, codImagenPerfil));
+                    BufferedImage brim = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+                    Imagen i = new Imagen(brim);
+
+                    imagen = new ImagenPost(i, id, meGusta, codImagenPerfil);
+                    break;
+                }
             }
-
         } catch (SQLException | IOException ex) {
+            Tools.imprimirC("ERROR");
         }
 
-        return imagenes;
+        return imagen;
     }
+    //</editor-fold>
 }

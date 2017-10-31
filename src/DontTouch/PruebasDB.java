@@ -7,7 +7,7 @@ package DontTouch;
 public class PruebasDB {
 
     public static void main(String... arg) {
-        new PruebasDB().insertarComen();
+        new PruebasDB().eliminarIMG();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Pruebas de insercion">
@@ -23,7 +23,7 @@ public class PruebasDB {
     }
 
     public void insertarIma() {
-        Imagen img = new Imagen("C:\\Users\\breyn\\Desktop\\Jacob_Frye.jpg");
+        Imagen img = new Imagen("C:\\Users\\breyn\\Desktop\\tecnologia.jpg");
 
         Tools.imprimirC("" + DontTouch.Insercion.sqlInsertImagen(new ImagenPost(img, 0, 1)));
 
@@ -35,8 +35,15 @@ public class PruebasDB {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Pruebas de Eliminacion">
+    public void eliminarIMG(){
+        Eliminar.sqlDeleteImagenPost(String.valueOf(1));
+    }
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Pruebas de Busqueda">
+    public void consultarIMG(){
+        ImagenPost img = Consulta.sqlConsultImagePost(String.valueOf(1));
+        Tools.imprimirC(img.toString());
+    }
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Pruebas de Actualizacion">
 //</editor-fold>
