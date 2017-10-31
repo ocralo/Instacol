@@ -5,6 +5,7 @@ package Control;
  * @author Momo
  */
 //import Controller.Imagen;
+import Modelo.imagen;
 import Modelo.perfil;
 import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
@@ -251,6 +252,42 @@ public class BaseDatos {
 
     }
 
+    public LinkedList buscarFoto() throws IOException {
+        LinkedList<imagen> listaImagenes = new LinkedList();
+        BufferedImage img;
+        Blob imagenB;
+        byte[] blobAsBytes;
+
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM imagen");
+            while (rs.next()) {
+
+                String megusta = rs.getString("megusta");
+                String codUsuario = rs.getString("id_imagen");
+                String codPerfilImagen= rs.getString("cod_perfil_imagen");
+                imagenB = rs.getBlob("imagen");
+
+                int blobLength = (int) imagenB.length();
+                blobAsBytes = imagenB.getBytes(1, blobLength);
+                imagenB.free();
+
+                img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+
+                imagen imgen = new imagen(img, megusta, codUsuario, codPerfilImagen);
+                
+
+                listaImagenes.add(imgen);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listaImagenes;
+
+    }
+    
     public boolean insertarPerfil(perfil perfilU, String ruta) throws FileNotFoundException, IOException {
 
         String sql = "INSERT INTO perfil (nombre_perfil,foto_perfil,cod_usuario) VALUES(?,?,?)";

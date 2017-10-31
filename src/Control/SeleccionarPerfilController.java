@@ -31,7 +31,7 @@ import javafx.scene.image.ImageView;
  * @author rodrigoescobarlopez
  */
 public class SeleccionarPerfilController implements Initializable {
-    
+
     @FXML
     private ImageView img1;
     @FXML
@@ -48,7 +48,7 @@ public class SeleccionarPerfilController implements Initializable {
     private Button subir;
     @FXML
     private Button bajar;
-    
+
     private String idBuscar;
     private LinkedList<perfil> perfil;
     private LinkedList<Image> imagenes;
@@ -56,6 +56,7 @@ public class SeleccionarPerfilController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -66,7 +67,7 @@ public class SeleccionarPerfilController implements Initializable {
         subir.setDisable(true);
         perfil = new LinkedList<>();
         imagenes = new LinkedList<>();
-        
+
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
@@ -81,7 +82,7 @@ public class SeleccionarPerfilController implements Initializable {
                 try {
                     String aux = in.readLine();
                     String[] auxDato = aux.split(",");
-                    
+
                     idBuscar = auxDato[0];
                 } catch (IOException ex) {
                     Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,80 +92,79 @@ public class SeleccionarPerfilController implements Initializable {
                     Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
                     imagenes.add(imageB);
                 }
-                
+
                 img1.setImage(imagenes.get(0));
                 rPerfil1.setText(perfil.get(0).getNombre_perfil());
-                
-                if(perfil.size()<=1){
-                img2.setDisable(true);
-                img2.setVisible(false);
-                
-                }
-                else{
-                
-                img2.setImage(imagenes.get(1));
-                rPerfil2.setText(perfil.get(1).getNombre_perfil());
-                
-                if(perfil.size()<=2){
-                }else{
-                }
+
+                if (perfil.size() <= 1) {
+                    img2.setDisable(true);
+                    img2.setVisible(false);
+
+                } else {
+
+                    img2.setImage(imagenes.get(1));
+                    rPerfil2.setText(perfil.get(1).getNombre_perfil());
+
+                    if (perfil.size() <= 2) {
+                    } else {
+                    }
                 }
                 img3.setImage(imagenes.get(2));
                 rPerfil3.setText(perfil.get(2).getNombre_perfil());
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (!idBuscar.isEmpty()) {
-                
+
             }
-            
+
         } else {
             System.out.println("No se pudo realizar la conexión");
         }
-        
+
     }
-    
+
     @FXML
     private void bajarMas(ActionEvent event) throws IOException {
         contPerfil += 3;
         img1.setImage(imagenes.get(contPerfil));
         rPerfil1.setText(perfil.get(contPerfil).getNombre_perfil());
-        
+
         img2.setImage(imagenes.get(contPerfil + 1));
         rPerfil2.setText(perfil.get(contPerfil + 1).getNombre_perfil());
-        
+
         img3.setImage(imagenes.get(contPerfil + 2));
         rPerfil3.setText(perfil.get(contPerfil + 2).getNombre_perfil());
-        
+
         if ((contPerfil - 3) == perfil.size()) {
-            
+
             bajar.setVisible(false);
             bajar.setDisable(true);
-            
+
         }
-        
+
     }
-    
+
     @FXML
     private void quitarMas(ActionEvent event) throws IOException {
         contPerfil -= 3;
-        img1.setImage(imagenes.get(contPerfil-2));
-        rPerfil1.setText(perfil.get(contPerfil-2).getNombre_perfil());
-        
-        img2.setImage(imagenes.get(contPerfil-1));
-        rPerfil2.setText(perfil.get(contPerfil-1).getNombre_perfil());
-        
+        img1.setImage(imagenes.get(contPerfil - 2));
+        rPerfil1.setText(perfil.get(contPerfil - 2).getNombre_perfil());
+
+        img2.setImage(imagenes.get(contPerfil - 1));
+        rPerfil2.setText(perfil.get(contPerfil - 1).getNombre_perfil());
+
         img3.setImage(imagenes.get(contPerfil));
         rPerfil3.setText(perfil.get(contPerfil).getNombre_perfil());
-        
+
         if (contPerfil == 0) {
-            
+
             subir.setVisible(false);
             subir.setDisable(true);
-            
+
         }
-        
+
     }
-    
+
 }
