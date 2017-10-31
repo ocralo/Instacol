@@ -5,14 +5,24 @@
  */
 package Control;
 
+import Modelo.perfil;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -38,29 +48,110 @@ public class SeleccionarPerfilController implements Initializable {
     private Button subir;
     @FXML
     private Button bajar;
+    
+    private String idBuscar;
+    private LinkedList<perfil> perfil;
+    private LinkedList<Image> imagenes;
+    private int contPerfil;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        contPerfil = 0;
         subir.setVisible(false);
-        subir.setDisable(false);
+        subir.setDisable(true);
+        perfil = new LinkedList<>();
+        imagenes = new LinkedList<>();
         
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
-        
+            try {
+                BufferedReader in = null;
+                try {
+                    in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    String aux = in.readLine();
+                    String[] auxDato = aux.split(",");
+                    
+                    idBuscar = auxDato[0];
+                } catch (IOException ex) {
+                    Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                perfil = objBases.buscarPerfil(idBuscar);
+                for (int i = 0; i < perfil.size(); i++) {
+                    Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
+                    imagenes.add(imageB);
+                }
+                
+                img1.setImage(imagenes.get(0));
+                rPerfil1.setText(perfil.get(0).getNombre_perfil());
+                
+                img2.setImage(imagenes.get(1));
+                rPerfil2.setText(perfil.get(1).getNombre_perfil());
+                
+                img3.setImage(imagenes.get(2));
+                rPerfil3.setText(perfil.get(2).getNombre_perfil());
+                
+            } catch (IOException ex) {
+                Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (!idBuscar.isEmpty()) {
+                
+            }
+            
+        } else {
+            System.out.println("No se pudo realizar la conexión");
         }
         
-    }    
+    }
     
     @FXML
-    private void dfg(ActionEvent event) throws IOException {
-    
+    private void bajarMas(ActionEvent event) throws IOException {
+        contPerfil += 3;
+        img1.setImage(imagenes.get(contPerfil));
+        rPerfil1.setText(perfil.get(contPerfil).getNombre_perfil());
         
+        img2.setImage(imagenes.get(contPerfil + 1));
+        rPerfil2.setText(perfil.get(contPerfil + 1).getNombre_perfil());
+        
+        img3.setImage(imagenes.get(contPerfil + 2));
+        rPerfil3.setText(perfil.get(contPerfil + 2).getNombre_perfil());
+        
+        if ((contPerfil - 3) == perfil.size()) {
+            
+            bajar.setVisible(false);
+            bajar.setDisable(true);
+            
+        }
+        
+    }
     
+    @FXML
+    private void quitarMas(ActionEvent event) throws IOException {
+        contPerfil -= 3;
+        img1.setImage(imagenes.get(0));
+        rPerfil1.setText(perfil.get(0).getNombre_perfil());
+        
+        img2.setImage(imagenes.get(1));
+        rPerfil2.setText(perfil.get(1).getNombre_perfil());
+        
+        img3.setImage(imagenes.get(2));
+        rPerfil3.setText(perfil.get(2).getNombre_perfil());
+        
+        if (contPerfil == 0) {
+            
+            subir.setVisible(false);
+            subir.setDisable(true);
+            
+        }
+        
     }
     
 }
