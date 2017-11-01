@@ -33,13 +33,13 @@ public class FotosController implements Initializable {
     Iterator<imagen> ite;
 
     @FXML
-    Label likeP;
+    private Label likeP;
     @FXML
-    Label likeS;
+    private Label likeS;
     @FXML
-    ImageView imagen1;
+    private ImageView imagen1;
     @FXML
-    ImageView imagen2;
+    private ImageView imagen2;
 
     /**
      * Initializes the controller class.
@@ -58,6 +58,7 @@ public class FotosController implements Initializable {
             try {
                 listaImagenes = objBases.buscarFoto();
                 ite = listaImagenes.iterator();
+                colocarImagenes();
             } catch (IOException ex) {
                 Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -65,13 +66,13 @@ public class FotosController implements Initializable {
     }
 
     private void colocarImagenes() {
-        if (ite.hasNext()) {
+        if (ite.hasNext() && ite != null) {
             imagen1.setImage(SwingFXUtils.toFXImage((BufferedImage) ite.next().getImagen(), null));
         } else {
             Tools.imprimirC("No hay mas imagenes");
         }
 
-        if (ite.hasNext()) {
+        if (ite.hasNext() && ite != null) {
             imagen2.setImage(SwingFXUtils.toFXImage((BufferedImage) ite.next().getImagen(), null));
         } else {
             Tools.imprimirC("No hay mas imagenes");

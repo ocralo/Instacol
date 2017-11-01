@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="likeP" prefHeight="427.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.FotosController">
+<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.FotosController">
    <children>
       <MenuBar layoutY="1.0" prefHeight="29.0" prefWidth="310.0">
         <menus>

@@ -5,7 +5,6 @@
  */
 package Control;
 
-
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,18 +24,20 @@ import javafx.scene.image.ImageView;
  * @author rodrigoescobarlopez
  */
 public class InicioController implements Initializable {
-    
-    @FXML private ImageView Logo;
-    @FXML private TextField TFcorreo;
-    @FXML private PasswordField PFclave;
-    
+
+    @FXML
+    private ImageView Logo;
+    @FXML
+    private TextField TFcorreo;
+    @FXML
+    private PasswordField PFclave;
+
     private boolean correcto = false;
     ArrayList arr;
-    
-    
+
     @FXML
     private void InicioSesion(ActionEvent event) throws IOException {
-        String buscar,asegurar,asegurar2,idUsuario,correoU;
+        String buscar, asegurar, asegurar2, idUsuario, correoU;
         buscar = TFcorreo.getText();
         asegurar = PFclave.getText();
         boolean conexion;
@@ -45,36 +46,34 @@ public class InicioController implements Initializable {
             conexion = objbases.crearConexion();
             if (conexion) {
                 arr = objbases.buscarCorreo(buscar);
-                
+
                 asegurar2 = arr.get(3).toString();
                 idUsuario = arr.get(5).toString();
                 correoU = arr.get(2).toString();
-                
-                if(asegurar.equals(asegurar2)){
-                correcto=true;
+
+                if (asegurar.equals(asegurar2)) {
+                    correcto = true;
                 }
-                 if(correcto == true){
-                     PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt","UTF-8");
-                     String User=idUsuario +","+ correoU;
-                     writer.println(User);
-                     writer.close();
-                      Picr.changeScene("IniciarSesion.fxml", event);
-                        }else{
-                         System.out.println("Usuario o contraseña incorrecta");
-                        }
+                if (correcto == true) {
+                    PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+                    String User = idUsuario + "," + correoU;
+                    writer.println(User);
+                    writer.close();
+                    Picr.changeScene("IniciarSesion.fxml", event);
+                } else {
+                    System.out.println("Usuario o contraseña incorrecta");
+                }
             }
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void Registrar(ActionEvent event) throws IOException {
-       Picr.changeScene("Registrar.fxml", event);
+        Picr.changeScene("Registrar.fxml", event);
     }
 
-   
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BaseDatos objBases = new BaseDatos();
@@ -86,5 +85,5 @@ public class InicioController implements Initializable {
             System.out.println("No se pudo realizar la conexión");
         }
     }
-    
+
 }
