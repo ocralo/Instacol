@@ -23,7 +23,7 @@ public class Picr extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Vista/PERFIL.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Vista/CrearPerfil.fxml"));
         stage.setTitle("Picr");
         Image appIcon = new Image(getClass().getResourceAsStream("/Imagenes/imagenIcono.png"));
         stage.getIcons().add(appIcon);
