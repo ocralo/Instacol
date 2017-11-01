@@ -81,4 +81,11 @@ public class FotosController implements Initializable {
     private void likeSegundo(ActionEvent event) {
 
     }
+
+    @FXML
+    private void bajarImg(ActionEvent event) {
+        imagen1.setImage(null);
+        imagen2.setImage(null);
+        colocarImagenes();
+    }
 }
