@@ -2,10 +2,6 @@ package DontTouch;
 
 import Control.BaseDatos;
 import Modelo.imagen;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -14,7 +10,7 @@ import javax.imageio.ImageIO;
 public class PruebasDB {
 
     public static void main(String... arg) {
-        new PruebasDB().eliminarIMG();
+        new PruebasDB().insertarImagenes();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Pruebas de insercion">
@@ -22,18 +18,17 @@ public class PruebasDB {
         Tools.imprimirC("" + DontTouch.Insercion.sqlInsertUsuario(new Usuario("Breyner", "Albarracin", "basfv@sfitvbrs", "jaja", "1997/09/09")));
     }
 
-    public void insertarImagen() {
-        try {
-            imagen i = new imagen(ImageIO.read(new File("a")), String.valueOf(5), String.valueOf(0), String.valueOf(1));
-            i = new imagen(ImageIO.read(new File("a")), String.valueOf(5), String.valueOf(0), String.valueOf(1));
-            i = new imagen(ImageIO.read(new File("a")), String.valueOf(5), String.valueOf(0), String.valueOf(1));
-
-            BaseDatos base = new BaseDatos();
-            if (Conexion.crearConexion()) {
-                //Insercion.sqlInsertImagen(i);
+    public void insertarImagenes() {
+        String ruta = "C:\\Users\\breyn\\Desktop\\";
+        String[] rutas = {"1", "2", "3"};
+        BaseDatos base = new BaseDatos();
+        for (String r : rutas) {
+            Tools.imprimirC(ruta + r + ".jpg");
+            imagen i = new imagen(String.valueOf(3), String.valueOf(1), ruta + r + ".jpg");
+            
+            if (base.crearConexion()) {
+                base.sqlInsertImagen(i);
             }
-        } catch (IOException io) {
-
         }
     }
 
@@ -61,13 +56,14 @@ public class PruebasDB {
         Eliminar.sqlDeleteImagenPost(String.valueOf(1));
     }
 //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Pruebas de Busqueda">
 
+    //<editor-fold defaultstate="collapsed" desc="Pruebas de Busqueda">
     public void consultarIMG() {
         ImagenPost img = Consulta.sqlConsultImagePost(String.valueOf(1));
         Tools.imprimirC(img.toString());
     }
 //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="Pruebas de Actualizacion">
 //</editor-fold>
 }

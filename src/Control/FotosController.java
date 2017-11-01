@@ -8,13 +8,10 @@ package Control;
 import DontTouch.Tools;
 import Modelo.imagen;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,13 +52,9 @@ public class FotosController implements Initializable {
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
-            try {
-                listaImagenes = objBases.buscarFoto();
-                ite = listaImagenes.iterator();
-                colocarImagenes();
-            } catch (IOException ex) {
-                Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            listaImagenes = objBases.buscarFoto();
+            ite = listaImagenes.iterator();
+            colocarImagenes();
         }
     }
 

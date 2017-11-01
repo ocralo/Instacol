@@ -5,23 +5,23 @@ package Control;
  * @author Momo
  */
 //import Controller.Imagen;
+import DontTouch.Conexion;
+import DontTouch.Tools;
 import Modelo.imagen;
 import Modelo.perfil;
-import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.embed.swing.SwingFXUtils;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 
 public class BaseDatos {
 
@@ -141,8 +141,6 @@ public class BaseDatos {
         return false;
     }
 
-    
-
     public ArrayList buscarCorreo(String buscar) throws IOException {
         ArrayList arrElementos = new ArrayList();
         try {
@@ -252,7 +250,7 @@ public class BaseDatos {
 
     }
 
-    public LinkedList buscarFoto() throws IOException {
+    public LinkedList<imagen> buscarFoto() {
         LinkedList<imagen> listaImagenes = new LinkedList();
         BufferedImage img;
         Blob imagenB;
@@ -262,9 +260,9 @@ public class BaseDatos {
             ResultSet rs = st.executeQuery("SELECT * FROM imagen");
             while (rs.next()) {
 
-                String megusta = rs.getString("megusta");
+                String megusta = rs.getString("me_gusta");
                 String codUsuario = rs.getString("id_imagen");
-                String codPerfilImagen= rs.getString("cod_perfil_imagen");
+                String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
 
                 int blobLength = (int) imagenB.length();
@@ -274,20 +272,18 @@ public class BaseDatos {
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
                 imagen imgen = new imagen(img, megusta, codUsuario, codPerfilImagen);
-                
 
                 listaImagenes.add(imgen);
 
             }
 
-        } catch (SQLException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return listaImagenes;
-
     }
-    
+
     public boolean insertarPerfil(perfil perfilU, String ruta) throws FileNotFoundException, IOException {
 
         String sql = "INSERT INTO perfil (nombre_perfil,foto_perfil,cod_usuario) VALUES(?,?,?)";
@@ -303,7 +299,7 @@ public class BaseDatos {
             ps.setString(1, perfilU.getNombre_perfil());
             ps.setBinaryStream(2, fis, (int) file.length());
             ps.setInt(3, Integer.parseInt(perfilU.getCod_usuario()));
-            
+
             ps.executeUpdate();
             conexion.commit();
 
@@ -313,16 +309,16 @@ public class BaseDatos {
         } finally {
             try {
                 ps.close();
-                
+
             } catch (SQLException ex) {
-            } 
+            }
         }
         return false;
     }
-    
-    public String pedirUsuario(String correo){
+
+    public String pedirUsuario(String correo) {
         String idUsuario = "";
- try {
+        try {
             ResultSet rs = st.executeQuery("SELECT * FROM usuario WHERE correo='" + correo + "'");
             while (rs.next()) {
                 String nombreUsuario = rs.getObject("nombre_usuario").toString();
@@ -332,14 +328,60 @@ public class BaseDatos {
                 String fechaNacimientoUsuario = rs.getObject("fecha_nacimiento").toString();
                 idUsuario = rs.getObject("id_usuario").toString();
 
-               
             }
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return idUsuario;
-      }
-    
     }
 
+    //<editor-fold defaultstate="collapsed" desc="ImagenPost">
+    /**
+     * Metodo que permite insertar una imagen en un perfil
+     *
+     * @param imagen
+     * @return true si ela inserción fue exitosa o false si hubo algun error
+     */
+    public boolean sqlInsertImagen(imagen imagen) {
+
+        String sql;
+
+        if (crearConexion()) {
+            PreparedStatement ps = null;
+
+            try {
+                sql = "insert into imagen "
+                        + "(imagen,"
+                        + "me_gusta,"
+                        + "cod_perfil_imagen)"
+                        + "values(?,?,?)";
+
+                getConexion().setAutoCommit(false);
+                ps = getConexion().prepareStatement(sql);
+
+                File f = new File(imagen.getRuta());
+                FileInputStream fis = new FileInputStream(f);
+
+                ps.setBinaryStream(1, fis, f.length());
+                ps.setString(2, imagen.getMe_gusta());
+                ps.setString(3, imagen.getCod_perfil_imagen());
+
+                ps.executeUpdate();
+                getConexion().commit();
+
+                return true;
+            } catch (SQLException | FileNotFoundException ex) {
+                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    DontTouch.Tools.imprimirC(ex.getMessage());
+                }
+            }
+        }
+        return false;
+    }
+//</editor-fold>
+}
