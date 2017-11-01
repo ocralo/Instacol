@@ -38,7 +38,7 @@
             <Image url="@../Imagenes/icono_en_blanco.png" />
          </image>
       </ImageView>
-      <Button fx:id="bajar" layoutX="252.0" layoutY="386.0" mnemonicParsing="false" text="▼" />
-      <Button fx:id="subir" disable="true" layoutX="252.0" layoutY="38.0" mnemonicParsing="false" text="▲" />
+      <Button fx:id="bajar" layoutX="252.0" layoutY="386.0" mnemonicParsing="false" onAction="#bajarMas" text="▼" />
+      <Button fx:id="subir" disable="true" layoutX="252.0" layoutY="38.0" mnemonicParsing="false" onAction="#quitarMas" text="▲" />
    </children>
 </AnchorPane>
