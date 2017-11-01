@@ -77,6 +77,7 @@ public class CrearPerfilController implements Initializable {
     
     @FXML
     private void fotoPerfil(ActionEvent event) throws IOException {
+        
         Stage st = new Stage(StageStyle.UTILITY);
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Buscar Archivos JPG");

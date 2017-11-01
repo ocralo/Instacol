@@ -32,7 +32,7 @@ public class Picr extends Application {
         stage.show();
     }
 
-    public static void changeScene(String fxml, ActionEvent event) throws IOException {
+   public static void changeScene(String fxml, ActionEvent event) throws IOException {
         
         Parent homeParent = FXMLLoader.load(Picr.class.getResource("/Vista/" + fxml));
         Scene homeScene = new Scene(homeParent);
