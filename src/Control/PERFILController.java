@@ -18,13 +18,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.swing.JOptionPane;
-import javafx.event.EventHandler;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -37,8 +38,9 @@ public class PERFILController implements Initializable {
     private ImageView imagenPerfil;
     @FXML
     private Label nombrePerfil;
-    
+
     private String idBuscar;
+
     /**
      * Initializes the controller class.
      *
@@ -47,26 +49,26 @@ public class PERFILController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
             try {
                 BufferedReader in = null;
-         try {
-             in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
-         } catch (FileNotFoundException ex) {
-             Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         try {
-             String aux = in.readLine();
-             String[] auxDato = aux.split(",");
+                try {
+                    in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    String aux = in.readLine();
+                    String[] auxDato = aux.split(",");
 
-             idBuscar = auxDato[0];
-         } catch (IOException ex) {
-             Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
-         }
+                    idBuscar = auxDato[0];
+                } catch (IOException ex) {
+                    Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 LinkedList<perfil> perfil = objBases.buscarPerfil(idBuscar);
                 Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
 
@@ -85,9 +87,10 @@ public class PERFILController implements Initializable {
         }
     }
 
-    public String traerNombrePerfil(String idBuscar) {
-
-        return "";
+    
+    @FXML
+    private void CambiarPerfil(ActionEvent event) throws IOException {
+        Picr.changeScene("Registrar.fxml", event);
     }
 
 }
