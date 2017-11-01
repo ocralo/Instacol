@@ -20,10 +20,10 @@ import javafx.stage.Stage;
  * @author rodrigoescobarlopez
  */
 public class Picr extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Vista/Fotos.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Vista/PERFIL.fxml"));
         stage.setTitle("Picr");
         Image appIcon = new Image(getClass().getResourceAsStream("/Imagenes/imagenIcono.png"));
         stage.getIcons().add(appIcon);
@@ -31,9 +31,10 @@ public class Picr extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public static void changeScene(String fxml, ActionEvent event) throws IOException {
-        Parent homeParent = FXMLLoader.load(Picr.class.getResource("/Vista/"+fxml));
+        
+        Parent homeParent = FXMLLoader.load(Picr.class.getResource("/Vista/" + fxml));
         Scene homeScene = new Scene(homeParent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appStage.hide();
@@ -47,5 +48,5 @@ public class Picr extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
