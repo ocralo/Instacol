@@ -44,8 +44,8 @@ public class BaseDatos {
      */
     public boolean crearConexion() {
         try {
-            String usuario = "root";
-            String clave = "Usaka.mysql2804";
+            String usuario = "InstaColAdmin";
+            String clave = "instacol";
             String bd = "insta_col";
             Class.forName("com.mysql.jdbc.Driver");                                      //user  //pass
             conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + bd, usuario, clave);
