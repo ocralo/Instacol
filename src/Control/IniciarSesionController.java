@@ -7,7 +7,16 @@ package Control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -16,10 +25,16 @@ import javafx.fxml.Initializable;
  */
 public class IniciarSesionController implements Initializable {
 
+    @FXML
+    private ScrollPane scrollPaneImagenes;
+    @FXML
+    private AnchorPane anchorPaneImagenes;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
     
 }
