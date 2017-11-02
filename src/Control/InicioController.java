@@ -57,12 +57,12 @@ public class InicioController implements Initializable {
                     if (asegurar.equals(asegurar2)) {
                         correcto = true;
                     }
-                    if (correcto == true) {
+                    if (correcto) {
                         PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
                         String User = idUsuario + "," + correoU;
                         writer.println(User);
                         writer.close();
-                        Picr.changeScene("SeleccionarPerfil.fxml", event);
+                        Picr.changeScene("IniciarSesion.fxml", event);
                     } else {
                         System.out.println("Usuario o contraseña incorrecta");
                     }

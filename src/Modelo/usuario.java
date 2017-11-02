@@ -87,9 +87,9 @@ public class usuario {
     }
     
     public boolean insertarUsuario(ArrayList<usuario> arrUsu){
-        String sql="";
+        String sql;
         BaseDatos objBases=new BaseDatos();
-        boolean conexion=false;
+        boolean conexion;
         boolean insertar=false;
         
         sql="insert into usuario (nombre_usuario,apellido_usuario,correo,clave,fecha_nacimiento) values(?,?,?,?,?)";

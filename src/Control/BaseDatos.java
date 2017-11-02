@@ -336,6 +336,36 @@ public class BaseDatos {
         return idUsuario;
     }
 
+    public boolean InsertImagen(imagen ImagenU, String ruta) throws FileNotFoundException, IOException {
+
+        String sql = "INSERT INTO imagen (imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) VALUES(?,?,?,?)";
+        PreparedStatement ps = null;
+        try {
+            conexion.setAutoCommit(false);
+            File file = new File(ruta);
+            FileInputStream fis = new FileInputStream(file);
+            ps = conexion.prepareStatement(sql);
+            ps.setBinaryStream(1, fis, (int) file.length());
+            ps.setInt(2, Integer.parseInt(ImagenU.getMe_gusta()));
+            ps.setInt(3, Integer.parseInt(ImagenU.getId_imagen()));
+            ps.setInt(4, Integer.parseInt(ImagenU.getCod_perfil_imagen()));
+
+            ps.executeUpdate();
+            conexion.commit();
+
+            System.out.println("lo subi");
+            return true;
+        } catch (SQLException ex) {
+        } finally {
+            try {
+                ps.close();
+
+            } catch (SQLException ex) {
+            }
+        }
+        return false;
+    }
+    
     //<editor-fold defaultstate="collapsed" desc="ImagenPost">
     /**
      * Metodo que permite insertar una imagen en un perfil

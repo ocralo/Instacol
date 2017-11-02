@@ -85,31 +85,27 @@ public class imagen {
         return "imagen{" + "imagen=" + imagen + ", me_gusta=" + me_gusta + ", id_imagen=" + id_imagen + ", cod_perfil_imagen=" + cod_perfil_imagen + '}';
     }
 
-    public boolean insertarImagen(LinkedList<imagen> imagen, String ruta) throws SQLException, FileNotFoundException {
-
-        String sql;
-        BaseDatos objBases = new BaseDatos();
-        boolean conexion;
-        boolean insertar = false;
-
-        sql = "insert into imagen "
-                + "(imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) values(?,?,?,?)";
-        for (imagen imagen1 : imagen) {
-            conexion = objBases.crearConexion();
-            if (conexion) {
-
-                /*insertar = objBases.sqlInsertImagen(sql,
-                        ruta,
-                        imagen1.getMegusta(),
-                        imagen1.getId(),
-                        imagen1.getCodimagen_Perfil());*/
-            }
-        }
-
-        System.out.println(imagen);
-        System.out.println(ruta);
-        return true;
-    }
+//    public boolean insertarImagen(LinkedList<imagen> imagen, String ruta) throws SQLException, FileNotFoundException {
+//
+//        String sql;
+//        BaseDatos objBases = new BaseDatos();
+//        boolean conexion;
+//        boolean insertar = false;
+//
+//        sql = "insert into imagen "
+//                + "(imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) values(?,?,?,?)";
+//        for (imagen imagen1 : imagen) {
+//            conexion = objBases.crearConexion();
+//            if (conexion) {
+//                insertar = objBases.sqlInsertImagen(sql,
+//                        imagen1.getImagen(),
+//                        imagen1.getMe_gusta(),
+//                        imagen1.getId_imagen(),
+//                        imagen1.getCod_perfil_imagen());
+//            }
+//        }
+//        return insertar;
+//    }
 
     public static ImageIcon byteAImagen(byte[] imagenbyte) {
         ImageIcon imageIcon = new ImageIcon(imagenbyte);
