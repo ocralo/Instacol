@@ -93,7 +93,7 @@ public class FotosController implements Initializable {
                 img1.setMe_gusta((Integer.parseInt(img1.getMe_gusta()) + 1) + "");
                 objBaseDatos.agregarLike(img1);
             }
-            colocarImagenes();
+            colocarImagenes(); 
         }
     }
 
