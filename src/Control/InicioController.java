@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,22 +48,31 @@ public class InicioController implements Initializable {
             if (conexion) {
                 arr = objbases.buscarCorreo(buscar);
 
-                asegurar2 = arr.get(3).toString();
-                idUsuario = arr.get(5).toString();
-                correoU = arr.get(2).toString();
+                if(arr.size()>0)
+                {
+                    asegurar2 = arr.get(3).toString();
+                    idUsuario = arr.get(5).toString();
+                    correoU = arr.get(2).toString();
+                    
+                    if (asegurar.equals(asegurar2)) {
+                        correcto = true;
+                    }
+                    if (correcto == true) {
+                        PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+                        String User = idUsuario + "," + correoU;
+                        writer.println(User);
+                        writer.close();
+                        Picr.changeScene("IniciarSesion.fxml", event);
+                    } else {
+                        System.out.println("Usuario o contraseña incorrecta");
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "No se encontraron los datos ingresados");
+                }
 
-                if (asegurar.equals(asegurar2)) {
-                    correcto = true;
-                }
-                if (correcto == true) {
-                    PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
-                    String User = idUsuario + "," + correoU;
-                    writer.println(User);
-                    writer.close();
-                    Picr.changeScene("IniciarSesion.fxml", event);
-                } else {
-                    System.out.println("Usuario o contraseña incorrecta");
-                }
+                
             }
         } catch (IOException ex) {
             Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
