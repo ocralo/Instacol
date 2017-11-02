@@ -90,7 +90,7 @@ public class PERFILController implements Initializable {
     
     @FXML
     private void CambiarPerfil(ActionEvent event) throws IOException {
-        Picr.changeScene("Registrar.fxml", event);
+        Picr.changeScene("SeleccionarPerfil.fxml", event);
     }
 
 }

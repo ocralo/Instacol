@@ -62,7 +62,7 @@ public class InicioController implements Initializable {
                         String User = idUsuario + "," + correoU;
                         writer.println(User);
                         writer.close();
-                        Picr.changeScene("IniciarSesion.fxml", event);
+                        Picr.changeScene("SeleccionarPerfil.fxml", event);
                     } else {
                         System.out.println("Usuario o contraseña incorrecta");
                     }
