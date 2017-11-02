@@ -384,4 +384,25 @@ public class BaseDatos {
         return false;
     }
 //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Incrementar MeGusta">
+    public boolean agregarLike(imagen img) {
+
+        try {
+            if (crearConexion()) {
+                String sql = "UPDATE imagen SET me_gusta=" + img.getMe_gusta() + " WHERE id_imagen=" + img.getId_imagen();
+                getConexion().setAutoCommit(false);
+                PreparedStatement ps = getConexion().prepareStatement(sql);
+                ps.executeUpdate();
+                getConexion().commit();
+
+                return true;
+            }
+        } catch (SQLException ex) {
+
+        }
+        return false;
+    }
+    //</editor-fold>
 }
+

@@ -27,7 +27,10 @@ import javafx.scene.image.ImageView;
 public class FotosController implements Initializable {
 
     LinkedList<imagen> listaImagenes;
-    Iterator<imagen> ite;
+    imagen img1;
+    imagen img2;
+    int ite1;
+    int ite2;
 
     @FXML
     private Label likeP;
@@ -49,24 +52,34 @@ public class FotosController implements Initializable {
         listaImagenes = new LinkedList<>();
         String idPerfil;
         BaseDatos objBases = new BaseDatos();
-        boolean conexion;
-        conexion = objBases.crearConexion();
-        if (conexion) {
+        if (objBases.crearConexion()) {
             listaImagenes = objBases.buscarFoto();
-            ite = listaImagenes.iterator();
+            ite1 = 0;
+            ite2 = 1;
             colocarImagenes();
         }
     }
 
     private void colocarImagenes() {
-        if (ite.hasNext() && ite != null) {
-            imagen1.setImage(SwingFXUtils.toFXImage((BufferedImage) ite.next().getImagen(), null));
+        imagen1.setImage(null);
+        imagen2.setImage(null);
+        img1 = null;
+        img2 = null;
+        likeP.setText("0");
+        likeS.setText("0");
+
+        if (ite1 < listaImagenes.size()) {
+            img1 = listaImagenes.get(ite1);
+            imagen1.setImage(SwingFXUtils.toFXImage((BufferedImage) img1.getImagen(), null));
+            likeP.setText(img1.getMe_gusta());
         } else {
             Tools.imprimirC("No hay mas imagenes");
         }
 
-        if (ite.hasNext() && ite != null) {
-            imagen2.setImage(SwingFXUtils.toFXImage((BufferedImage) ite.next().getImagen(), null));
+        if (ite2 < listaImagenes.size()) {
+            img2 = listaImagenes.get(ite2);
+            imagen2.setImage(SwingFXUtils.toFXImage((BufferedImage) img2.getImagen(), null));
+            likeS.setText(img2.getMe_gusta());
         } else {
             Tools.imprimirC("No hay mas imagenes");
         }
@@ -74,18 +87,44 @@ public class FotosController implements Initializable {
 
     @FXML
     private void likePrimero(ActionEvent event) {
-
+        if (img1 != null) {
+            BaseDatos objBaseDatos = new BaseDatos();
+            if (objBaseDatos.crearConexion()) {
+                img1.setMe_gusta((Integer.parseInt(img1.getMe_gusta()) + 1) + "");
+                objBaseDatos.agregarLike(img1);
+            }
+            colocarImagenes();
+        }
     }
 
     @FXML
     private void likeSegundo(ActionEvent event) {
 
+        if (img2 != null) {
+            BaseDatos objBaseDatos = new BaseDatos();
+            if (objBaseDatos.crearConexion()) {
+                img2.setMe_gusta((Integer.parseInt(img2.getMe_gusta()) + 1) + "");
+                objBaseDatos.agregarLike(img2);
+            }
+            colocarImagenes();
+        }
     }
 
     @FXML
-    private void bajarImg(ActionEvent event) {
-        imagen1.setImage(null);
-        imagen2.setImage(null);
+    private void botonAbajo(ActionEvent event) {
+        if (ite2 < listaImagenes.size()) {
+            ite1 += 2;
+            ite2 += 2;
+        }
+        colocarImagenes();
+    }
+
+    @FXML
+    private void botonArriba(ActionEvent event) {
+        if (ite1 > 0) {
+            ite1 -= 2;
+            ite2 -= 2;
+        }
         colocarImagenes();
     }
 }
