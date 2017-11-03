@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -20,6 +21,15 @@ import javafx.stage.Stage;
  * @author rodrigoescobarlopez
  */
 public class Picr extends Application {
+
+    public static void changeScene(String fxml, MouseEvent event) throws IOException {
+        Parent homeParent = FXMLLoader.load(Picr.class.getResource("/Vista/" + fxml));
+        Scene homeScene = new Scene(homeParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.hide();
+        appStage.setScene(homeScene);
+        appStage.show();
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -33,7 +43,6 @@ public class Picr extends Application {
     }
 
    public static void changeScene(String fxml, ActionEvent event) throws IOException {
-        
         Parent homeParent = FXMLLoader.load(Picr.class.getResource("/Vista/" + fxml));
         Scene homeScene = new Scene(homeParent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

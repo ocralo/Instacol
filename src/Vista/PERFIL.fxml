@@ -26,9 +26,20 @@
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="310.0">
          <items>
-          <Button mnemonicParsing="false" onAction="#CambiarPerfil" prefHeight="25.0" prefWidth="97.0" text="cambiar Perfil" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" onAction="#handleButtonActionAtras" text="◀" />
+          <Button mnemonicParsing="false" onAction="#CambiarPerfil" prefHeight="25.0" prefWidth="97.0" text="Cambiar Perfil" />
+            <Button mnemonicParsing="false" onAction="#CrearNuevoPerfil" text="Crear Perfil nuevo" />
          </items></ToolBar>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imagenViewImagenes" fitHeight="185.0" fitWidth="220.0" layoutX="45.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="botonAnteriorImagen" layoutX="5.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleButtonActionAnteriorImagen" prefHeight="19.0" prefWidth="14.0" text="◀">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="botonSiguienteImagen" layoutX="273.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleButtonActionSiguienteImagen" prefHeight="19.0" prefWidth="14.0" text="▶">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

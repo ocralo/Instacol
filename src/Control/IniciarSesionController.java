@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -87,14 +88,15 @@ public class IniciarSesionController implements Initializable {
         }
     }
 
-    @FXML
-    private void CrearNuevoPerfil(ActionEvent event) throws IOException{
-        Picr.changeScene("CrearPerfil.fxml", event);
-    }
     
     @FXML
     private void AgregarImagenNueva(ActionEvent event) throws IOException{
         Picr.changeScene("AgregarImagen.fxml", event);
+    }
+    
+    @FXML
+    private void abrirPerfil(MouseEvent event) throws IOException{
+        Picr.changeScene("PERFIL.fxml", event);
     }
     
 }

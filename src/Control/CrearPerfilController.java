@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -45,6 +46,7 @@ public class CrearPerfilController implements Initializable {
     private File file;
     
     private String idUsuario;
+    private String idPerfil;
 
     
     
@@ -60,6 +62,7 @@ public class CrearPerfilController implements Initializable {
              String aux=in.readLine();
              String[] auxDato = aux.split(",");
              idUsuario = auxDato[0];
+             idPerfil = auxDato[1];
          } catch (IOException ex) {
              Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -106,6 +109,12 @@ public class CrearPerfilController implements Initializable {
         objBases.insertarPerfil(perfil, srcimg);
         objBases.pedirUsuario(idUsuario);
         
+        idPerfil = objBases.buscarPerfil("nombre_perfil", nombre).getLast().getId_perfil();
+        
+        PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+        String txt = idUsuario + "," + idPerfil;
+        writer.println(txt);
+        writer.close();
         
         Picr.changeScene("PERFIL.fxml", event);
         }else {

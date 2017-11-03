@@ -164,18 +164,20 @@ public class BaseDatos {
         return arrElementos;
     }
 
-    public BufferedImage buscarImagen(int buscarImagen) throws IOException {
-        BufferedImage img = null;
+    public LinkedList<imagen> buscarImagen(String criterio, String buscarImagen) throws IOException {
+        LinkedList<imagen> listaImagenes = new LinkedList();
+        BufferedImage img;
         Blob imagenB;
         byte[] blobAsBytes;
-        String nombre;
-        try {
-            ResultSet rs = st.executeQuery("SELECT imagen FROM imagen WHERE id_imagen ='" + buscarImagen + "'");
 
-            System.out.println("sql");
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM imagen where " + criterio + "='" + buscarImagen + "'");
             while (rs.next()) {
+
+                String megusta = rs.getString("me_gusta_imagen");
+                String codUsuario = rs.getString("id_imagen");
+                String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
-                nombre = rs.getString("me_gusta_imagen");
 
                 int blobLength = (int) imagenB.length();
                 blobAsBytes = imagenB.getBytes(1, blobLength);
@@ -183,13 +185,17 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
+                imagen imgen = new imagen(img, megusta, codUsuario, codPerfilImagen);
+
+                listaImagenes.add(imgen);
+
             }
 
-        } catch (SQLException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return img;
-        //return img;
+
+        return listaImagenes;
     }
 
     public void sqlDeleteUsuario(String eliminar) throws IOException {
