@@ -6,7 +6,7 @@
 package Control;
 
 import Modelo.imagen;
-import Modelo.perfil;
+import Modelo.Perfil;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;

@@ -5,7 +5,7 @@
  */
 package Control;
 
-import Modelo.perfil;
+import Modelo.Perfil;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -76,7 +76,8 @@ public class IniciarSesionController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            LinkedList<perfil> perfil = objBases.buscarPerfil(idBuscar);
+            LinkedList<Perfil> perfil = objBases.buscarPerfil("id_perfil",idBuscar);
+            System.out.println(perfil.size());
             Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
             
             iconoperfil.setImage(imageB);

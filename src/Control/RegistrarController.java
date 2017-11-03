@@ -1,6 +1,6 @@
 package Control;
 
-import Modelo.usuario;
+import Modelo.Usuario;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,8 +29,8 @@ public class RegistrarController implements Initializable {
     @FXML
     private DatePicker DPnacimiento;
 
-    usuario objUsuario;
-    ArrayList<usuario> arrUsuario;
+    Usuario objUsuario;
+    ArrayList<Usuario> arrUsuario;
     LocalDate localdate;
 
     @FXML
@@ -51,7 +51,7 @@ public class RegistrarController implements Initializable {
         localdate = DPnacimiento.getValue();
         nacimiento = localdate.toString();
 
-        objUsuario = new usuario(nombre, apellido, correo, clave, nacimiento, idusuario);
+        objUsuario = new Usuario(nombre, apellido, correo, clave, nacimiento, idusuario);
         arrUsuario.add(objUsuario);
 
         boolean insertar = false;
@@ -98,7 +98,7 @@ public class RegistrarController implements Initializable {
         } else {
             System.out.println("no se pudo realizar la conexión");
         }
-        objUsuario = new usuario();
+        objUsuario = new Usuario();
         arrUsuario = new ArrayList<>();
     }
 

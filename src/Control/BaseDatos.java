@@ -5,10 +5,8 @@ package Control;
  * @author Momo
  */
 //import Controller.Imagen;
-import DontTouch.Conexion;
-import DontTouch.Tools;
 import Modelo.imagen;
-import Modelo.perfil;
+import Modelo.Perfil;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -21,7 +19,6 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 
 public class BaseDatos {
 
@@ -210,19 +207,20 @@ public class BaseDatos {
      * Método utilizado para establecer la conexión con la base de datos
      * insta_col
      *
-     * @param buscarId
+     * @param valor
      * @return estado regresa el estado de la conexión, true si se estableció la
      * conexión, falso en caso contrario
      * @throws java.io.IOException
      */
-    public LinkedList buscarPerfil(String buscarId) throws IOException {
-        LinkedList<perfil> listaUsuario = new LinkedList();
+    public LinkedList<Perfil> buscarPerfil(String criterio, String valor) throws IOException {
+        LinkedList<Perfil> listaPerfil = new LinkedList();
         BufferedImage img;
         Blob imagenB;
         byte[] blobAsBytes;
 
         try {
-            ResultSet rs = st.executeQuery("SELECT * FROM perfil WHERE id_perfil ='" + buscarId + "'");
+            System.out.println("SELECT * FROM perfil WHERE " + criterio + " ='" + valor + "'");
+            ResultSet rs = st.executeQuery("SELECT * FROM perfil WHERE " + criterio + " ='" + valor + "'");
             while (rs.next()) {
 
                 String nombrePerfil = rs.getString("nombre_perfil");
@@ -236,9 +234,10 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                perfil us = new perfil(nombrePerfil, img, idPerfil, codUsuario);
+                Perfil us = new Perfil(nombrePerfil, img, idPerfil, codUsuario);
 
-                listaUsuario.add(us);
+                listaPerfil.add(us);
+                System.out.println(us);
 
             }
 
@@ -246,7 +245,7 @@ public class BaseDatos {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return listaUsuario;
+        return listaPerfil;
 
     }
 
@@ -284,7 +283,7 @@ public class BaseDatos {
         return listaImagenes;
     }
 
-    public boolean insertarPerfil(perfil perfilU, String ruta) throws FileNotFoundException, IOException {
+    public boolean insertarPerfil(Perfil perfilU, String ruta) throws FileNotFoundException, IOException {
 
         String sql = "INSERT INTO perfil (nombre_perfil,foto_perfil,cod_usuario) VALUES(?,?,?)";
         PreparedStatement ps = null;
@@ -365,7 +364,7 @@ public class BaseDatos {
         }
         return false;
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="ImagenPost">
     /**
      * Metodo que permite insertar una imagen en un perfil
@@ -435,4 +434,3 @@ public class BaseDatos {
     }
     //</editor-fold>
 }
-

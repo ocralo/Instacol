@@ -5,7 +5,7 @@
  */
 package Control;
 
-import Modelo.perfil;
+import Modelo.Perfil;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -101,7 +101,7 @@ public class CrearPerfilController implements Initializable {
         String nombre = nombrePTex.getText();
         BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
         String codUsuario= idUsuario;//cambiar
-        perfil perfil = new perfil(nombre, imageB, codUsuario);
+        Perfil perfil = new Perfil(nombre, imageB, codUsuario);
         
         objBases.insertarPerfil(perfil, srcimg);
         objBases.pedirUsuario(idUsuario);

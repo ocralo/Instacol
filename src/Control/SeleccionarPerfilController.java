@@ -5,7 +5,7 @@
  */
 package Control;
 
-import Modelo.perfil;
+import Modelo.Perfil;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -50,7 +50,7 @@ public class SeleccionarPerfilController implements Initializable {
     private Button bajar;
 
     private String idBuscar;
-    private LinkedList<perfil> perfil;
+    private LinkedList<Perfil> perfil;
     private LinkedList<Image> imagenes;
     private int contPerfil;
 
@@ -87,8 +87,10 @@ public class SeleccionarPerfilController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                perfil = objBases.buscarPerfil(idBuscar);
+                perfil = objBases.buscarPerfil("cod_usuario",idBuscar);
+                System.out.println("En la consulta se cargaron " + perfil.size());
                 for (int i = 0; i < perfil.size(); i++) {
+                    System.out.println("Imagen " + i);
                     Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
                     imagenes.add(imageB);
                 }
@@ -96,21 +98,29 @@ public class SeleccionarPerfilController implements Initializable {
                 img1.setImage(imagenes.get(0));
                 rPerfil1.setText(perfil.get(0).getNombre_perfil());
 
-                if (perfil.size() <= 1) {
-                    img2.setDisable(true);
-                    img2.setVisible(false);
-
-                } else {
-
+                if(perfil.size() > 1)
+                {
                     img2.setImage(imagenes.get(1));
                     rPerfil2.setText(perfil.get(1).getNombre_perfil());
-
-                    if (perfil.size() <= 2) {
-                    } else {
-                    }
                 }
-                img3.setImage(imagenes.get(2));
-                rPerfil3.setText(perfil.get(2).getNombre_perfil());
+                else
+                {
+                    img2.setVisible(false);
+                    rPerfil2.setVisible(false);
+                }
+                
+                if(perfil.size() > 2)
+                {
+                    img3.setImage(imagenes.get(2));
+                    rPerfil3.setText(perfil.get(2).getNombre_perfil());
+                }
+                else
+                {
+                    img3.setVisible(false);
+                    rPerfil3.setVisible(false);
+                }
+
+                
 
             } catch (IOException ex) {
                 Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);

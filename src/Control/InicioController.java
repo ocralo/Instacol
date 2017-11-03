@@ -5,6 +5,7 @@
  */
 package Control;
 
+import Modelo.Usuario;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,9 +39,9 @@ public class InicioController implements Initializable {
 
     @FXML
     private void InicioSesion(ActionEvent event) throws IOException {
-        String buscar, asegurar, asegurar2, idUsuario, correoU;
+        String buscar, clave, verifClave, idUsuario, correoU;
         buscar = TFcorreo.getText();
-        asegurar = PFclave.getText();
+        clave = PFclave.getText();
         boolean conexion;
         BaseDatos objbases = new BaseDatos();
         try {
@@ -48,13 +49,12 @@ public class InicioController implements Initializable {
             if (conexion) {
                 arr = objbases.buscarCorreo(buscar);
 
-                if(arr.size()>0)
-                {
-                    asegurar2 = arr.get(3).toString();
-                    idUsuario = arr.get(5).toString();
-                    correoU = arr.get(2).toString();
-                    
-                    if (asegurar.equals(asegurar2)) {
+                if (arr.size() > 0) {
+                    verifClave = arr.get(Usuario.CLAVE).toString();
+                    idUsuario = arr.get(Usuario.ID).toString();
+                    correoU = arr.get(Usuario.CORREO).toString();
+
+                    if (clave.equals(verifClave)) {
                         correcto = true;
                     }
                     if (correcto) {
@@ -62,17 +62,15 @@ public class InicioController implements Initializable {
                         String User = idUsuario + "," + correoU;
                         writer.println(User);
                         writer.close();
-                        Picr.changeScene("IniciarSesion.fxml", event);
+//                        Picr.changeScene("IniciarSesion.fxml", event);
+                        Picr.changeScene("SeleccionarPerfil.fxml", event);
                     } else {
                         System.out.println("Usuario o contraseña incorrecta");
                     }
-                }
-                else
-                {
+                } else {
                     JOptionPane.showMessageDialog(null, "No se encontraron los datos ingresados");
                 }
 
-                
             }
         } catch (IOException ex) {
             Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,9 +84,8 @@ public class InicioController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        BaseDatos objBases = new BaseDatos();
-        boolean conexion;
-        conexion = objBases.crearConexion();
+        BaseDatos db = new BaseDatos();
+        boolean conexion = db.crearConexion();
         if (conexion) {
 
         } else {
