@@ -96,7 +96,11 @@ public class PERFILController implements Initializable {
                     Image image = SwingFXUtils.toFXImage((BufferedImage) imagen.getImagen(), null);
                     imagenesList.add(image);
                 }
-                imagenViewImagenes.setImage(imagenesList.getFirst());
+                if(imagenes.size() > 0)
+                {
+                    imagenViewImagenes.setImage(imagenesList.getFirst());
+                }
+                
                 
             } catch (IOException ex) {
                 Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
