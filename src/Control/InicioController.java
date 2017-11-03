@@ -59,7 +59,7 @@ public class InicioController implements Initializable {
                     }
                     if (correcto) {
                         PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
-                        String User = idUsuario + "," + correoU;
+                        String User = idUsuario;
                         writer.println(User);
                         writer.close();
 //                        Picr.changeScene("IniciarSesion.fxml", event);

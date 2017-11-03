@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -139,7 +140,9 @@ public class SeleccionarPerfilController implements Initializable {
             botonSubir.setVisible(true);
         }
         
-        System.out.println(contadorImagenes + " " + triosImagenes);
+        rPerfil1.setSelected(false);
+        rPerfil2.setSelected(false);
+        rPerfil3.setSelected(false);
 //        if () {
 //
 //        }
@@ -178,8 +181,10 @@ public class SeleccionarPerfilController implements Initializable {
         {
             botonSubir.setVisible(false);
         }
-        
-        System.out.println(contadorImagenes + " " + triosImagenes);
+      
+        rPerfil1.setSelected(false);
+        rPerfil2.setSelected(false);
+        rPerfil3.setSelected(false);
 //        contPerfil -= 3;
 //        img1.setImage(imagenes.get(contPerfil - 2));
 //        rPerfil1.setText(perfil.get(contPerfil - 2).getNombre_perfil());
@@ -198,7 +203,49 @@ public class SeleccionarPerfilController implements Initializable {
 //        }
 
     }
+    
+    @FXML
+    private void handleRButtonAction1(ActionEvent event) throws IOException {
+        rPerfil2.setSelected(false);
+        rPerfil3.setSelected(false);
+    }
+    
+    @FXML
+    private void handleRButtonAction2(ActionEvent event) throws IOException {
+        rPerfil1.setSelected(false);
+        rPerfil3.setSelected(false);
+    }
+    
+    @FXML
+    private void handleRButtonAction3(ActionEvent event) throws IOException {
+        rPerfil1.setSelected(false);
+        rPerfil2.setSelected(false);
+    }
 
+    @FXML
+    private void handleButtonActionSeleccionar(ActionEvent event) throws IOException {
+        String perfilID = "";
+        
+        if(rPerfil1.isSelected())
+        {
+            perfilID = perfil.get(contPerfil*3).getId_perfil();
+        }
+        else if(rPerfil2.isSelected())
+        {
+            perfilID = perfil.get(contPerfil*3 + 1).getId_perfil();
+        }
+        else if(rPerfil3.isSelected())
+        {
+            perfilID = perfil.get(contPerfil*3 + 2).getId_perfil();
+        }
+        
+        PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+        String perfil = idBuscar + "," + perfilID;
+        writer.println(perfil);
+        writer.close();
+        
+    }
+    
     private void organizarImagenes() {
         img2.setVisible(true);
         rPerfil2.setVisible(true);
