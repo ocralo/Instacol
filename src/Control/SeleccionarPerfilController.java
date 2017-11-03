@@ -244,6 +244,7 @@ public class SeleccionarPerfilController implements Initializable {
         writer.println(perfil);
         writer.close();
         
+        Picr.changeScene("IniciarSesion.fxml", event);
     }
     
     private void organizarImagenes() {

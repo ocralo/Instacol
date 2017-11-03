@@ -72,7 +72,7 @@ public class IniciarSesionController implements Initializable {
                     String aux = in.readLine();
                     String[] auxDato = aux.split(",");
 
-                    idBuscar = auxDato[0];
+                    idBuscar = auxDato[1];
                 } catch (IOException ex) {
                     Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
                 }

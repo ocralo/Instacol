@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.PERFILController">
    <children>
-      <ImageView fx:id="imagenPerfil" fitHeight="150.0" fitWidth="164.0" layoutX="80.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagenPerfil" fitHeight="100.0" fitWidth="125.0" layoutX="93.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/icono_en_blanco.png" />
          </image>
@@ -19,12 +19,16 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
-      <Label fx:id="nombrePerfil" alignment="CENTER" contentDisplay="CENTER" layoutX="58.0" layoutY="229.0" prefHeight="35.0" prefWidth="200.0" text=" Nombre Perfil" textAlignment="CENTER">
+      <Label fx:id="nombrePerfil" alignment="CENTER" contentDisplay="CENTER" layoutX="45.0" layoutY="157.0" prefHeight="35.0" prefWidth="200.0" text=" Nombre Perfil" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>
       </Label>
-      <ToolBar prefHeight="40.0" prefWidth="310.0" />
-    <Button layoutX="4.0" layoutY="7.0" mnemonicParsing="false" onAction="#CambiarPerfil" text="cambiar Perfil" />
+      <ToolBar prefHeight="40.0" prefWidth="310.0">
+         <items>
+          <Button mnemonicParsing="false" onAction="#CambiarPerfil" prefHeight="25.0" prefWidth="97.0" text="cambiar Perfil" />
+            <Button mnemonicParsing="false" text="Button" />
+         </items></ToolBar>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
