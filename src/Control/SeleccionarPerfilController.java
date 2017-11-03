@@ -45,14 +45,16 @@ public class SeleccionarPerfilController implements Initializable {
     @FXML
     private RadioButton rPerfil3;
     @FXML
-    private Button subir;
+    private Button botonSubir;
     @FXML
-    private Button bajar;
+    private Button botonBajar;
 
     private String idBuscar;
     private LinkedList<Perfil> perfil;
     private LinkedList<Image> imagenes;
     private int contPerfil;
+    private int triosImagenes;
+    private int contadorImagenes;
 
     /**
      * Initializes the controller class.
@@ -63,10 +65,11 @@ public class SeleccionarPerfilController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         contPerfil = 0;
-        subir.setVisible(false);
-        subir.setDisable(true);
+        botonSubir.setVisible(false);
+        botonBajar.setVisible(false);
         perfil = new LinkedList<>();
         imagenes = new LinkedList<>();
+        contadorImagenes = 0;
 
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
@@ -87,40 +90,22 @@ public class SeleccionarPerfilController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                perfil = objBases.buscarPerfil("cod_usuario",idBuscar);
-                System.out.println("En la consulta se cargaron " + perfil.size());
+                perfil = objBases.buscarPerfil("cod_usuario", idBuscar);
+//                System.out.println("En la consulta se cargaron " + perfil.size());
                 for (int i = 0; i < perfil.size(); i++) {
-                    System.out.println("Imagen " + i);
-                    Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
+//                    System.out.println("Imagen " + i);
+                    Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(i).getFoto_perfil(), null);
                     imagenes.add(imageB);
                 }
 
-                img1.setImage(imagenes.get(0));
-                rPerfil1.setText(perfil.get(0).getNombre_perfil());
-
-                if(perfil.size() > 1)
-                {
-                    img2.setImage(imagenes.get(1));
-                    rPerfil2.setText(perfil.get(1).getNombre_perfil());
-                }
-                else
-                {
-                    img2.setVisible(false);
-                    rPerfil2.setVisible(false);
-                }
+                organizarImagenes();
                 
-                if(perfil.size() > 2)
-                {
-                    img3.setImage(imagenes.get(2));
-                    rPerfil3.setText(perfil.get(2).getNombre_perfil());
-                }
-                else
-                {
-                    img3.setVisible(false);
-                    rPerfil3.setVisible(false);
-                }
-
+                triosImagenes = (int) Math.ceil((double)imagenes.size()/3);
                 
+                if(triosImagenes > 1)
+                {
+                    botonBajar.setVisible(true);
+                }
 
             } catch (IOException ex) {
                 Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,45 +121,109 @@ public class SeleccionarPerfilController implements Initializable {
     }
 
     @FXML
-    private void bajarMas(ActionEvent event) throws IOException {
-        contPerfil += 3;
-        img1.setImage(imagenes.get(contPerfil));
-        rPerfil1.setText(perfil.get(contPerfil).getNombre_perfil());
-
-        img2.setImage(imagenes.get(contPerfil + 1));
-        rPerfil2.setText(perfil.get(contPerfil + 1).getNombre_perfil());
-
-        img3.setImage(imagenes.get(contPerfil + 2));
-        rPerfil3.setText(perfil.get(contPerfil + 2).getNombre_perfil());
-
-        if ((contPerfil - 3) == perfil.size()) {
-
-            bajar.setVisible(false);
-            bajar.setDisable(true);
-
+    private void handleButtonActionBajar(ActionEvent event) throws IOException {
+        if((contadorImagenes + 1) < triosImagenes)
+        {
+            contadorImagenes++;
         }
+        
+        organizarImagenes();
+        
+        if((contadorImagenes + 1) == triosImagenes)
+        {
+            botonBajar.setVisible(false);
+        }
+        
+        if(contadorImagenes > 0)
+        {
+            botonSubir.setVisible(true);
+        }
+        
+        System.out.println(contadorImagenes + " " + triosImagenes);
+//        if () {
+//
+//        }
+//        contPerfil += 3;
+//        img1.setImage(imagenes.get(contPerfil));
+//        rPerfil1.setText(perfil.get(contPerfil).getNombre_perfil());
+//
+//        img2.setImage(imagenes.get(contPerfil + 1));
+//        rPerfil2.setText(perfil.get(contPerfil + 1).getNombre_perfil());
+//
+//        img3.setImage(imagenes.get(contPerfil + 2));
+//        rPerfil3.setText(perfil.get(contPerfil + 2).getNombre_perfil());
+//
+//        if ((contPerfil - 3) == perfil.size()) {
+//
+//            botonBajar.setVisible(false);
+//            botonBajar.setDisable(true);
+//
+//        }
 
     }
 
     @FXML
-    private void quitarMas(ActionEvent event) throws IOException {
-        contPerfil -= 3;
-        img1.setImage(imagenes.get(contPerfil - 2));
-        rPerfil1.setText(perfil.get(contPerfil - 2).getNombre_perfil());
+    private void handleButtonActionSubir(ActionEvent event) throws IOException {
+        
+        if(contadorImagenes > 0)
+        {
+            contadorImagenes--;
+        }
+        
+        organizarImagenes();
+        
+        botonBajar.setVisible(true);
+        
+        if(contadorImagenes == 0)
+        {
+            botonSubir.setVisible(false);
+        }
+        
+        System.out.println(contadorImagenes + " " + triosImagenes);
+//        contPerfil -= 3;
+//        img1.setImage(imagenes.get(contPerfil - 2));
+//        rPerfil1.setText(perfil.get(contPerfil - 2).getNombre_perfil());
+//
+//        img2.setImage(imagenes.get(contPerfil - 1));
+//        rPerfil2.setText(perfil.get(contPerfil - 1).getNombre_perfil());
+//
+//        img3.setImage(imagenes.get(contPerfil));
+//        rPerfil3.setText(perfil.get(contPerfil).getNombre_perfil());
+//
+//        if (contPerfil == 0) {
+//
+//            botonSubir.setVisible(false);
+//            botonSubir.setDisable(true);
+//
+//        }
 
-        img2.setImage(imagenes.get(contPerfil - 1));
-        rPerfil2.setText(perfil.get(contPerfil - 1).getNombre_perfil());
+    }
 
-        img3.setImage(imagenes.get(contPerfil));
-        rPerfil3.setText(perfil.get(contPerfil).getNombre_perfil());
+    private void organizarImagenes() {
+        img2.setVisible(true);
+        rPerfil2.setVisible(true);
+        
+        img3.setVisible(true);
+        rPerfil3.setVisible(true);
+        
+        img1.setImage(imagenes.get(3*contadorImagenes));
+        rPerfil1.setText(perfil.get(3*contadorImagenes).getNombre_perfil());
 
-        if (contPerfil == 0) {
-
-            subir.setVisible(false);
-            subir.setDisable(true);
-
+        if (perfil.size() > (3*contadorImagenes) + 1) {
+            img2.setImage(imagenes.get(3*contadorImagenes + 1));
+            rPerfil2.setText(perfil.get(3*contadorImagenes + 1).getNombre_perfil());
+        } else {
+            img2.setVisible(false);
+            rPerfil2.setVisible(false);
         }
 
+        if (perfil.size() > (3*contadorImagenes) + 2) {
+            img3.setImage(imagenes.get(3*contadorImagenes + 2));
+            rPerfil3.setText(perfil.get(3*contadorImagenes + 2).getNombre_perfil());
+        } else {
+            img3.setVisible(false);
+            rPerfil3.setVisible(false);
+        }
     }
 
 }
