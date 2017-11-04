@@ -163,7 +163,7 @@ public class BaseDatos {
     }
 
     public void sqlDeleteUsuario(String eliminar) throws IOException {
-        String sql = "DELETE FROM usuarios WHERE id_usuario=" + eliminar + "";
+        String sql = "DELETE FROM usuario WHERE id_usuario=" + eliminar + "";
         PreparedStatement ps;
         try {
             ps = conexion.prepareStatement(sql);

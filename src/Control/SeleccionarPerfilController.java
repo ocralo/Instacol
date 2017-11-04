@@ -110,7 +110,7 @@ public class SeleccionarPerfilController implements Initializable {
                 }
 
             } catch (IOException ex) {
-                Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (!idBuscar.isEmpty()) {
 
@@ -284,20 +284,26 @@ public class SeleccionarPerfilController implements Initializable {
             perfilID = perfil.get(contPerfil*3).getId_perfil();
             rPerfil1.setVisible(false);
             img1.setVisible(false);
+            perfil.remove(contPerfil*3);
         }
         else if(rPerfil2.isSelected())
         {
             perfilID = perfil.get(contPerfil*3 + 1).getId_perfil();
             rPerfil2.setVisible(false);
             img2.setVisible(false);
+            perfil.remove(contPerfil*3 + 1);
         }
         else if(rPerfil3.isSelected())
         {
             perfilID = perfil.get(contPerfil*3 + 2).getId_perfil();
             rPerfil3.setVisible(false);
             img3.setVisible(false);
+            perfil.remove(contPerfil*3 + 2);
         }
-        
+        if(perfil.isEmpty()){
+            objBases.sqlDeleteUsuario(idBuscar);
+            Picr.changeScene("Inicio.fxml", event);
+        }
         rPerfil1.setSelected(false);
         rPerfil2.setSelected(false);
         rPerfil3.setSelected(false);

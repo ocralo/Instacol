@@ -116,7 +116,7 @@ public class CrearPerfilController implements Initializable {
         writer.println(txt);
         writer.close();
         
-        Picr.changeScene("PERFIL.fxml", event);
+        Picr.changeScene("Perfil.fxml", event);
         }else {
             System.out.println("No se pudo realizar la conexión");
         }

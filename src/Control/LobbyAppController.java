@@ -122,7 +122,7 @@ public class LobbyAppController implements Initializable {
     
     @FXML
     private void abrirPerfil(MouseEvent event) throws IOException{
-        Picr.changeScene("PERFIL.fxml", event);
+        Picr.changeScene("Perfil.fxml", event);
     }
     
     @FXML
