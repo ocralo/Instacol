@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -58,14 +59,16 @@ public class LobbyAppController implements Initializable {
     private Button botonSiguienteImagen;
     
     
-    private String idBuscar;
+    private String idUsuario,idBuscar;
     private LinkedList<Image> imagenesList;
+    private LinkedList<imagen> imagenes;
     private int contador;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         imagenesList = new LinkedList<>();
+        imagenes = new LinkedList<>();
         contador = 0;
         botonAnteriorImagen.setVisible(false);
         
@@ -87,7 +90,7 @@ public class LobbyAppController implements Initializable {
                 try {
                     String aux = in.readLine();
                     String[] auxDato = aux.split(",");
-
+                    idUsuario =auxDato[0];
                     idBuscar = auxDato[1];
                 } catch (IOException ex) {
                     Logger.getLogger(LobbyAppController.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +102,7 @@ public class LobbyAppController implements Initializable {
             iconoperfil.setImage(imageB);
             nombrePerfil.setText(perfil.get(0).getNombre_perfil());
             
-            LinkedList<imagen> imagenes = objBases.buscarFoto();
+            imagenes = objBases.buscarFoto();
                 for (imagen imagen : imagenes) {
                     
                     Image image = SwingFXUtils.toFXImage((BufferedImage) imagen.getImagen(), null);
@@ -161,6 +164,15 @@ public class LobbyAppController implements Initializable {
     private void actualizarImagen() {
         Image image = imagenesList.get(contador);
         imagenViewNews.setImage(image);
+    }
+    
+    @FXML
+    private void AbrirImagen(MouseEvent event) throws IOException{
+        PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+        String txt = idUsuario + "," + idBuscar + ","+ imagenes.get(contador).getId_imagen();
+        writer.println(txt);
+        writer.close();
+        Picr.changeScene("Fotos.fxml", event);
     }
     
 }

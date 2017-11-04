@@ -113,7 +113,8 @@ public class FotosController implements Initializable {
        actualizarLikesLabel();
    }
     
-    private void actualizarLikesLabel(){
-        like.setText(imagenes.getFirst().getMe_gusta());
+    private void actualizarLikesLabel() throws IOException{
+        LinkedList<imagen> imagenesLike = objBases.buscarImagen("id_imagen", idImagen);
+        like.setText(imagenesLike.getFirst().getMe_gusta());
     }
 }
