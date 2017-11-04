@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -278,37 +279,39 @@ public class SeleccionarPerfilController implements Initializable {
       @FXML
     private void handleButtonActionEliminarPerfil(ActionEvent event) throws IOException{
         String perfilID = "";
-        
-        if(rPerfil1.isSelected())
-        {
-            perfilID = perfil.get(contPerfil*3).getId_perfil();
-            rPerfil1.setVisible(false);
-            img1.setVisible(false);
-            perfil.remove(contPerfil*3);
-        }
-        else if(rPerfil2.isSelected())
-        {
-            perfilID = perfil.get(contPerfil*3 + 1).getId_perfil();
-            rPerfil2.setVisible(false);
-            img2.setVisible(false);
-            perfil.remove(contPerfil*3 + 1);
-        }
-        else if(rPerfil3.isSelected())
-        {
-            perfilID = perfil.get(contPerfil*3 + 2).getId_perfil();
-            rPerfil3.setVisible(false);
-            img3.setVisible(false);
-            perfil.remove(contPerfil*3 + 2);
-        }
-        if(perfil.isEmpty()){
-            objBases.sqlDeleteUsuario(idBuscar);
-            Picr.changeScene("Inicio.fxml", event);
-        }
-        rPerfil1.setSelected(false);
-        rPerfil2.setSelected(false);
-        rPerfil3.setSelected(false);
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Seguro desea eliminar su perfil?"+"\n"+"Si no tiene otro perfil su cuenta será eliminada");
+        if(respuesta==0){
+            if(rPerfil1.isSelected())
+            {
+                perfilID = perfil.get(contPerfil*3).getId_perfil();
+                rPerfil1.setVisible(false);
+                img1.setVisible(false);
+                perfil.remove(contPerfil*3);
+            }
+            else if(rPerfil2.isSelected())
+            {
+                perfilID = perfil.get(contPerfil*3 + 1).getId_perfil();
+                rPerfil2.setVisible(false);
+                img2.setVisible(false);
+                perfil.remove(contPerfil*3 + 1);
+            }
+            else if(rPerfil3.isSelected())
+            {
+                perfilID = perfil.get(contPerfil*3 + 2).getId_perfil();
+                rPerfil3.setVisible(false);
+                img3.setVisible(false);
+                perfil.remove(contPerfil*3 + 2);
+            }
+            if(perfil.isEmpty()){
+                objBases.sqlDeleteUsuario(idBuscar);
+                Picr.changeScene("Inicio.fxml", event);
+            }
+            rPerfil1.setSelected(false);
+            rPerfil2.setSelected(false);
+            rPerfil3.setSelected(false);
 
-        objBases.EliminarPerfil(perfilID);
+            objBases.EliminarPerfil(perfilID);
+        }
     }
 
 }

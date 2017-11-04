@@ -345,6 +345,18 @@ public class BaseDatos {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void ActualizarLikes(String valor,String id_imagen)throws IOException{
+        String sql = "UPDATE imagen SET me_gusta_imagen='" +valor+ "' WHERE id_imagen='"+id_imagen+"'";
+        PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     //<editor-fold defaultstate="collapsed" desc="ImagenPost">
     /**
      * Metodo que permite insertar una imagen en un perfil

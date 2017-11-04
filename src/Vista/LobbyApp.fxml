@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="265.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.IniciarSesionController">
+<AnchorPane id="AnchorPane" prefHeight="265.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.LobbyAppController">
    <children>
       <Pane prefHeight="427.0" prefWidth="313.0" />
       <ScrollPane fx:id="scrollPaneImagenes" prefHeight="427.0" prefWidth="313.0" AnchorPane.leftAnchor="0.0">

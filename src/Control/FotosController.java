@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -34,11 +35,15 @@ import javafx.scene.image.ImageView;
 public class FotosController implements Initializable {
 
     LinkedList<Image> imagenesList;
+    LinkedList<imagen> imagenes;
     BaseDatos objBases;
-    private String idBuscar,idUsuario;
+    private String idImagen;
+    private int contador;
 
     @FXML
-    private Label likeP;
+    private ToggleButton ToggleButtonLike;
+    @FXML
+    private Label like;
     @FXML
     private ImageView imagenViewImagenes;
 
@@ -50,7 +55,9 @@ public class FotosController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        contador = 0;
         imagenesList = new LinkedList<>();
+        imagenes = new LinkedList<>();
         objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
@@ -65,16 +72,15 @@ public class FotosController implements Initializable {
                 try {
                     String aux = in.readLine();
                     String[] auxDato = aux.split(",");
-                    idUsuario = auxDato[0];
-                    idBuscar = auxDato[1];
+                    idImagen = auxDato[2];
                 } catch (IOException ex) {
                     Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                LinkedList<imagen> imagenes = objBases.buscarImagen("cod_perfil_imagen", idBuscar);
+                imagenes = objBases.buscarImagen("id_imagen", idImagen);
                 for (imagen imagen : imagenes) {
-                    
                     Image image = SwingFXUtils.toFXImage((BufferedImage) imagen.getImagen(), null);
                     imagenesList.add(image);
+                    like.setText(imagen.getMe_gusta());
                 }
                 if(imagenes.size() > 0)
                 {
@@ -90,4 +96,24 @@ public class FotosController implements Initializable {
         }
     }
 
+    @FXML
+    private void handleButtonActionAtras(ActionEvent event) throws IOException{
+        Picr.changeScene("Perfil.fxml", event);
+    }
+    
+   @FXML
+   private void DarLike(ActionEvent event) throws IOException{
+       if(ToggleButtonLike.isSelected()){
+           contador++;
+       }else{
+           contador--;
+       }
+       int valor = Integer.parseInt(imagenes.getFirst().getMe_gusta()) + contador;
+       objBases.ActualizarLikes(String.valueOf(valor), idImagen);
+       actualizarLikesLabel();
+   }
+    
+    private void actualizarLikesLabel(){
+        like.setText(imagenes.getFirst().getMe_gusta());
+    }
 }

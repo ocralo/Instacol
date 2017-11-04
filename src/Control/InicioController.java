@@ -68,7 +68,7 @@ public class InicioController implements Initializable {
                         System.out.println("Usuario o contraseña incorrecta");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se encontraron los datos ingresados");
+                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
                 }
 
             }
