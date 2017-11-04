@@ -6,6 +6,7 @@
 package Control;
 
 import Modelo.Perfil;
+import Modelo.imagen;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -38,7 +40,7 @@ import javafx.scene.paint.Color;
  *
  * @author Momo
  */
-public class IniciarSesionController implements Initializable {
+public class LobbyAppController implements Initializable {
 
     @FXML
     private ScrollPane scrollPaneImagenes;
@@ -47,13 +49,26 @@ public class IniciarSesionController implements Initializable {
     @FXML
     private ImageView iconoperfil;
     @FXML
+    private ImageView imagenViewNews;
+    @FXML
     private Label nombrePerfil;
+    @FXML
+    private Button botonAnteriorImagen;
+    @FXML
+    private Button botonSiguienteImagen;
     
-     private String idBuscar;
+    
+    private String idBuscar;
+    private LinkedList<Image> imagenesList;
+    private int contador;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        imagenesList = new LinkedList<>();
+        contador = 0;
+        botonAnteriorImagen.setVisible(false);
+        
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
@@ -67,7 +82,7 @@ public class IniciarSesionController implements Initializable {
                 try {
                     in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LobbyAppController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
                     String aux = in.readLine();
@@ -75,7 +90,7 @@ public class IniciarSesionController implements Initializable {
 
                     idBuscar = auxDato[1];
                 } catch (IOException ex) {
-                    Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LobbyAppController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             LinkedList<Perfil> perfil = objBases.buscarPerfil("id_perfil",idBuscar);
             System.out.println(perfil.size());
@@ -83,8 +98,19 @@ public class IniciarSesionController implements Initializable {
             
             iconoperfil.setImage(imageB);
             nombrePerfil.setText(perfil.get(0).getNombre_perfil());
+            
+            LinkedList<imagen> imagenes = objBases.buscarFoto();
+                for (imagen imagen : imagenes) {
+                    
+                    Image image = SwingFXUtils.toFXImage((BufferedImage) imagen.getImagen(), null);
+                    imagenesList.add(image);
+                }
+                if(imagenes.size() > 0)
+                {
+                    imagenViewNews.setImage(imagenesList.getFirst());
+                }
         }catch (IOException ex) {
-            Logger.getLogger(PERFILController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyAppController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,6 +123,44 @@ public class IniciarSesionController implements Initializable {
     @FXML
     private void abrirPerfil(MouseEvent event) throws IOException{
         Picr.changeScene("PERFIL.fxml", event);
+    }
+    
+    @FXML
+    private void handleButtonActionSiguienteImagen(ActionEvent event) throws IOException{
+        if(contador < (imagenesList.size()-1))
+        {
+            contador++;
+        }
+        
+        if(contador == (imagenesList.size()-1))
+        {
+            botonSiguienteImagen.setVisible(false);
+        }
+        
+        botonAnteriorImagen.setVisible(true);
+        
+        actualizarImagen();
+    }
+    
+    @FXML
+    private void handleButtonActionAnteriorImagen(ActionEvent event) throws IOException{
+        if(contador > 0)
+        {
+            contador--;
+        }
+        if(contador == 0)
+        {
+            botonAnteriorImagen.setVisible(false);
+        }
+        
+        botonSiguienteImagen.setVisible(true);
+        
+        actualizarImagen();
+    }
+    
+    private void actualizarImagen() {
+        Image image = imagenesList.get(contador);
+        imagenViewNews.setImage(image);
     }
     
 }

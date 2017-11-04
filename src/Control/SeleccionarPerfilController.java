@@ -56,6 +56,7 @@ public class SeleccionarPerfilController implements Initializable {
     private int contPerfil;
     private int triosImagenes;
     private int contadorImagenes;
+    private BaseDatos objBases;
 
     /**
      * Initializes the controller class.
@@ -72,7 +73,7 @@ public class SeleccionarPerfilController implements Initializable {
         imagenes = new LinkedList<>();
         contadorImagenes = 0;
 
-        BaseDatos objBases = new BaseDatos();
+        objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
@@ -244,7 +245,7 @@ public class SeleccionarPerfilController implements Initializable {
         writer.println(perfil);
         writer.close();
         
-        Picr.changeScene("IniciarSesion.fxml", event);
+        Picr.changeScene("LobbyApp.fxml", event);
     }
     
     private void organizarImagenes() {
@@ -272,6 +273,36 @@ public class SeleccionarPerfilController implements Initializable {
             img3.setVisible(false);
             rPerfil3.setVisible(false);
         }
+    }
+    
+      @FXML
+    private void handleButtonActionEliminarPerfil(ActionEvent event) throws IOException{
+        String perfilID = "";
+        
+        if(rPerfil1.isSelected())
+        {
+            perfilID = perfil.get(contPerfil*3).getId_perfil();
+            rPerfil1.setVisible(false);
+            img1.setVisible(false);
+        }
+        else if(rPerfil2.isSelected())
+        {
+            perfilID = perfil.get(contPerfil*3 + 1).getId_perfil();
+            rPerfil2.setVisible(false);
+            img2.setVisible(false);
+        }
+        else if(rPerfil3.isSelected())
+        {
+            perfilID = perfil.get(contPerfil*3 + 2).getId_perfil();
+            rPerfil3.setVisible(false);
+            img3.setVisible(false);
+        }
+        
+        rPerfil1.setSelected(false);
+        rPerfil2.setSelected(false);
+        rPerfil3.setSelected(false);
+
+        objBases.EliminarPerfil(perfilID);
     }
 
 }

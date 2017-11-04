@@ -15,15 +15,25 @@
          <content>
             <AnchorPane fx:id="anchorPaneImagenes" prefHeight="425.0" prefWidth="309.0">
                <children>
-                  <ImageView fitHeight="275.0" fitWidth="200.0" layoutX="56.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imagenViewNews" fitHeight="318.0" fitWidth="232.0" layoutX="11.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="iconoperfil" fitHeight="27.0" fitWidth="30.0" layoutX="2.0" layoutY="2.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="nombrePerfil" layoutX="39.0" layoutY="7.0" onMouseClicked="#abrirPerfil" prefHeight="17.0" prefWidth="142.0" text="Nombre perfil actual" />
-                  <Label layoutX="120.0" layoutY="40.0" text="News">
+                  <Label layoutX="85.0" layoutY="41.0" text="News">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Label>
-                  <Button layoutX="256.0" layoutY="367.0" mnemonicParsing="false" onAction="#AgregarImagenNueva" prefHeight="6.0" prefWidth="33.0" text="+" textAlignment="JUSTIFY">
+                  <Button layoutX="257.0" layoutY="225.0" mnemonicParsing="false" onAction="#AgregarImagenNueva" prefHeight="6.0" prefWidth="33.0" text="+" textAlignment="JUSTIFY">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="botonAnteriorImagen" layoutX="254.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleButtonActionAnteriorImagen" prefHeight="44.0" prefWidth="47.0" text="▲" textAlignment="JUSTIFY">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="botonSiguienteImagen" layoutX="254.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleButtonActionSiguienteImagen" prefHeight="44.0" prefWidth="47.0" text="▼" textAlignment="JUSTIFY">
                      <font>
                         <Font size="20.0" />
                      </font>

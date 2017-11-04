@@ -97,7 +97,7 @@ public class AgregarImagenController implements Initializable {
         
         objBases.InsertImagen(Imagen, srcimg);
         
-        Picr.changeScene("IniciarSesion.fxml", event);
+        Picr.changeScene("LobbyApp.fxml", event);
         }else {
             System.out.println("No se pudo realizar la conexión");
         }

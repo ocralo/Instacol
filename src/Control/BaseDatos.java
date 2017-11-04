@@ -75,42 +75,6 @@ public class BaseDatos {
         return true;
     }
 
-    /**
-     *
-     * Método utilizado para realizar la instrucción SELECT
-     *
-     * @param sql Cadena que contiene la instrucción SQL a ejecutar
-     * @return resultado regresa los registros generados por la consulta
-     *
-     */
-    public String ejecutarSQLSelect(String sql) {
-        ResultSet rs;
-        int id;
-        String nom = "";
-        String tel = "";
-        String dir = "";
-        String concatenar = "";
-
-        try {
-            Statement sentencia = conexion.createStatement();
-            rs = sentencia.executeQuery(sql);
-            while (rs.next()) {
-                id = rs.getInt(1);
-                nom = rs.getNString("nombreusuario");
-                tel = rs.getNString("cedulausuario");
-                dir = rs.getNString("celusuario");
-
-                concatenar = id + " " + nom + " " + tel + " " + dir;
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-
-        return concatenar;
-    }
-
     public boolean sqlInsertUsuario(String insert, String Nombre_usuario, String Apellido_usuario, String Correo, String Clave, String Fecha_nacimiento) {
         // String insert = "insert into Imagenes(imagen,nombre) values(?,?)";
         PreparedStatement ps = null;
@@ -265,7 +229,7 @@ public class BaseDatos {
             ResultSet rs = st.executeQuery("SELECT * FROM imagen");
             while (rs.next()) {
 
-                String megusta = rs.getString("me_gusta");
+                String megusta = rs.getString("me_gusta_imagen");
                 String codUsuario = rs.getString("id_imagen");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
@@ -371,6 +335,16 @@ public class BaseDatos {
         return false;
     }
 
+    public void EliminarPerfil(String eliminar)throws IOException {
+        String sql = "DELETE FROM perfil WHERE id_perfil=" + eliminar;
+        PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     //<editor-fold defaultstate="collapsed" desc="ImagenPost">
     /**
      * Metodo que permite insertar una imagen en un perfil

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -47,9 +48,10 @@ public class PERFILController implements Initializable {
     @FXML
     private Button botonSiguienteImagen;
 
-    private String idBuscar;
+    private String idBuscar,idUsuario;
     private LinkedList<Image> imagenesList;
     private int contador;
+    private BaseDatos objBases;
 
     /**
      * Initializes the controller class.
@@ -64,7 +66,7 @@ public class PERFILController implements Initializable {
         contador = 0;
         
         
-        BaseDatos objBases = new BaseDatos();
+        objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
@@ -78,7 +80,7 @@ public class PERFILController implements Initializable {
                 try {
                     String aux = in.readLine();
                     String[] auxDato = aux.split(",");
-
+                    idUsuario = auxDato[0];
                     idBuscar = auxDato[1];
                 } catch (IOException ex) {
                     Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
@@ -142,7 +144,7 @@ public class PERFILController implements Initializable {
             botonAnteriorImagen.setVisible(false);
         }
         
-        botonAnteriorImagen.setVisible(false);
+        botonSiguienteImagen.setVisible(true);
         
         actualizarImagen();
     }
@@ -166,7 +168,7 @@ public class PERFILController implements Initializable {
     
     @FXML
     private void handleButtonActionAtras(ActionEvent event) throws IOException{
-        Picr.changeScene("IniciarSesion.fxml", event);
+        Picr.changeScene("LobbyApp.fxml", event);
     }
 
     private void actualizarImagen() {
