@@ -112,7 +112,6 @@ public class AgregarImagenController implements Initializable {
 
     @FXML
     private void Subir(ActionEvent event) throws IOException {
-        BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
