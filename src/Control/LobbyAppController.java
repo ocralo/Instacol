@@ -48,9 +48,13 @@ public class LobbyAppController implements Initializable {
     @FXML
     private AnchorPane anchorPaneImagenes;
     @FXML
-    private ImageView iconoperfil;
+    private ImageView iconoPerfil;
     @FXML
     private ImageView imagenViewNews;
+    @FXML
+    private ImageView iconoPerfilNews;
+    @FXML
+    private Label nombrePerfilNews;
     @FXML
     private Label nombrePerfil;
     @FXML
@@ -61,16 +65,20 @@ public class LobbyAppController implements Initializable {
     
     private String idUsuario,idBuscar;
     private LinkedList<Image> imagenesList;
-    private LinkedList<imagen> imagenes;
+    private LinkedList<Image> imagenPerfilesList;
+    private LinkedList<String> nombrePerfilesList;
     private int contador;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         imagenesList = new LinkedList<>();
-        imagenes = new LinkedList<>();
+        imagenPerfilesList = new LinkedList<>();
+        nombrePerfilesList = new LinkedList<>();
         contador = 0;
         botonAnteriorImagen.setVisible(false);
+        
+        System.out.println("-------------------------------------");
         
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
@@ -99,18 +107,28 @@ public class LobbyAppController implements Initializable {
             System.out.println(perfil.size());
             Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
             
-            iconoperfil.setImage(imageB);
+            iconoPerfil.setImage(imageB);
             nombrePerfil.setText(perfil.get(0).getNombre_perfil());
             
-            imagenes = objBases.buscarFoto();
-                for (imagen imagen : imagenes) {
+            LinkedList<LinkedList<Object>> consulta = objBases.buscarImagenPerfil();
+            
+                for (LinkedList<Object> c : consulta) {
+                    imagen i = ((imagen)c.getFirst());
+                    Image imagen = SwingFXUtils.toFXImage((BufferedImage) i.getImagen(), null);
+                    imagenesList.add(imagen);
                     
-                    Image image = SwingFXUtils.toFXImage((BufferedImage) imagen.getImagen(), null);
-                    imagenesList.add(image);
+                    Perfil p = ((Perfil)c.getLast());
+                    Image imagenPerfil = SwingFXUtils.toFXImage((BufferedImage) p.getFoto_perfil(), null);
+                    imagenPerfilesList.add(imagenPerfil);
+                    
+                    nombrePerfilesList.add(p.getNombre_perfil());
                 }
-                if(imagenes.size() > 0)
+                if(consulta.size() > 0)
                 {
                     imagenViewNews.setImage(imagenesList.getFirst());
+                    iconoPerfilNews.setImage(imagenPerfilesList.getFirst());
+                    nombrePerfilNews.setText(nombrePerfilesList.getFirst());
+                    
                 }
         }catch (IOException ex) {
             Logger.getLogger(LobbyAppController.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,16 +181,20 @@ public class LobbyAppController implements Initializable {
     
     private void actualizarImagen() {
         Image image = imagenesList.get(contador);
+        Image fotoPerfil = imagenPerfilesList.get(contador);
+        String nombrePerfil = nombrePerfilesList.get(contador);
         imagenViewNews.setImage(image);
+        iconoPerfilNews.setImage(fotoPerfil);
+        nombrePerfilNews.setText(nombrePerfil);
     }
     
     @FXML
     private void AbrirImagen(MouseEvent event) throws IOException{
         PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
-        String txt = idUsuario + "," + idBuscar + ","+ imagenes.get(contador).getId_imagen();
-        writer.println(txt);
-        writer.close();
-        Picr.changeScene("Fotos.fxml", event);
+//        String txt = idUsuario + "," + idBuscar + ","+ imagenes.get(contador).getId_imagen();
+//        writer.println(txt);
+//        writer.close();
+//        Picr.changeScene("Fotos.fxml", event);
     }
     
 }

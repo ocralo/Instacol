@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -8,15 +13,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="265.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.LobbyAppController">
+<AnchorPane id="AnchorPane" prefHeight="265.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.LobbyAppController">
    <children>
       <Pane prefHeight="427.0" prefWidth="313.0" />
       <ScrollPane fx:id="scrollPaneImagenes" prefHeight="427.0" prefWidth="313.0" AnchorPane.leftAnchor="0.0">
          <content>
             <AnchorPane fx:id="anchorPaneImagenes" prefHeight="425.0" prefWidth="309.0">
                <children>
-                  <ImageView fx:id="imagenViewNews" fitHeight="318.0" fitWidth="232.0" layoutX="11.0" layoutY="88.0" onMouseClicked="#AbrirImagen" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="iconoperfil" fitHeight="27.0" fitWidth="30.0" layoutX="2.0" layoutY="2.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imagenViewNews" fitHeight="286.0" fitWidth="232.0" layoutX="11.0" layoutY="120.0" onMouseClicked="#AbrirImagen" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="iconoPerfil" fitHeight="27.0" fitWidth="30.0" layoutX="2.0" layoutY="2.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="nombrePerfil" layoutX="39.0" layoutY="7.0" onMouseClicked="#abrirPerfil" prefHeight="17.0" prefWidth="142.0" text="Nombre perfil actual" />
                   <Label layoutX="85.0" layoutY="41.0" text="News">
                      <font>
@@ -38,6 +43,8 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
+                  <Label fx:id="nombrePerfilNews" layoutX="57.0" layoutY="95.0" onMouseClicked="#abrirPerfil" prefHeight="17.0" prefWidth="142.0" text="Nombre perfil actual" />
+                  <ImageView fx:id="iconoPerfilNews" fitHeight="19.0" fitWidth="27.0" layoutX="23.0" layoutY="97.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true" />
                </children></AnchorPane>
          </content>
       </ScrollPane>

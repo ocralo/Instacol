@@ -53,7 +53,7 @@ public class AgregarImagenController implements Initializable {
          try {
              String aux=in.readLine();
              String[] auxDato = aux.split(",");
-             idPerfil = auxDato[0];
+             idPerfil = auxDato[1];
          } catch (IOException ex) {
              Logger.getLogger(AgregarImagenController.class.getName()).log(Level.SEVERE, null, ex);
          }

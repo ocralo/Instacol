@@ -425,4 +425,58 @@ public class BaseDatos {
         return false;
     }
     //</editor-fold>
+    public LinkedList<LinkedList<Object>> buscarImagenPerfil() {
+        LinkedList<LinkedList<Object>> listaConsulta = new LinkedList();
+        BufferedImage img;
+        BufferedImage imgPerfil;
+        Blob imagenPerfil;
+        Blob imagen;
+        byte[] blobAsBytes;
+
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM imagen i, perfil p where i.cod_perfil_imagen=p.id_perfil");
+            while (rs.next()) {
+                LinkedList<Object> resultado = new LinkedList<>();
+                String meGusta = rs.getString("me_gusta_imagen");
+                String idImagen = rs.getString("id_imagen");
+                String codPerfilImagen = rs.getString("cod_perfil_imagen");
+                imagen = rs.getBlob("imagen");
+
+                int blobLengthImagen = (int) imagen.length();
+                blobAsBytes = imagen.getBytes(1, blobLengthImagen);
+                imagen.free();
+                
+                img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+                imagen i = new imagen(img, meGusta, idImagen, codPerfilImagen);
+                
+                String nombrePerfil = rs.getString("nombre_perfil");
+                String codUsuario = rs.getString("cod_usuario");
+                String idPerfil = rs.getString("id_perfil");
+                imagenPerfil = rs.getBlob("foto_perfil");
+
+                int blobLengthPerfil = (int) imagenPerfil.length();
+                blobAsBytes = imagenPerfil.getBytes(1, blobLengthPerfil);
+                imagenPerfil.free();                
+
+                imgPerfil = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+                
+                Perfil p = new Perfil(nombrePerfil, imgPerfil, idPerfil, codUsuario);
+                
+                resultado.add(i);
+                resultado.add(p);               
+
+                listaConsulta.add((LinkedList<Object>)resultado.clone());
+                
+                resultado.clear();
+
+            }
+
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listaConsulta;
+    }
+
 }
+
