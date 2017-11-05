@@ -7,6 +7,7 @@ package Control;
 //import Controller.Imagen;
 import Modelo.imagen;
 import Modelo.Perfil;
+import Modelo.lista;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -477,6 +478,52 @@ public class BaseDatos {
 
         return listaConsulta;
     }
+    
+    public boolean InsertLista(lista Lista) {
+        String sql = "INSERT INTO lista(nombre_lista,id_lista, cod_perfil_lista) values(?,?,?)";
+        PreparedStatement ps = null;
+        try {
+            conexion.setAutoCommit(false);
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, Lista.getNombre_lista());
+            ps.setInt(2, Integer.parseInt(Lista.getId_lista()));
+            ps.setInt(3, Integer.parseInt(Lista.getCod_perfil_lista()));
+            ps.executeUpdate();
+            conexion.commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+    
+    public LinkedList<lista> buscarLista(String criterio, String valor) throws IOException {
+        LinkedList<lista> listalista = new LinkedList();
 
+        try {
+            System.out.println("SELECT * FROM lista WHERE " + criterio + " ='" + valor + "'");
+            ResultSet rs = st.executeQuery("SELECT * FROM lista WHERE " + criterio + " ='" + valor + "'");
+            while (rs.next()) {
+                String nombreLista = rs.getString("nombre_lista");
+                String idLista = rs.getString("id_lista");
+                String codPerfilLista = rs.getString("cod_perfil_lista");
+
+                lista us = new lista(nombreLista, idLista, codPerfilLista);
+
+                listalista.add(us);
+                System.out.println(us);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listalista;
+    }
 }
 

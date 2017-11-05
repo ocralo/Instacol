@@ -40,6 +40,7 @@
                   </Button>
                   <Label fx:id="nombrePerfilNews" layoutX="57.0" layoutY="95.0" prefHeight="17.0" prefWidth="142.0" text="Nombre perfil actual" />
                   <ImageView fx:id="iconoPerfilNews" fitHeight="19.0" fitWidth="27.0" layoutX="23.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button layoutX="211.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleButtonActionDesconectarse" text="Desconectarse" />
                </children></AnchorPane>
          </content>
       </ScrollPane>

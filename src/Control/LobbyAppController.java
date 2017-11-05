@@ -199,4 +199,8 @@ public class LobbyAppController implements Initializable {
         Picr.changeScene("Fotos.fxml", event);
     }
     
+    @FXML
+    private void handleButtonActionDesconectarse(ActionEvent event) throws IOException{
+        Picr.changeScene("Inicio.fxml", event);
+    }
 }

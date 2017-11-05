@@ -131,8 +131,4 @@ public class FotosController implements Initializable {
         like.setText(imagenesLike.getFirst().getMe_gusta());
     }
     
-    @FXML
-    private void handleButtonActionComentar(ActionEvent event){
-        
-    }
 }
