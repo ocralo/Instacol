@@ -505,10 +505,10 @@ public class BaseDatos {
     
     public LinkedList<lista> buscarLista(String criterio, String valor) throws IOException {
         LinkedList<lista> listalista = new LinkedList();
-
+        System.out.println("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         try {
-            System.out.println("SELECT * FROM lista WHERE " + criterio + " ='" + valor + "'");
-            ResultSet rs = st.executeQuery("SELECT * FROM lista WHERE " + criterio + " ='" + valor + "'");
+            System.out.println("SELECT * FROM lista WHERE " + criterio + "='" + valor + "'");
+            ResultSet rs = st.executeQuery("SELECT * FROM lista WHERE " + criterio + "='" + valor + "'");
             while (rs.next()) {
                 String nombreLista = rs.getString("nombre_lista");
                 String idLista = rs.getString("id_lista");

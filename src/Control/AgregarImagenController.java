@@ -52,13 +52,22 @@ public class AgregarImagenController implements Initializable {
     private Image image;
     private File file;
     private String idPerfil;
-    private BaseDatos objBases;
+    BaseDatos objBases;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        objBases = new BaseDatos();
+        boolean conexion;
+        conexion = objBases.crearConexion();
+        if (conexion) {
 
-        BufferedReader in = null;
+        } else {
+            System.out.println("no se pudo realizar la conexión");
+        }
+        
         try {
+            BufferedReader in = null;
             try {
                 in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
             } catch (FileNotFoundException ex) {
@@ -84,14 +93,7 @@ public class AgregarImagenController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(AgregarImagenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        objBases = new BaseDatos();
-        boolean conexion;
-        conexion = objBases.crearConexion();
-        if (conexion) {
-
-        } else {
-            System.out.println("No se pudo realizar la conexión");
-        }
+        
     }
 
     @FXML
@@ -112,7 +114,7 @@ public class AgregarImagenController implements Initializable {
 
     @FXML
     private void Subir(ActionEvent event) throws IOException {
-        BaseDatos objBases = new BaseDatos();
+        
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
