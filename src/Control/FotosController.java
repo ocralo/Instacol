@@ -6,6 +6,7 @@
 package Control;
 
 import DontTouch.Tools;
+import Modelo.Perfil;
 import Modelo.imagen;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -37,7 +38,7 @@ public class FotosController implements Initializable {
     LinkedList<Image> imagenesList;
     LinkedList<imagen> imagenes;
     BaseDatos objBases;
-    private String idImagen;
+    private String idImagen,idBuscar;
     private int contador;
 
     @FXML
@@ -45,7 +46,11 @@ public class FotosController implements Initializable {
     @FXML
     private Label like;
     @FXML
+    private Label LabelPerfil;
+    @FXML
     private ImageView imagenViewImagenes;
+    @FXML
+    private ImageView imagenViewPerfil; 
 
     /**
      * Initializes the controller class.
@@ -72,6 +77,7 @@ public class FotosController implements Initializable {
                 try {
                     String aux = in.readLine();
                     String[] auxDato = aux.split(",");
+                    idBuscar = auxDato[1];
                     idImagen = auxDato[2];
                 } catch (IOException ex) {
                     Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,6 +92,13 @@ public class FotosController implements Initializable {
                 {
                     imagenViewImagenes.setImage(imagenesList.getFirst());
                 }
+                LinkedList<Perfil> perfil = objBases.buscarPerfil("id_perfil",idBuscar);
+                System.out.println(perfil.size());
+                Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
+
+                imagenViewPerfil.setImage(imageB);
+                LabelPerfil.setText(perfil.get(0).getNombre_perfil());
+                
                 
             }catch (IOException ex) {
                 Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,5 +129,10 @@ public class FotosController implements Initializable {
     private void actualizarLikesLabel() throws IOException{
         LinkedList<imagen> imagenesLike = objBases.buscarImagen("id_imagen", idImagen);
         like.setText(imagenesLike.getFirst().getMe_gusta());
+    }
+    
+    @FXML
+    private void handleButtonActionComentar(ActionEvent event){
+        
     }
 }

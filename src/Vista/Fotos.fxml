@@ -11,21 +11,38 @@
 
 <AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.FotosController">
     <children>
-        <ImageView fx:id="imagenViewImagenes" fitHeight="204.0" fitWidth="270.0" layoutX="24.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../Imagenes/sinInternet1.gif" />
-            </image>
-        </ImageView>
-        <Label layoutX="57.0" layoutY="271.0" text="Likes">
+        <ImageView fx:id="imagenViewImagenes" fitHeight="272.0" fitWidth="270.0" layoutX="24.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" />
+        <Label layoutX="57.0" layoutY="392.0" text="Likes">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-        <Label fx:id="like" layoutX="91.0" layoutY="272.0" text="0" />
+        <Label fx:id="like" layoutX="91.0" layoutY="393.0" text="0" />
       <ToolBar layoutX="2.0" prefHeight="40.0" prefWidth="310.0">
         <items>
           <Button mnemonicParsing="false" onAction="#handleButtonActionAtras" text="◀" />
         </items>
       </ToolBar>
-      <ToggleButton fx:id="ToggleButtonLike" layoutX="24.0" layoutY="267.0" mnemonicParsing="false" onAction="#DarLike" text="♥" />
+      <ToggleButton fx:id="ToggleButtonLike" layoutX="24.0" layoutY="388.0" mnemonicParsing="false" onAction="#DarLike" text="♥" />
+      <ImageView fx:id="imagenViewPerfil" fitHeight="40.0" fitWidth="50.0" layoutX="24.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/sinInternet1.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="LabelPerfil" layoutX="104.0" layoutY="53.0" text="Perfil Actual">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="Comentarios" layoutX="280.0" layoutY="392.0" text="0" />
+      <Label layoutX="200.0" layoutY="392.0" text="Comentarios">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button layoutX="122.0" layoutY="388.0" mnemonicParsing="false" onAction="#handleButtonActionComentar" prefHeight="25.0" prefWidth="72.0" text="Comentar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
