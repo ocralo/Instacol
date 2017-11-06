@@ -5,7 +5,6 @@
  */
 package Control;
 
-import Modelo.MeGustaImagen;
 import Modelo.imagen;
 import Modelo.Perfil;
 import Modelo.lista;
@@ -120,7 +119,7 @@ public class AgregarImagenController implements Initializable {
             BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
             int id_imagen = 0;
             String codPerfilImagen = idPerfil;
-            imagen Imagen = new imagen(imageB,String.valueOf(id_imagen), String.valueOf(codPerfilImagen));
+            imagen Imagen = new imagen(imageB,String.valueOf(0),String.valueOf(id_imagen), String.valueOf(codPerfilImagen));
             objBases.InsertImagen(Imagen, srcimg);
             LinkedList<imagen> img =objBases.buscarFoto();
             for(String listaNombreListas : nombrelista){

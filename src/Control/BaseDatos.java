@@ -5,7 +5,6 @@ package Control;
  * @author Momo
  */
 //import Controller.Imagen;
-import Modelo.MeGustaImagen;
 import Modelo.imagen;
 import Modelo.Perfil;
 import Modelo.lista;
@@ -141,6 +140,7 @@ public class BaseDatos {
             while (rs.next()) {
 
                 String codUsuario = rs.getString("id_imagen");
+                String me_gusta = rs.getString("me_gusta");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
 
@@ -150,7 +150,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img,me_gusta, codUsuario, codPerfilImagen);
 
                 listaImagenes.add(imgen);
 
@@ -231,6 +231,7 @@ public class BaseDatos {
             while (rs.next()) {
 
                 String codUsuario = rs.getString("id_imagen");
+                String me_gusta = rs.getString("me_gusta");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
 
@@ -240,7 +241,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img,me_gusta, codUsuario, codPerfilImagen);
 
                 listaImagenes.add(imgen);
 
@@ -307,7 +308,7 @@ public class BaseDatos {
 
     public boolean InsertImagen(imagen ImagenU, String ruta) throws FileNotFoundException, IOException {
 
-        String sql = "INSERT INTO imagen (imagen,id_imagen,cod_perfil_imagen) VALUES(?,?,?)";
+        String sql = "INSERT INTO imagen (imagen,me_gusta,id_imagen,cod_perfil_imagen) VALUES(?,?,?,?)";
         PreparedStatement ps = null;
         try {
             conexion.setAutoCommit(false);
@@ -315,8 +316,9 @@ public class BaseDatos {
             FileInputStream fis = new FileInputStream(file);
             ps = conexion.prepareStatement(sql);
             ps.setBinaryStream(1, fis, (int) file.length());
-            ps.setInt(2, Integer.parseInt(ImagenU.getId_imagen()));
-            ps.setInt(3, Integer.parseInt(ImagenU.getCod_perfil_imagen()));
+            ps.setInt(2, Integer.parseInt(ImagenU.getMe_gusta()));
+            ps.setInt(3, Integer.parseInt(ImagenU.getId_imagen()));
+            ps.setInt(4, Integer.parseInt(ImagenU.getCod_perfil_imagen()));
 
             ps.executeUpdate();
             conexion.commit();
@@ -345,17 +347,6 @@ public class BaseDatos {
         }
     }
     
-    public void ActualizarLikes(String valor,String id_imagen)throws IOException{
-        String sql = "UPDATE me_gusta_imagen SET me_gusta_imagen='" +valor+ "' WHERE id_meGusta='"+id_imagen+"'";
-        PreparedStatement ps;
-        try {
-            ps = conexion.prepareStatement(sql);
-            ps.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-        }   
-    }
-    
     public LinkedList<LinkedList<Object>> buscarImagenPerfil() {
         LinkedList<LinkedList<Object>> listaConsulta = new LinkedList();
         BufferedImage img;
@@ -369,6 +360,7 @@ public class BaseDatos {
             while (rs.next()) {
                 LinkedList<Object> resultado = new LinkedList<>();
                 String idImagen = rs.getString("id_imagen");
+                String me_gusta = rs.getString("me_gusta");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagen = rs.getBlob("imagen");
 
@@ -377,7 +369,7 @@ public class BaseDatos {
                 imagen.free();
                 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                imagen i = new imagen(img, idImagen, codPerfilImagen);
+                imagen i = new imagen(img,me_gusta, idImagen, codPerfilImagen);
                 
                 String nombrePerfil = rs.getString("nombre_perfil");
                 String codUsuario = rs.getString("cod_usuario");
@@ -486,6 +478,7 @@ public class BaseDatos {
             ResultSet rs = st.executeQuery("SELECT * FROM imagen i join lista_imagen li on i.id_imagen=li.cod_imagen join lista l on li.cod_lista=l.id_lista where l."+criterio+"='"+valor+"'");
             while (rs.next()) {
                 String codUsuario = rs.getString("id_imagen");
+                String me_gusta = rs.getString("me_gusta");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
 
@@ -495,7 +488,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img,me_gusta, codUsuario, codPerfilImagen);
 
                 listaimagenes.add(imgen);
             }
@@ -506,33 +499,15 @@ public class BaseDatos {
         return listaimagenes;
     }
     
-    public int buscarLikes() throws IOException {
-        int total = 0;
-        try {
-            ResultSet rs = st.executeQuery("SELECT SUM(m.me_gusta_imagen) AS suma FROM perfil p join imagen i join me_gusta_imagen m on i.id_imagen=m.cod_meGusta_imagen;");
-            while (rs.next()) {
-                String megusta = rs.getString("suma");
-                if(megusta == null){
-                    total=0;
-                }else{
-                total = Integer.parseInt(megusta);
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return total;
-    }
-    
-    public boolean InsertLike(MeGustaImagen like) {
-        String sql = "INSERT INTO me_gusta_imagen(id_meGusta,me_gusta_imagen,cod_meGusta_imagen) values(?,?,?)";
+    public boolean CrearLike(String idPerfilImagen,String codPerfilPI,String codImagenPI) {
+        String sql = "INSERT INTO perfil_imagen(id_perfil_imagen,cod_perfil_pi,cod_imagen_pi) VALUES(?,?,?)";
         PreparedStatement ps = null;
         try {
             conexion.setAutoCommit(false);
             ps = conexion.prepareStatement(sql);
-            ps.setInt(1, Integer.parseInt(like.getId_meGusta()));
-            ps.setInt(2, Integer.parseInt(like.getMe_gusta_imagen()));
-            ps.setInt(3, Integer.parseInt(like.getCod_meGusta_imagen()));
+            ps.setInt(1, Integer.parseInt(idPerfilImagen));
+            ps.setInt(2, Integer.parseInt(codPerfilPI));
+            ps.setInt(3, Integer.parseInt(codImagenPI));
             ps.executeUpdate();
             conexion.commit();
             return true;
@@ -546,6 +521,43 @@ public class BaseDatos {
             }
         }
         return false;
+    }
+    
+    public void EliminarLike(String eliminar)throws IOException {
+        String sql = "DELETE FROM perfil_imagen WHERE cod_perfil_pi='"+eliminar+"';";
+        System.out.println(sql);
+        PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public int NumeroLikes()throws IOException{
+        int total = 0;
+        try {
+            ResultSet rs = st.executeQuery("SELECT Count(i.me_gusta) AS suma FROM imagen i join perfil_imagen join perfil p");
+            while (rs.next()) {
+                String megusta = rs.getString("suma");
+                total = Integer.parseInt(megusta);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;
+    }
+    
+    public void UpdateLike(String valor, String id_imagen){
+        String sql = "UPDATE imagen SET me_gusta='"+valor+"WHERE id_imagen ='"+id_imagen+"'";
+        PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
 }
 

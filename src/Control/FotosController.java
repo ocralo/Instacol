@@ -5,7 +5,6 @@
  */
 package Control;
 
-import Modelo.MeGustaImagen;
 import Modelo.Perfil;
 import Modelo.imagen;
 import java.awt.image.BufferedImage;
@@ -39,7 +38,6 @@ public class FotosController implements Initializable {
     LinkedList<imagen> imagenes;
     BaseDatos objBases;
     private String idImagen,idBuscar;
-    private int contador;
 
     @FXML
     private ToggleButton ToggleButtonLike;
@@ -60,7 +58,6 @@ public class FotosController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        contador = 0;
         imagenesList = new LinkedList<>();
         imagenes = new LinkedList<>();
         objBases = new BaseDatos();
@@ -97,7 +94,7 @@ public class FotosController implements Initializable {
 
                 imagenViewPerfil.setImage(imageB);
                 LabelPerfil.setText(perfil.get(0).getNombre_perfil());
-                like.setText(String.valueOf(objBases.buscarLikes()));
+                like.setText(String.valueOf(objBases.NumeroLikes()));
                 
             }catch (IOException ex) {
                 Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,20 +112,23 @@ public class FotosController implements Initializable {
     
    @FXML
    private void DarLike(ActionEvent event) throws IOException{
-       if(ToggleButtonLike.isSelected()){
-           contador++;
-       }else{
-           contador--;
-       }
+       String choice = "a";
+       if(ToggleButtonLike.isSelected()){ choice = "b";}
        
-       MeGustaImagen megusta = new MeGustaImagen(String.valueOf(0), String.valueOf(0), img.getLast().getId_imagen());
-       objBases.InsertLike(megusta);
+       switch(choice){
+       
+            case "b":
+               objBases.CrearLike(String.valueOf(0),idBuscar, idImagen);
+               break;
+            case "a":
+                objBases.EliminarLike(idBuscar);
+                break;
+        }
        actualizarLikesLabel();
    }
     
     private void actualizarLikesLabel() throws IOException{
-        objBases.ActualizarLikes(String.valueOf(contador), idImagen);
-        like.setText(String.valueOf(objBases.buscarLikes()));
+        like.setText(String.valueOf(objBases.NumeroLikes()));
     }
     
 }
