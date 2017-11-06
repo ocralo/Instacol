@@ -505,10 +505,8 @@ public class BaseDatos {
     
     public LinkedList<lista> buscarLista(String criterio, String valor) throws IOException {
         LinkedList<lista> listalista = new LinkedList();
-
         try {
-            System.out.println("SELECT * FROM lista WHERE " + criterio + " ='" + valor + "'");
-            ResultSet rs = st.executeQuery("SELECT * FROM lista WHERE " + criterio + " ='" + valor + "'");
+            ResultSet rs = st.executeQuery("SELECT * FROM lista WHERE " + criterio + "='" + valor + "'");
             while (rs.next()) {
                 String nombreLista = rs.getString("nombre_lista");
                 String idLista = rs.getString("id_lista");
@@ -524,6 +522,30 @@ public class BaseDatos {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listalista;
+    }
+    
+    public boolean InsertListaImagen(String idListaImagen,String codLista,String codImagen) {
+        String sql = "INSERT INTO lista_imagen(id_lista_imagen,cod_lista, cod_imagen) VALUES(?,?,?)";
+        PreparedStatement ps = null;
+        try {
+            conexion.setAutoCommit(false);
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(idListaImagen));
+            ps.setInt(2, Integer.parseInt(codLista));
+            ps.setInt(3, Integer.parseInt(codImagen));
+            ps.executeUpdate();
+            conexion.commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
     }
 }
 

@@ -6,13 +6,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.AgregarImagenController">
+<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.AgregarImagenController">
    <children>
       <ImageView fx:id="imagen" fitHeight="306.0" fitWidth="281.0" layoutX="15.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="226.0" layoutY="388.0" mnemonicParsing="false" onAction="#Subir" text="Subir" />
       <Button layoutX="14.0" layoutY="311.0" mnemonicParsing="false" onAction="#SeleccionImagen" text="Seleccionar..." />
       <Label layoutX="15.0" layoutY="366.0" text="Listas:" />
-      <ComboBox fx:id="ComboBoxListas" layoutX="15.0" layoutY="388.0" onMouseClicked="#AgregarALista" prefHeight="25.0" prefWidth="121.0" />
+      <ComboBox fx:id="ComboBoxListas" layoutX="15.0" layoutY="388.0" prefHeight="25.0" prefWidth="121.0" />
       <Button layoutX="214.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleButtonActionCrearLista" text="Crear lista" />
+      <Button layoutX="145.0" layoutY="388.0" mnemonicParsing="false" onAction="#AgregarALista" text="B" />
    </children>
 </AnchorPane>

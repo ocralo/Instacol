@@ -52,13 +52,24 @@ public class AgregarImagenController implements Initializable {
     private Image image;
     private File file;
     private String idPerfil;
-    private BaseDatos objBases;
+    BaseDatos objBases;
+    LinkedList<String> nombrelista;
+    ObservableList<String> lista;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        nombrelista = new LinkedList();
+        objBases = new BaseDatos();
+        boolean conexion;
+        conexion = objBases.crearConexion();
+        if (conexion) {
 
-        BufferedReader in = null;
+        } else {
+            System.out.println("no se pudo realizar la conexión");
+        }
+        
         try {
+            BufferedReader in = null;
             try {
                 in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
             } catch (FileNotFoundException ex) {
@@ -71,27 +82,17 @@ public class AgregarImagenController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(AgregarImagenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
             LinkedList<lista> listas = objBases.buscarLista("cod_perfil_lista", idPerfil);
-            System.out.println(listas.size());
-
-            ObservableList<String> lista = FXCollections.observableArrayList();
+            lista = FXCollections.observableArrayList();
             for (lista Lista : listas) {
                 lista.add(Lista.getNombre_lista());
             }
-            
             ComboBoxListas.setItems(lista);
+            
         } catch (IOException ex) {
             Logger.getLogger(AgregarImagenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        objBases = new BaseDatos();
-        boolean conexion;
-        conexion = objBases.crearConexion();
-        if (conexion) {
-
-        } else {
-            System.out.println("No se pudo realizar la conexión");
-        }
+        
     }
 
     @FXML
@@ -120,9 +121,12 @@ public class AgregarImagenController implements Initializable {
             int id_imagen = 0;
             String codPerfilImagen = idPerfil;
             imagen Imagen = new imagen(imageB, String.valueOf(me_gusta), String.valueOf(id_imagen), String.valueOf(codPerfilImagen));
-
             objBases.InsertImagen(Imagen, srcimg);
-
+            LinkedList<imagen> img =objBases.buscarFoto();
+            for(String listaNombreListas : nombrelista){
+                LinkedList<lista> lista =objBases.buscarLista("nombre_lista", listaNombreListas);
+                objBases.InsertListaImagen(String.valueOf(0),lista.getLast().getId_lista(),img.getLast().getId_imagen());
+            }
             Picr.changeScene("LobbyApp.fxml", event);
         } else {
             System.out.println("No se pudo realizar la conexión");
@@ -130,11 +134,11 @@ public class AgregarImagenController implements Initializable {
     }
 
     @FXML
-    private void AgregarALista(MouseEvent event) throws IOException {
-        String nombrePlato = ComboBoxListas.getValue() + "";
-
-        ComboBoxListas.getItems().remove(nombrePlato);
-        System.out.println(nombrePlato);
+    private void AgregarALista(ActionEvent event) throws IOException {
+        String ListaSeleccionada = ComboBoxListas.getValue() + "";
+        ComboBoxListas.getItems().remove(ListaSeleccionada);
+        nombrelista.add(ListaSeleccionada);
+        System.out.println(ListaSeleccionada);
     }
 
     @FXML
@@ -142,5 +146,7 @@ public class AgregarImagenController implements Initializable {
         String nombre = JOptionPane.showInputDialog(null, "Nombre de la nueva lista");
         lista Lista = new lista(nombre, String.valueOf(0), idPerfil);
         objBases.InsertLista(Lista);
+        lista.add(nombre);
+        ComboBoxListas.setItems(lista);
     }
 }
