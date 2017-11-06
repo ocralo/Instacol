@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
@@ -9,20 +14,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.FotosController">
+<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.FotosController">
     <children>
-        <ImageView fx:id="imagenViewImagenes" fitHeight="272.0" fitWidth="270.0" layoutX="24.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" />
-        <Label layoutX="57.0" layoutY="392.0" text="Likes">
+        <ImageView fx:id="imagenViewImagenes" fitHeight="193.0" fitWidth="270.0" layoutX="24.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" />
+        <Label layoutX="57.0" layoutY="300.0" text="Likes">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-        <Label fx:id="like" layoutX="91.0" layoutY="393.0" text="0" />
+        <Label fx:id="like" layoutX="91.0" layoutY="301.0" text="0" />
       <ToolBar layoutX="2.0" prefHeight="40.0" prefWidth="310.0">
         <items>
           <Button mnemonicParsing="false" onAction="#handleButtonActionAtras" text="◀" />
         </items>
       </ToolBar>
-      <ToggleButton fx:id="ToggleButtonLike" layoutX="24.0" layoutY="388.0" mnemonicParsing="false" onAction="#DarLike" text="♥" />
+      <ToggleButton fx:id="ToggleButtonLike" layoutX="24.0" layoutY="296.0" mnemonicParsing="false" onAction="#DarLike" text="♥" />
       <ImageView fx:id="imagenViewPerfil" fitHeight="40.0" fitWidth="50.0" layoutX="24.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/sinInternet1.gif" />
@@ -33,11 +38,15 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="Comentarios" layoutX="280.0" layoutY="392.0" text="0" />
-      <Label layoutX="200.0" layoutY="392.0" text="Comentarios">
+      <Label fx:id="Comentarios" layoutX="278.0" layoutY="301.0" prefHeight="17.0" prefWidth="7.0" text="0" />
+      <Label layoutX="200.0" layoutY="300.0" text="Comentarios">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <TextArea fx:id="textAreaComentarios" editable="false" layoutX="24.0" layoutY="363.0" prefHeight="54.0" prefWidth="270.0" />
+      <TextArea fx:id="textAreaEnviarComentario" layoutX="91.0" layoutY="338.0" prefHeight="25.0" prefWidth="152.0" />
+      <Button layoutX="243.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleButtonActionEnviarComentario" text="Button" />
+      <Label layoutX="23.0" layoutY="342.0" text="Comentar" />
     </children>
 </AnchorPane>

@@ -593,7 +593,7 @@ public class BaseDatos {
             while (rs.next()) {
                 LinkedList<String> infoComentarios = new LinkedList<>();
                 String nombrePerfil = rs.getString("nombre_perfil");
-                String comentario = rs.getString("comentario");
+                String comentario = rs.getString("mensaje");
                 
                 infoComentarios.add(nombrePerfil);
                 infoComentarios.add(comentario);

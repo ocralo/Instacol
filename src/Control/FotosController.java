@@ -27,6 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -139,6 +140,22 @@ public class FotosController implements Initializable {
         }
        actualizarLikesLabel();
    }
+   
+   @FXML
+    private void handleButtonActionEnviarComentario(ActionEvent event) throws IOException{
+        String comentario = textAreaEnviarComentario.getText().trim();
+        
+        if(!comentario.equals(""))
+        {
+            objBases.insertarComentario(idBuscar, idImagen, comentario);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Ingrese un comentario");
+        }
+        
+        actualizarComentarios();
+    }
     
     private void actualizarLikesLabel() throws IOException{
         like.setText(String.valueOf(objBases.NumeroLikes()));
