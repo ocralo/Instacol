@@ -22,6 +22,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -41,6 +42,8 @@ public class FotosController implements Initializable {
 
     @FXML
     private ToggleButton ToggleButtonLike;
+    @FXML
+    private Button boton;
     @FXML
     private Label like;
     @FXML
@@ -94,7 +97,12 @@ public class FotosController implements Initializable {
 
                 imagenViewPerfil.setImage(imageB);
                 LabelPerfil.setText(perfil.get(0).getNombre_perfil());
-                like.setText(String.valueOf(objBases.NumeroLikes()));
+                like.setText(String.valueOf(imagenes.getFirst().getMe_gusta()));
+                if(objBases.buscarPerfilImagen(idBuscar).isEmpty()){
+                    ToggleButtonLike.setSelected(false);
+                }else{
+                    ToggleButtonLike.setSelected(true);
+                }
                 
             }catch (IOException ex) {
                 Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,7 +136,10 @@ public class FotosController implements Initializable {
    }
     
     private void actualizarLikesLabel() throws IOException{
-        like.setText(String.valueOf(objBases.NumeroLikes()));
+        int megusta =objBases.NumeroLikes();
+        objBases.UpdateLike(String.valueOf(megusta), idImagen);
+        imagenes = objBases.buscarImagen("id_imagen", idImagen);
+        like.setText(imagenes.getFirst().getMe_gusta());
     }
     
 }

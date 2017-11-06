@@ -523,22 +523,24 @@ public class BaseDatos {
         return false;
     }
     
-    public void EliminarLike(String eliminar)throws IOException {
-        String sql = "DELETE FROM perfil_imagen WHERE cod_perfil_pi='"+eliminar+"';";
+    public boolean EliminarLike(String eliminar)throws IOException {
+        String sql = "DELETE FROM perfil_imagen WHERE cod_perfil_pi="+eliminar;
         System.out.println(sql);
         PreparedStatement ps;
         try {
             ps = conexion.prepareStatement(sql);
-            ps.execute();
+            ps.executeUpdate();
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
     
     public int NumeroLikes()throws IOException{
         int total = 0;
         try {
-            ResultSet rs = st.executeQuery("SELECT Count(i.me_gusta) AS suma FROM imagen i join perfil_imagen join perfil p");
+            ResultSet rs = st.executeQuery("SELECT COUNT(pi.id_perfil_imagen) AS suma FROM perfil_imagen pi");
             while (rs.next()) {
                 String megusta = rs.getString("suma");
                 total = Integer.parseInt(megusta);
@@ -550,14 +552,35 @@ public class BaseDatos {
     }
     
     public void UpdateLike(String valor, String id_imagen){
-        String sql = "UPDATE imagen SET me_gusta='"+valor+"WHERE id_imagen ='"+id_imagen+"'";
+        String sql = "UPDATE imagen SET me_gusta='"+valor+"' WHERE id_imagen ='"+id_imagen+"'";
         PreparedStatement ps;
         try {
             ps = conexion.prepareStatement(sql);
             ps.execute();
+            conexion.commit();
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }  
+    }
+    
+    public LinkedList<String> buscarPerfilImagen(String valor) throws IOException {
+        LinkedList<String> prueba = new LinkedList();
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM perfil_imagen where cod_perfil_pi ='"+valor+"'");
+            while (rs.next()) {
+                String idPerfilImagen = rs.getString("id_perfil_imagen");
+                String codPerfilPI = rs.getString("cod_perfil_pi");
+                String codImagenPI = rs.getString("cod_imagen_pi");
+                
+                prueba.add(idPerfilImagen);
+                prueba.add(codPerfilPI);
+                prueba.add(codImagenPI);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return prueba;
     }
 }
 
