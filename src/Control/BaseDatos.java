@@ -582,5 +582,54 @@ public class BaseDatos {
         }
         return prueba;
     }
+        
+    public boolean insertarComentario(String idPerfil, String idImagen, String comentario) {
+        String sql = "INSERT INTO comentario(mensaje,cod_perfil_comentario, cod_imagen_comentario) VALUES(?,?,?)";
+        PreparedStatement ps = null;
+        try {
+            conexion.setAutoCommit(false);
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, comentario);
+            ps.setInt(2, Integer.parseInt(idPerfil));
+            ps.setInt(3, Integer.parseInt(idImagen));
+            ps.executeUpdate();
+            conexion.commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
+    public LinkedList<LinkedList<String>> buscarComentariosPerfil(String idImagen) {
+        LinkedList<LinkedList<String>> comentarios = new LinkedList();
+        
+        try {
+            
+            ResultSet rs = st.executeQuery("select * from comentario c, imagen i, perfil p where c.cod_imagen_comentario=i.id_imagen and c.cod_perfil_comentario=p.id_perfil and i.id_imagen=" + idImagen);
+            while (rs.next()) {
+                LinkedList<String> infoComentarios = new LinkedList<>();
+                String nombrePerfil = rs.getString("nombre_perfil");
+                String comentario = rs.getString("mensaje");
+                
+                infoComentarios.add(nombrePerfil);
+                infoComentarios.add(comentario);
+                
+                comentarios.add((LinkedList<String>)infoComentarios.clone());
+                
+                infoComentarios.clear();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return comentarios;
+    }
 }
 
