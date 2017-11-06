@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,8 +37,11 @@ public class FotosController implements Initializable {
 
     LinkedList<Image> imagenesList;
     LinkedList<imagen> imagenes;
+    LinkedList<LinkedList<String>> comentarios;
+    String reporteComentarios;
     BaseDatos objBases;
     private String idImagen,idBuscar;
+    private int contador;
 
     @FXML
     private ToggleButton ToggleButtonLike;
@@ -49,6 +53,10 @@ public class FotosController implements Initializable {
     private ImageView imagenViewImagenes;
     @FXML
     private ImageView imagenViewPerfil; 
+    @FXML
+    private TextArea textAreaComentarios; 
+    @FXML
+    private TextArea textAreaEnviarComentario;
 
     /**
      * Initializes the controller class.
@@ -58,6 +66,8 @@ public class FotosController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        contador = 0;
+        reporteComentarios = "";
         imagenesList = new LinkedList<>();
         imagenes = new LinkedList<>();
         objBases = new BaseDatos();
@@ -88,6 +98,9 @@ public class FotosController implements Initializable {
                 {
                     imagenViewImagenes.setImage(imagenesList.getFirst());
                 }
+                
+                actualizarComentarios();
+                
                 LinkedList<Perfil> perfil = objBases.buscarPerfil("id_perfil",idBuscar);
                 System.out.println(perfil.size());
                 Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(0).getFoto_perfil(), null);
@@ -129,6 +142,16 @@ public class FotosController implements Initializable {
     
     private void actualizarLikesLabel() throws IOException{
         like.setText(String.valueOf(objBases.NumeroLikes()));
+    }
+    
+    private void actualizarComentarios() {
+        reporteComentarios = "";
+        comentarios = objBases.buscarComentariosPerfil(idImagen);
+        for (LinkedList<String> comentario : comentarios) {
+            reporteComentarios += comentario.getFirst() + ": " + comentario.getLast() + "\n";
+        }
+
+        textAreaComentarios.setText(reporteComentarios);
     }
     
 }
