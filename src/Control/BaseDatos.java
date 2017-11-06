@@ -509,7 +509,7 @@ public class BaseDatos {
     public int buscarLikes() throws IOException {
         int total = 0;
         try {
-            ResultSet rs = st.executeQuery("SELECT SUM(m.me_gusta_imagen) as suma from me_gusta_imagen m");
+            ResultSet rs = st.executeQuery("SELECT SUM(m.me_gusta_imagen) AS suma FROM perfil p join imagen i join me_gusta_imagen m on i.id_imagen=m.cod_meGusta_imagen;");
             while (rs.next()) {
                 String megusta = rs.getString("suma");
                 if(megusta == null){

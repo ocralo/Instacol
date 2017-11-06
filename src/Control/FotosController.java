@@ -5,6 +5,7 @@
  */
 package Control;
 
+import Modelo.MeGustaImagen;
 import Modelo.Perfil;
 import Modelo.imagen;
 import java.awt.image.BufferedImage;
@@ -119,11 +120,14 @@ public class FotosController implements Initializable {
        }else{
            contador--;
        }
-       objBases.ActualizarLikes(String.valueOf(contador), idImagen);
+       
+       MeGustaImagen megusta = new MeGustaImagen(String.valueOf(0), String.valueOf(0), img.getLast().getId_imagen());
+       objBases.InsertLike(megusta);
        actualizarLikesLabel();
    }
     
     private void actualizarLikesLabel() throws IOException{
+        objBases.ActualizarLikes(String.valueOf(contador), idImagen);
         like.setText(String.valueOf(objBases.buscarLikes()));
     }
     

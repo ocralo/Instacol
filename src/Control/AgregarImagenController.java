@@ -127,8 +127,6 @@ public class AgregarImagenController implements Initializable {
                 LinkedList<lista> lista =objBases.buscarLista("nombre_lista", listaNombreListas);
                 objBases.InsertListaImagen(String.valueOf(0),lista.getLast().getId_lista(),img.getLast().getId_imagen());
             }
-            MeGustaImagen megusta = new MeGustaImagen(String.valueOf(0), String.valueOf(0), img.getLast().getId_imagen());
-            objBases.InsertLike(megusta);
             Picr.changeScene("LobbyApp.fxml", event);
         } else {
             System.out.println("No se pudo realizar la conexión");
