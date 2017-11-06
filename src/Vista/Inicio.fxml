@@ -28,8 +28,7 @@
                     <font>
                         <Font name="Tahoma" size="20.0" />
                     </font>
-                </Label>
-                <Label fx:id="LOlvido" accessibleRole="HYPERLINK" layoutX="78.0" layoutY="148.0" text="¿Has olvidado tu contraseña?" />
+                </Label>                
                 <TextField fx:id="TFcorreo" layoutX="81.0" layoutY="46.0" />
                 <Button layoutX="79.0" layoutY="177.0" mnemonicParsing="false" onAction="#InicioSesion" prefHeight="55.0" prefWidth="155.0" text="Iniciar Sesión"> 
                     <font>
