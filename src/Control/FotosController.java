@@ -124,7 +124,7 @@ public class FotosController implements Initializable {
    }
     
     private void actualizarLikesLabel() throws IOException{
-        like.setText(String.valueOf(objBases.buscarLikes()+contador));
+        like.setText(String.valueOf(objBases.buscarLikes()));
     }
     
 }

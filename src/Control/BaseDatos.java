@@ -307,7 +307,7 @@ public class BaseDatos {
 
     public boolean InsertImagen(imagen ImagenU, String ruta) throws FileNotFoundException, IOException {
 
-        String sql = "INSERT INTO imagen (imagen,id_imagen,cod_perfil_imagen) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO imagen (imagen,id_imagen,cod_perfil_imagen) VALUES(?,?,?)";
         PreparedStatement ps = null;
         try {
             conexion.setAutoCommit(false);
@@ -509,7 +509,7 @@ public class BaseDatos {
     public int buscarLikes() throws IOException {
         int total = 0;
         try {
-            ResultSet rs = st.executeQuery("SELECT SUM(m.id_meGusta) as suma from me_gusta_imagen m");
+            ResultSet rs = st.executeQuery("SELECT SUM(m.me_gusta_imagen) as suma from me_gusta_imagen m");
             while (rs.next()) {
                 String megusta = rs.getString("suma");
                 if(megusta == null){

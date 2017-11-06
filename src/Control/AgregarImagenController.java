@@ -118,7 +118,6 @@ public class AgregarImagenController implements Initializable {
         conexion = objBases.crearConexion();
         if (conexion) {
             BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
-            int me_gusta = 0;
             int id_imagen = 0;
             String codPerfilImagen = idPerfil;
             imagen Imagen = new imagen(imageB,String.valueOf(id_imagen), String.valueOf(codPerfilImagen));
