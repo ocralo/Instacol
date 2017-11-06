@@ -5,6 +5,7 @@ package Control;
  * @author Momo
  */
 //import Controller.Imagen;
+import Modelo.MeGustaImagen;
 import Modelo.imagen;
 import Modelo.Perfil;
 import Modelo.lista;
@@ -139,7 +140,6 @@ public class BaseDatos {
             ResultSet rs = st.executeQuery("SELECT * FROM imagen where " + criterio + "='" + buscarImagen + "'");
             while (rs.next()) {
 
-                String megusta = rs.getString("me_gusta_imagen");
                 String codUsuario = rs.getString("id_imagen");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
@@ -150,7 +150,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img, megusta, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img, codUsuario, codPerfilImagen);
 
                 listaImagenes.add(imgen);
 
@@ -230,7 +230,6 @@ public class BaseDatos {
             ResultSet rs = st.executeQuery("SELECT * FROM imagen");
             while (rs.next()) {
 
-                String megusta = rs.getString("me_gusta_imagen");
                 String codUsuario = rs.getString("id_imagen");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagenB = rs.getBlob("imagen");
@@ -241,7 +240,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img, megusta, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img, codUsuario, codPerfilImagen);
 
                 listaImagenes.add(imgen);
 
@@ -308,7 +307,7 @@ public class BaseDatos {
 
     public boolean InsertImagen(imagen ImagenU, String ruta) throws FileNotFoundException, IOException {
 
-        String sql = "INSERT INTO imagen (imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO imagen (imagen,id_imagen,cod_perfil_imagen) VALUES(?,?,?,?)";
         PreparedStatement ps = null;
         try {
             conexion.setAutoCommit(false);
@@ -316,9 +315,8 @@ public class BaseDatos {
             FileInputStream fis = new FileInputStream(file);
             ps = conexion.prepareStatement(sql);
             ps.setBinaryStream(1, fis, (int) file.length());
-            ps.setInt(2, Integer.parseInt(ImagenU.getMe_gusta()));
-            ps.setInt(3, Integer.parseInt(ImagenU.getId_imagen()));
-            ps.setInt(4, Integer.parseInt(ImagenU.getCod_perfil_imagen()));
+            ps.setInt(2, Integer.parseInt(ImagenU.getId_imagen()));
+            ps.setInt(3, Integer.parseInt(ImagenU.getCod_perfil_imagen()));
 
             ps.executeUpdate();
             conexion.commit();
@@ -348,84 +346,16 @@ public class BaseDatos {
     }
     
     public void ActualizarLikes(String valor,String id_imagen)throws IOException{
-        String sql = "UPDATE imagen SET me_gusta_imagen='" +valor+ "' WHERE id_imagen='"+id_imagen+"'";
+        String sql = "UPDATE me_gusta_imagen SET me_gusta_imagen='" +valor+ "' WHERE id_meGusta='"+id_imagen+"'";
         PreparedStatement ps;
         try {
             ps = conexion.prepareStatement(sql);
             ps.execute();
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }   
     }
-    //<editor-fold defaultstate="collapsed" desc="ImagenPost">
-    /**
-     * Metodo que permite insertar una imagen en un perfil
-     *
-     * @param imagen
-     * @return true si ela inserción fue exitosa o false si hubo algun error
-     */
-    public boolean sqlInsertImagen(imagen imagen) {
-
-        String sql;
-
-        if (crearConexion()) {
-            PreparedStatement ps = null;
-
-            try {
-                sql = "insert into imagen "
-                        + "(imagen,"
-                        + "me_gusta,"
-                        + "cod_perfil_imagen)"
-                        + "values(?,?,?)";
-
-                getConexion().setAutoCommit(false);
-                ps = getConexion().prepareStatement(sql);
-
-                File f = new File(imagen.getRuta());
-                FileInputStream fis = new FileInputStream(f);
-
-                ps.setBinaryStream(1, fis, f.length());
-                ps.setString(2, imagen.getMe_gusta());
-                ps.setString(3, imagen.getCod_perfil_imagen());
-
-                ps.executeUpdate();
-                getConexion().commit();
-
-                return true;
-            } catch (SQLException | FileNotFoundException ex) {
-                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    DontTouch.Tools.imprimirC(ex.getMessage());
-                }
-            }
-        }
-        return false;
-    }
-//</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc="Incrementar MeGusta">
-    public boolean agregarLike(imagen img) {
-
-        try {
-            if (crearConexion()) {
-                String sql = "UPDATE imagen SET me_gusta=" + img.getMe_gusta() + " WHERE id_imagen=" + img.getId_imagen();
-                getConexion().setAutoCommit(false);
-                PreparedStatement ps = getConexion().prepareStatement(sql);
-                ps.executeUpdate();
-                getConexion().commit();
-
-                return true;
-            }
-        } catch (SQLException ex) {
-
-        }
-        return false;
-    }
-    //</editor-fold>
+    
     public LinkedList<LinkedList<Object>> buscarImagenPerfil() {
         LinkedList<LinkedList<Object>> listaConsulta = new LinkedList();
         BufferedImage img;
@@ -438,7 +368,6 @@ public class BaseDatos {
             ResultSet rs = st.executeQuery("SELECT * FROM imagen i, perfil p where i.cod_perfil_imagen=p.id_perfil");
             while (rs.next()) {
                 LinkedList<Object> resultado = new LinkedList<>();
-                String meGusta = rs.getString("me_gusta_imagen");
                 String idImagen = rs.getString("id_imagen");
                 String codPerfilImagen = rs.getString("cod_perfil_imagen");
                 imagen = rs.getBlob("imagen");
@@ -448,7 +377,7 @@ public class BaseDatos {
                 imagen.free();
                 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                imagen i = new imagen(img, meGusta, idImagen, codPerfilImagen);
+                imagen i = new imagen(img, idImagen, codPerfilImagen);
                 
                 String nombrePerfil = rs.getString("nombre_perfil");
                 String codUsuario = rs.getString("cod_usuario");
@@ -533,6 +462,77 @@ public class BaseDatos {
             ps.setInt(1, Integer.parseInt(idListaImagen));
             ps.setInt(2, Integer.parseInt(codLista));
             ps.setInt(3, Integer.parseInt(codImagen));
+            ps.executeUpdate();
+            conexion.commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+    
+    public LinkedList<imagen> buscarImagenesLista(String criterio, String valor) throws IOException {
+        LinkedList<imagen> listaimagenes = new LinkedList();
+        BufferedImage img;
+        Blob imagenB;
+        byte[] blobAsBytes;
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM imagen i join lista_imagen li on i.id_imagen=li.cod_imagen join lista l on li.cod_lista=l.id_lista where l."+criterio+"='"+valor+"'");
+            while (rs.next()) {
+                String codUsuario = rs.getString("id_imagen");
+                String codPerfilImagen = rs.getString("cod_perfil_imagen");
+                imagenB = rs.getBlob("imagen");
+
+                int blobLength = (int) imagenB.length();
+                blobAsBytes = imagenB.getBytes(1, blobLength);
+                imagenB.free();
+
+                img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
+
+                imagen imgen = new imagen(img, codUsuario, codPerfilImagen);
+
+                listaimagenes.add(imgen);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaimagenes;
+    }
+    
+    public int buscarLikes() throws IOException {
+        int total = 0;
+        try {
+            ResultSet rs = st.executeQuery("SELECT SUM(m.id_meGusta) as suma from me_gusta_imagen m");
+            while (rs.next()) {
+                String megusta = rs.getString("suma");
+                if(megusta == null){
+                    total=0;
+                }else{
+                total = Integer.parseInt(megusta);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;
+    }
+    
+    public boolean InsertLike(MeGustaImagen like) {
+        String sql = "INSERT INTO me_gusta_imagen(id_meGusta,me_gusta_imagen,cod_meGusta_imagen) values(?,?,?)";
+        PreparedStatement ps = null;
+        try {
+            conexion.setAutoCommit(false);
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(like.getId_meGusta()));
+            ps.setInt(2, Integer.parseInt(like.getMe_gusta_imagen()));
+            ps.setInt(3, Integer.parseInt(like.getCod_meGusta_imagen()));
             ps.executeUpdate();
             conexion.commit();
             return true;

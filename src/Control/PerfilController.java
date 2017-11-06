@@ -7,6 +7,7 @@ package Control;
 
 import Modelo.Perfil;
 import Modelo.imagen;
+import Modelo.lista;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,17 +20,21 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -48,12 +53,15 @@ public class PerfilController implements Initializable {
     private Button botonAnteriorImagen;
     @FXML
     private Button botonSiguienteImagen;
+    @FXML
+    private ComboBox ComboBoxListas;
 
     private String idBuscar,idUsuario;
     private LinkedList<Image> imagenesList;
     private LinkedList<imagen> imagenes;
     private int contador;
     private BaseDatos objBases;
+    ObservableList<String> lista;
 
     /**
      * Initializes the controller class.
@@ -105,6 +113,12 @@ public class PerfilController implements Initializable {
                 {
                     imagenViewImagenes.setImage(imagenesList.getFirst());
                 }
+            LinkedList<lista> listas = objBases.buscarLista("cod_perfil_lista", idBuscar);
+            lista = FXCollections.observableArrayList();
+            for (lista Lista : listas) {
+                lista.add(Lista.getNombre_lista());
+            }
+            ComboBoxListas.setItems(lista);
                 
                 
             } catch (IOException ex) {
@@ -186,5 +200,16 @@ public class PerfilController implements Initializable {
         writer.println(txt);
         writer.close();
         Picr.changeScene("Fotos.fxml", event);
+    }
+    
+    @FXML
+    private void AbrirLista(ActionEvent event) throws IOException{
+        String nombre = ComboBoxListas.getValue() + "";
+        LinkedList<lista> lista =objBases.buscarLista("nombre_lista", nombre);
+        PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+        String txt = idUsuario + "," + idBuscar + ","+ imagenes.get(contador).getId_imagen() + "," + lista.getFirst().getId_lista();;
+        writer.println(txt);
+        writer.close();
+        Picr.changeScene("VerLista.fxml", event);
     }
 }

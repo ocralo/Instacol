@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 public class imagen {
 
     private Image imagen;
-    private String me_gusta;
     private String id_imagen;
     private String cod_perfil_imagen;
     private String ruta;
@@ -27,25 +26,19 @@ public class imagen {
     public imagen() {
     }
 
-    public imagen(Image imagen, String me_gusta, String id_imagen, String cod_perfil_imagen) {
+    public imagen(Image imagen, String id_imagen, String cod_perfil_imagen) {
         this.imagen = imagen;
-        this.me_gusta = me_gusta;
         this.id_imagen = id_imagen;
         this.cod_perfil_imagen = cod_perfil_imagen;
     }
 
-    public imagen(String me_gusta, String cod_perfil_imagen, String ruta) {
-        this.me_gusta = me_gusta;
+    public imagen( String cod_perfil_imagen, String ruta) {
         this.cod_perfil_imagen = cod_perfil_imagen;
         this.ruta = ruta;
     }
 
     public Image getImagen() {
         return imagen;
-    }
-
-    public String getMe_gusta() {
-        return me_gusta;
     }
 
     public String getId_imagen() {
@@ -58,10 +51,6 @@ public class imagen {
 
     public void setImagen(Image imagen) {
         this.imagen = imagen;
-    }
-
-    public void setMe_gusta(String me_gusta) {
-        this.me_gusta = me_gusta;
     }
 
     public void setId_imagen(String id_imagen) {
@@ -82,7 +71,7 @@ public class imagen {
 
     @Override
     public String toString() {
-        return "imagen{" + "imagen=" + imagen + ", me_gusta=" + me_gusta + ", id_imagen=" + id_imagen + ", cod_perfil_imagen=" + cod_perfil_imagen + '}';
+        return "imagen{" + "imagen=" + imagen + ", id_imagen=" + id_imagen + ", cod_perfil_imagen=" + cod_perfil_imagen + '}';
     }
 
 //    public boolean insertarImagen(LinkedList<imagen> imagen, String ruta) throws SQLException, FileNotFoundException {

@@ -5,7 +5,6 @@
  */
 package Control;
 
-import DontTouch.Tools;
 import Modelo.Perfil;
 import Modelo.imagen;
 import java.awt.image.BufferedImage;
@@ -86,7 +85,6 @@ public class FotosController implements Initializable {
                 for (imagen imagen : imagenes) {
                     Image image = SwingFXUtils.toFXImage((BufferedImage) imagen.getImagen(), null);
                     imagenesList.add(image);
-                    like.setText(imagen.getMe_gusta());
                 }
                 if(imagenes.size() > 0)
                 {
@@ -98,7 +96,7 @@ public class FotosController implements Initializable {
 
                 imagenViewPerfil.setImage(imageB);
                 LabelPerfil.setText(perfil.get(0).getNombre_perfil());
-                
+                like.setText(String.valueOf(objBases.buscarLikes()));
                 
             }catch (IOException ex) {
                 Logger.getLogger(FotosController.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,14 +119,12 @@ public class FotosController implements Initializable {
        }else{
            contador--;
        }
-       int valor = Integer.parseInt(imagenes.getFirst().getMe_gusta()) + contador;
-       objBases.ActualizarLikes(String.valueOf(valor), idImagen);
+       objBases.ActualizarLikes(String.valueOf(contador), idImagen);
        actualizarLikesLabel();
    }
     
     private void actualizarLikesLabel() throws IOException{
-        LinkedList<imagen> imagenesLike = objBases.buscarImagen("id_imagen", idImagen);
-        like.setText(imagenesLike.getFirst().getMe_gusta());
+        like.setText(String.valueOf(objBases.buscarLikes()+contador));
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package Control;
 
+import Modelo.MeGustaImagen;
 import Modelo.imagen;
 import Modelo.Perfil;
 import Modelo.lista;
@@ -120,13 +121,15 @@ public class AgregarImagenController implements Initializable {
             int me_gusta = 0;
             int id_imagen = 0;
             String codPerfilImagen = idPerfil;
-            imagen Imagen = new imagen(imageB, String.valueOf(me_gusta), String.valueOf(id_imagen), String.valueOf(codPerfilImagen));
+            imagen Imagen = new imagen(imageB,String.valueOf(id_imagen), String.valueOf(codPerfilImagen));
             objBases.InsertImagen(Imagen, srcimg);
             LinkedList<imagen> img =objBases.buscarFoto();
             for(String listaNombreListas : nombrelista){
                 LinkedList<lista> lista =objBases.buscarLista("nombre_lista", listaNombreListas);
                 objBases.InsertListaImagen(String.valueOf(0),lista.getLast().getId_lista(),img.getLast().getId_imagen());
             }
+            MeGustaImagen megusta = new MeGustaImagen(String.valueOf(0), String.valueOf(0), img.getLast().getId_imagen());
+            objBases.InsertLike(megusta);
             Picr.changeScene("LobbyApp.fxml", event);
         } else {
             System.out.println("No se pudo realizar la conexión");
