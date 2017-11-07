@@ -135,9 +135,13 @@ public class AgregarImagenController implements Initializable {
     @FXML
     private void AgregarALista(ActionEvent event) throws IOException {
         String ListaSeleccionada = ComboBoxListas.getValue() + "";
-        ComboBoxListas.getItems().remove(ListaSeleccionada);
-        nombrelista.add(ListaSeleccionada);
-        System.out.println(ListaSeleccionada);
+        if(ListaSeleccionada != null && !ListaSeleccionada.equals("null"))
+        {
+            ComboBoxListas.getItems().remove(ListaSeleccionada);
+            nombrelista.add(ListaSeleccionada);
+//            System.out.println(ListaSeleccionada);
+        }
+        
     }
 
     @FXML

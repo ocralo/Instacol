@@ -132,6 +132,15 @@ public class LobbyAppController implements Initializable {
                     iconoPerfilNews.setImage(imagenPerfilesList.getFirst());
                     nombrePerfilNews.setText(nombrePerfilesList.getFirst());
                 }
+                
+                botonAnteriorImagen.setVisible(false);
+                if(imagenesList.size() <= 1)
+                {
+                    botonSiguienteImagen.setVisible(false);
+                    imagenViewNews.setVisible(false);
+                    iconoPerfilNews.setVisible(false);
+                    nombrePerfilNews.setVisible(false);
+                }
         }catch (IOException ex) {
             Logger.getLogger(LobbyAppController.class.getName()).log(Level.SEVERE, null, ex);
         }

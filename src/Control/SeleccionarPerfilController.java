@@ -93,22 +93,9 @@ public class SeleccionarPerfilController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                perfil = objBases.buscarPerfil("cod_usuario", idBuscar);
-//                System.out.println("En la consulta se cargaron " + perfil.size());
-                for (int i = 0; i < perfil.size(); i++) {
-//                    System.out.println("Imagen " + i);
-                    Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(i).getFoto_perfil(), null);
-                    imagenes.add(imageB);
-                }
-
-                organizarImagenes();
                 
-                triosImagenes = (int) Math.ceil((double)imagenes.size()/3);
+                actualizarPerfiles();
                 
-                if(triosImagenes > 1)
-                {
-                    botonBajar.setVisible(true);
-                }
 
             } catch (IOException ex) {
                 Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
@@ -250,6 +237,9 @@ public class SeleccionarPerfilController implements Initializable {
     }
     
     private void organizarImagenes() {
+        img1.setVisible(true);
+        rPerfil1.setVisible(true);
+        
         img2.setVisible(true);
         rPerfil2.setVisible(true);
         
@@ -284,34 +274,68 @@ public class SeleccionarPerfilController implements Initializable {
             if(rPerfil1.isSelected())
             {
                 perfilID = perfil.get(contPerfil*3).getId_perfil();
-                rPerfil1.setVisible(false);
-                img1.setVisible(false);
+//                rPerfil1.setVisible(false);
+//                img1.setVisible(false);
                 perfil.remove(contPerfil*3);
             }
             else if(rPerfil2.isSelected())
             {
                 perfilID = perfil.get(contPerfil*3 + 1).getId_perfil();
-                rPerfil2.setVisible(false);
-                img2.setVisible(false);
+//                rPerfil2.setVisible(false);
+//                img2.setVisible(false);
                 perfil.remove(contPerfil*3 + 1);
             }
             else if(rPerfil3.isSelected())
             {
                 perfilID = perfil.get(contPerfil*3 + 2).getId_perfil();
-                rPerfil3.setVisible(false);
-                img3.setVisible(false);
+//                rPerfil3.setVisible(false);
+//                img3.setVisible(false);
                 perfil.remove(contPerfil*3 + 2);
             }
             if(perfil.isEmpty()){
                 objBases.sqlDeleteUsuario(idBuscar);
                 Picr.changeScene("Inicio.fxml", event);
             }
-            rPerfil1.setSelected(false);
-            rPerfil2.setSelected(false);
-            rPerfil3.setSelected(false);
+//            rPerfil1.setSelected(false);
+//            rPerfil2.setSelected(false);
+//            rPerfil3.setSelected(false);
 
             objBases.EliminarPerfil(perfilID);
+            
+            Picr.changeScene("SeleccionarPerfil.fxml", event);
+//            actualizarPerfiles();
         }
+    }
+
+    private void actualizarPerfiles() throws IOException {
+        botonBajar.setVisible(false);
+        botonSubir.setVisible(false);
+        img1.setVisible(false);
+        rPerfil1.setVisible(false);
+        
+        img2.setVisible(false);
+        rPerfil2.setVisible(false);
+        
+        img3.setVisible(false);
+        rPerfil3.setVisible(false);
+        imagenes.clear();
+        perfil = objBases.buscarPerfil("cod_usuario", idBuscar);
+//                System.out.println("En la consulta se cargaron " + perfil.size());
+                for (int i = 0; i < perfil.size(); i++) {
+//                    System.out.println("Imagen " + i);
+                    Image imageB = SwingFXUtils.toFXImage((BufferedImage) perfil.get(i).getFoto_perfil(), null);
+                    imagenes.add(imageB);
+                }
+
+                organizarImagenes();
+                
+                triosImagenes = (int) Math.ceil((double)imagenes.size()/3);
+                
+                if(triosImagenes > 1)
+                {
+                    botonBajar.setVisible(true);
+                }
+        contadorImagenes = 0;
     }
 
 }
