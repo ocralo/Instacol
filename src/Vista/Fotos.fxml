@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.FotosController">
     <children>
-        <ImageView fx:id="imagenViewImagenes" fitHeight="193.0" fitWidth="270.0" layoutX="24.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imagenViewImagenes" fitHeight="248.0" fitWidth="288.0" layoutX="13.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
         <Label layoutX="57.0" layoutY="300.0" text="Likes">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -25,28 +25,32 @@
       <ToolBar layoutX="2.0" prefHeight="40.0" prefWidth="310.0">
         <items>
           <Button mnemonicParsing="false" onAction="#handleButtonActionAtras" text="◀" />
+            <ImageView fx:id="imagenViewPerfil" fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/sinInternet1.gif" />
+               </image>
+            </ImageView>
+            <Label fx:id="LabelPerfil" prefHeight="13.0" prefWidth="139.0" text="Perfil Actual">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
         </items>
       </ToolBar>
       <ToggleButton fx:id="ToggleButtonLike" layoutX="24.0" layoutY="296.0" mnemonicParsing="false" onAction="#DarLike" text="♥" />
-      <ImageView fx:id="imagenViewPerfil" fitHeight="40.0" fitWidth="50.0" layoutX="24.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Imagenes/sinInternet1.gif" />
-         </image>
-      </ImageView>
-      <Label fx:id="LabelPerfil" layoutX="104.0" layoutY="53.0" text="Perfil Actual">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
       <Label fx:id="Comentarios" layoutX="278.0" layoutY="301.0" prefHeight="17.0" prefWidth="7.0" text="0" />
       <Label layoutX="200.0" layoutY="300.0" text="Comentarios">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextArea fx:id="textAreaComentarios" editable="false" layoutX="24.0" layoutY="363.0" prefHeight="54.0" prefWidth="270.0" />
-      <TextArea fx:id="textAreaEnviarComentario" layoutX="91.0" layoutY="338.0" prefHeight="25.0" prefWidth="152.0" />
-      <Button layoutX="243.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleButtonActionEnviarComentario" text="Button" />
-      <Label layoutX="23.0" layoutY="342.0" text="Comentar" />
+      <TextArea fx:id="textAreaComentarios" editable="false" layoutX="21.0" layoutY="363.0" prefHeight="54.0" prefWidth="270.0" />
+      <TextArea fx:id="textAreaEnviarComentario" layoutX="85.0" layoutY="328.0" prefHeight="35.0" prefWidth="152.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextArea>
+      <Button layoutX="237.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleButtonActionEnviarComentario" prefHeight="35.0" prefWidth="53.0" text="Enviar" />
+      <Label layoutX="23.0" layoutY="334.0" prefHeight="25.0" prefWidth="59.0" text="Comentar:" />
     </children>
 </AnchorPane>

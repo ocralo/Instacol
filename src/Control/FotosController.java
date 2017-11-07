@@ -163,6 +163,8 @@ public class FotosController implements Initializable {
         }
         
         actualizarComentarios();
+        
+        textAreaEnviarComentario.setText("");
     }
     
     private void actualizarLikesLabel() throws IOException{

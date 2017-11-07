@@ -125,7 +125,7 @@ public class PerfilController implements Initializable {
                 Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (!idBuscar.isEmpty()) {
-
+                
             }
 
         } else {
@@ -133,9 +133,10 @@ public class PerfilController implements Initializable {
         }
         
         botonAnteriorImagen.setVisible(false);
-        if(imagenesList.size() == 1)
+        if(imagenesList.size() <= 1)
         {
             botonSiguienteImagen.setVisible(false);
+            imagenViewImagenes.setVisible(false);
         }
     }
 
@@ -204,12 +205,17 @@ public class PerfilController implements Initializable {
     
     @FXML
     private void AbrirLista(ActionEvent event) throws IOException{
-        String nombre = ComboBoxListas.getValue() + "";
-        LinkedList<lista> lista =objBases.buscarLista("nombre_lista", nombre);
-        PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
-        String txt = idUsuario + "," + idBuscar + ","+ imagenes.get(contador).getId_imagen() + "," + lista.getFirst().getId_lista();;
-        writer.println(txt);
-        writer.close();
-        Picr.changeScene("VerLista.fxml", event);
+        String nombre = ComboBoxListas.getValue()+ "";
+        System.out.println(nombre);
+        if(nombre != null && !nombre.equals("null"))
+        {
+            LinkedList<lista> lista =objBases.buscarLista("nombre_lista", nombre);
+            PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+            String txt = idUsuario + "," + idBuscar + ","+ imagenes.get(contador).getId_imagen() + "," + lista.getFirst().getId_lista();;
+            writer.println(txt);
+            writer.close();
+            Picr.changeScene("VerLista.fxml", event);
+        }
+        
     }
 }
