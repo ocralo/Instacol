@@ -20,7 +20,7 @@
          <image>
             <Image url="@../Imagenes/icono_en_blanco.png" />
          </image></ImageView>
-      <Button layoutX="120.0" layoutY="223.0" mnemonicParsing="false" onAction="#fotoPerfil" text="BUSCAR" />
-      <Button layoutX="102.0" layoutY="351.0" mnemonicParsing="false" onAction="#subirPerfil" text="CREAR PERFIL" />
+      <Button fx:id="buscar" layoutX="120.0" layoutY="223.0" mnemonicParsing="false" onAction="#fotoPerfil" text="BUSCAR" />
+      <Button fx:id="crear" layoutX="102.0" layoutY="351.0" mnemonicParsing="false" onAction="#subirPerfil" text="CREAR PERFIL" />
    </children>
 </AnchorPane>

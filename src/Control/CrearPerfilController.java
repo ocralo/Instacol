@@ -22,6 +22,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,38 +36,42 @@ import javafx.stage.StageStyle;
  * @author rodrigoescobarlopez
  */
 public class CrearPerfilController implements Initializable {
-    
-     @FXML
+
+    @FXML
     private ImageView fotoPerfil;
-     @FXML
+    @FXML
     private TextField nombrePTex;
-     
+    @FXML
+    private Button crear;
+    @FXML
+    private Button buscar;
+
     private String srcimg;
     private Image image;
     private File file;
-    
+
     private String idUsuario;
     private String idPerfil;
 
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       BufferedReader in = null;
-         try {
-             in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
-         } catch (FileNotFoundException ex) {
-             Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         try {
-             String aux=in.readLine();
-             String[] auxDato = aux.split(",");
-             idUsuario = auxDato[0];
-             idPerfil = auxDato[1];
-         } catch (IOException ex) {
-             Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
-         }
-                
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader("src/Imagenes/usuario.txt"));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            String aux = in.readLine();
+            String[] auxDato = aux.split(",");
+            idUsuario = auxDato[0];
+            idPerfil = auxDato[1];
+            crear.setVisible(false);
+            crear.setDisable(true);
+        } catch (IOException ex) {
+            Logger.getLogger(CrearPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
@@ -76,11 +81,10 @@ public class CrearPerfilController implements Initializable {
             System.out.println("No se pudo realizar la conexión");
         }
     }
-    
-    
+
     @FXML
     private void fotoPerfil(ActionEvent event) throws IOException {
-        
+
         Stage st = new Stage(StageStyle.UTILITY);
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Buscar Archivos JPG");
@@ -93,31 +97,33 @@ public class CrearPerfilController implements Initializable {
 
         fotoPerfil.setImage(image);
         srcimg = file.getAbsolutePath();
+        crear.setVisible(true);
+        crear.setDisable(false);
     }
-    
+
     @FXML
     private void subirPerfil(ActionEvent event) throws IOException, SQLException {
         BaseDatos objBases = new BaseDatos();
         boolean conexion;
         conexion = objBases.crearConexion();
         if (conexion) {
-        String nombre = nombrePTex.getText();
-        BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
-        String codUsuario= idUsuario;//cambiar
-        Perfil perfil = new Perfil(nombre, imageB, codUsuario);
-        
-        objBases.insertarPerfil(perfil, srcimg);
-        objBases.pedirUsuario(idUsuario);
-        
-        idPerfil = objBases.buscarPerfil("nombre_perfil", nombre).getLast().getId_perfil();
-        
-        PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
-        String txt = idUsuario + "," + idPerfil;
-        writer.println(txt);
-        writer.close();
-        
-        Picr.changeScene("Perfil.fxml", event);
-        }else {
+            String nombre = nombrePTex.getText();
+            BufferedImage imageB = SwingFXUtils.fromFXImage(image, null);
+            String codUsuario = idUsuario;//cambiar
+            Perfil perfil = new Perfil(nombre, imageB, codUsuario);
+
+            objBases.insertarPerfil(perfil, srcimg);
+            objBases.pedirUsuario(idUsuario);
+
+            idPerfil = objBases.buscarPerfil("nombre_perfil", nombre).getLast().getId_perfil();
+
+            PrintWriter writer = new PrintWriter("src/Imagenes/usuario.txt", "UTF-8");
+            String txt = idUsuario + "," + idPerfil;
+            writer.println(txt);
+            writer.close();
+
+            Picr.changeScene("Perfil.fxml", event);
+        } else {
             System.out.println("No se pudo realizar la conexión");
         }
     }
