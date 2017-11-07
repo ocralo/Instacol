@@ -50,9 +50,9 @@ public class InicioController implements Initializable {
                 arr = objbases.buscarCorreo(buscar);
 
                 if (arr.size() > 0) {
-                    verifClave = arr.get(Usuario.CLAVE).toString();
-                    idUsuario = arr.get(Usuario.ID).toString();
-                    correoU = arr.get(Usuario.CORREO).toString();
+                    verifClave = arr.get(Usuario.getCLAVE()).toString();
+                    idUsuario = arr.get(Usuario.getID()).toString();
+                    correoU = arr.get(Usuario.getCORREO()).toString();
 
                     if (clave.equals(verifClave)) {
                         correcto = true;

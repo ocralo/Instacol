@@ -1,10 +1,5 @@
 package Control;
 
-/**
- *
- * @author Momo
- */
-//import Controller.Imagen;
 import Modelo.imagen;
 import Modelo.Perfil;
 import Modelo.lista;
@@ -26,10 +21,17 @@ public class BaseDatos {
     Connection conexion;
     Statement st;
 
+    /**
+     * Permite crear una base de datos vacia
+     */
     public BaseDatos() {
-        //conexion
     }
 
+    /**
+     * Permite obtener la Conexion de la clase
+     *
+     * @return connection a la base de datos
+     */
     public Connection getConexion() {
         return conexion;
     }
@@ -76,6 +78,18 @@ public class BaseDatos {
         return true;
     }
 
+    /**
+     * Permite insertar un usuario en la base de datos
+     *
+     * @param insert cadena con el comando SQL a ejecutar
+     * @param Nombre_usuario nombre del usuario a insertar
+     * @param Apellido_usuario apellido del usuario a insertar
+     * @param Correo correo del usuario a insertar
+     * @param Clave clave para el inicio de sesion
+     * @param Fecha_nacimiento fecha de nacimiento del usuario
+     * @return boleano con el resutaldo de la inserción (true=correcto / false =
+     * incorrecto)
+     */
     public boolean sqlInsertUsuario(String insert, String Nombre_usuario, String Apellido_usuario, String Correo, String Clave, String Fecha_nacimiento) {
         // String insert = "insert into Imagenes(imagen,nombre) values(?,?)";
         PreparedStatement ps = null;
@@ -103,7 +117,13 @@ public class BaseDatos {
         return false;
     }
 
-    public ArrayList buscarCorreo(String buscar) throws IOException {
+    /**
+     * Permite buscar un correo dentro de la base de datos para validaciones
+     *
+     * @param buscar cadena con el correo que se desea consultar
+     * @return Arreglo con todos los correos encontrados
+     */
+    public ArrayList buscarCorreo(String buscar) {
         ArrayList arrElementos = new ArrayList();
         try {
             ResultSet rs = st.executeQuery("SELECT * FROM usuario WHERE correo='" + buscar + "'");
@@ -129,7 +149,14 @@ public class BaseDatos {
         return arrElementos;
     }
 
-    public LinkedList<imagen> buscarImagen(String criterio, String buscarImagen) throws IOException {
+    /**
+     * Permite buscar una imagen a partir de varios criterios
+     *
+     * @param criterio cracteristica que se desea comprobar
+     * @param buscarImagen valor que se validará para obtener las imagenes
+     * @return Lista con las imagenes que cumplieron el criterio designado
+     */
+    public LinkedList<imagen> buscarImagen(String criterio, String buscarImagen) {
         LinkedList<imagen> listaImagenes = new LinkedList();
         BufferedImage img;
         Blob imagenB;
@@ -150,7 +177,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img,me_gusta, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img, me_gusta, codUsuario, codPerfilImagen);
 
                 listaImagenes.add(imgen);
 
@@ -163,7 +190,12 @@ public class BaseDatos {
         return listaImagenes;
     }
 
-    public void sqlDeleteUsuario(String eliminar) throws IOException {
+    /**
+     * Permite eliminar un usuario de la base de datos
+     *
+     * @param eliminar cadena con el ID del usuario que se desea eliminar
+     */
+    public void sqlDeleteUsuario(String eliminar) {
         String sql = "DELETE FROM usuario WHERE id_usuario=" + eliminar + "";
         PreparedStatement ps;
         try {
@@ -220,6 +252,11 @@ public class BaseDatos {
 
     }
 
+    /**
+     * Metodo que permite obtener todas las imagenes de la base de datos
+     *
+     * @return lista con todas las imagenes de la base de datos
+     */
     public LinkedList<imagen> buscarFoto() {
         LinkedList<imagen> listaImagenes = new LinkedList();
         BufferedImage img;
@@ -241,7 +278,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img,me_gusta, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img, me_gusta, codUsuario, codPerfilImagen);
 
                 listaImagenes.add(imgen);
 
@@ -254,6 +291,19 @@ public class BaseDatos {
         return listaImagenes;
     }
 
+    /**
+     * Permite insertar un usuario en la vase de daos
+     *
+     * @param perfilU Clase perfil que contiene la información del perfil a
+     * insertar
+     * @param ruta ruta de la imagen que se desea subir al perfil
+     * @return boleano con el resutaldo de la inserción (true=correcto / false =
+     * incorrecto)
+     * @throws FileNotFoundException Excepcion relacionado con la existencia del
+     * archivo en el disco
+     * @throws IOException Excepcion relacionada con la lectura y escritura en
+     * el disco duro
+     */
     public boolean insertarPerfil(Perfil perfilU, String ruta) throws FileNotFoundException, IOException {
 
         String sql = "INSERT INTO perfil (nombre_perfil,foto_perfil,cod_usuario) VALUES(?,?,?)";
@@ -286,6 +336,12 @@ public class BaseDatos {
         return false;
     }
 
+    /**
+     * Permite pedir el ID de un usuario a partir de su correo electronico
+     *
+     * @param correo correo electronico con el cual obtener el id
+     * @return cadena que contiene el id del usuario
+     */
     public String pedirUsuario(String correo) {
         String idUsuario = "";
         try {
@@ -306,6 +362,19 @@ public class BaseDatos {
         return idUsuario;
     }
 
+    /**
+     * Permite insertar una imagen en la base de datos
+     *
+     * @param ImagenU Clase imagen que contiene toda la información de la imagen
+     * a insertar
+     * @param ruta ruta de la imagen en el disco duro
+     * @return boleano con el resutaldo de la inserción (true=correcto / false =
+     * incorrecto)
+     * @throws FileNotFoundException Excepcion relacionado con la existencia del
+     * archivo en el disco
+     * @throws IOException Excepcion relacionada con la lectura y escritura en
+     * el disco duro
+     */
     public boolean InsertImagen(imagen ImagenU, String ruta) throws FileNotFoundException, IOException {
 
         String sql = "INSERT INTO imagen (imagen,me_gusta,id_imagen,cod_perfil_imagen) VALUES(?,?,?,?)";
@@ -336,7 +405,12 @@ public class BaseDatos {
         return false;
     }
 
-    public void EliminarPerfil(String eliminar)throws IOException {
+    /**
+     * Permite eliminar un perfil a partir de su ID
+     *
+     * @param eliminar cadena con el id del perfil a eliminar
+     */
+    public void EliminarPerfil(String eliminar) {
         String sql = "DELETE FROM perfil WHERE id_perfil=" + eliminar;
         PreparedStatement ps;
         try {
@@ -346,7 +420,13 @@ public class BaseDatos {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    /**
+     * Permite obtener una lista con listas de imagenes de los perfiles dentro
+     * de la base de datos
+     *
+     * @return lista de listas con las kimagenes de los perfiles
+     */
     public LinkedList<LinkedList<Object>> buscarImagenPerfil() {
         LinkedList<LinkedList<Object>> listaConsulta = new LinkedList();
         BufferedImage img;
@@ -367,10 +447,10 @@ public class BaseDatos {
                 int blobLengthImagen = (int) imagen.length();
                 blobAsBytes = imagen.getBytes(1, blobLengthImagen);
                 imagen.free();
-                
+
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                imagen i = new imagen(img,me_gusta, idImagen, codPerfilImagen);
-                
+                imagen i = new imagen(img, me_gusta, idImagen, codPerfilImagen);
+
                 String nombrePerfil = rs.getString("nombre_perfil");
                 String codUsuario = rs.getString("cod_usuario");
                 String idPerfil = rs.getString("id_perfil");
@@ -378,17 +458,17 @@ public class BaseDatos {
 
                 int blobLengthPerfil = (int) imagenPerfil.length();
                 blobAsBytes = imagenPerfil.getBytes(1, blobLengthPerfil);
-                imagenPerfil.free();                
+                imagenPerfil.free();
 
                 imgPerfil = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
-                
-                Perfil p = new Perfil(nombrePerfil, imgPerfil, idPerfil, codUsuario);
-                
-                resultado.add(i);
-                resultado.add(p);               
 
-                listaConsulta.add((LinkedList<Object>)resultado.clone());
-                
+                Perfil p = new Perfil(nombrePerfil, imgPerfil, idPerfil, codUsuario);
+
+                resultado.add(i);
+                resultado.add(p);
+
+                listaConsulta.add((LinkedList<Object>) resultado.clone());
+
                 resultado.clear();
 
             }
@@ -399,7 +479,14 @@ public class BaseDatos {
 
         return listaConsulta;
     }
-    
+
+    /**
+     * Permite insertar una lista de imagenes en la base de datos
+     *
+     * @param Lista clase lista que contiene la información a insertar
+     * @return boleano con el resutaldo de la inserción (true=correcto / false =
+     * incorrecto)
+     */
     public boolean InsertLista(lista Lista) {
         String sql = "INSERT INTO lista(nombre_lista,id_lista, cod_perfil_lista) values(?,?,?)";
         PreparedStatement ps = null;
@@ -423,7 +510,16 @@ public class BaseDatos {
         }
         return false;
     }
-    
+
+    /**
+     * Permite obtener una lista a partir de diversos criterios
+     *
+     * @param criterio Cadena con alusiva a un campo de la tabla
+     * @param valor Valor que debe tener dicho campo para ser usado en el
+     * aplicativo
+     * @return una Lista con las listas que cumplieron dicho criterio
+     * @throws IOException
+     */
     public LinkedList<lista> buscarLista(String criterio, String valor) throws IOException {
         LinkedList<lista> listalista = new LinkedList();
         try {
@@ -444,8 +540,18 @@ public class BaseDatos {
         }
         return listalista;
     }
-    
-    public boolean InsertListaImagen(String idListaImagen,String codLista,String codImagen) {
+
+    /**
+     * Permite insertar imagenes a una lista
+     *
+     * @param idListaImagen identificador de la lista (debe proporcionarlo la
+     * base de datos)
+     * @param codLista codigo de la lista donde se desea isnertar la imagen
+     * @param codImagen codigo de la imagen que se desea insertar en la lista
+     * @return boleano con el resutaldo de la inserción (true=correcto / false =
+     * incorrecto)
+     */
+    public boolean InsertListaImagen(String idListaImagen, String codLista, String codImagen) {
         String sql = "INSERT INTO lista_imagen(id_lista_imagen,cod_lista, cod_imagen) VALUES(?,?,?)";
         PreparedStatement ps = null;
         try {
@@ -468,14 +574,25 @@ public class BaseDatos {
         }
         return false;
     }
-    
+
+    /**
+     * Permite obtener las imagenes de una lista usando un criterio determinado
+     *
+     * @param criterio Columna que debe cumplir con el valor para obtener la
+     * lista de imagenes
+     * @param valor Valor que debe cumplir una columna determinada para poder
+     * devolver una lista de imagenes
+     * @return lista de imagen que contiene las imagenes que cumplieron con el
+     * criterio
+     * @throws IOException
+     */
     public LinkedList<imagen> buscarImagenesLista(String criterio, String valor) throws IOException {
         LinkedList<imagen> listaimagenes = new LinkedList();
         BufferedImage img;
         Blob imagenB;
         byte[] blobAsBytes;
         try {
-            ResultSet rs = st.executeQuery("SELECT * FROM imagen i join lista_imagen li on i.id_imagen=li.cod_imagen join lista l on li.cod_lista=l.id_lista where l."+criterio+"='"+valor+"'");
+            ResultSet rs = st.executeQuery("SELECT * FROM imagen i join lista_imagen li on i.id_imagen=li.cod_imagen join lista l on li.cod_lista=l.id_lista where l." + criterio + "='" + valor + "'");
             while (rs.next()) {
                 String codUsuario = rs.getString("id_imagen");
                 String me_gusta = rs.getString("me_gusta");
@@ -488,7 +605,7 @@ public class BaseDatos {
 
                 img = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 
-                imagen imgen = new imagen(img,me_gusta, codUsuario, codPerfilImagen);
+                imagen imgen = new imagen(img, me_gusta, codUsuario, codPerfilImagen);
 
                 listaimagenes.add(imgen);
             }
@@ -498,8 +615,18 @@ public class BaseDatos {
         }
         return listaimagenes;
     }
-    
-    public boolean CrearLike(String idPerfilImagen,String codPerfilPI,String codImagenPI) {
+
+    /**
+     * Metodo que permite dar like a una imagen
+     *
+     * @param idPerfilImagen identificador de la imagen a la cual se data un Me
+     * Gusta
+     * @param codPerfilPI codigo del perfil que realiza el Me gusta
+     * @param codImagenPI codigo de la imagen a la cual se dara Me gusta
+     * @return boleano con el resutaldo de la inserción (true=correcto / false =
+     * incorrecto)
+     */
+    public boolean CrearLike(String idPerfilImagen, String codPerfilPI, String codImagenPI) {
         String sql = "INSERT INTO perfil_imagen(id_perfil_imagen,cod_perfil_pi,cod_imagen_pi) VALUES(?,?,?)";
         PreparedStatement ps = null;
         try {
@@ -522,9 +649,18 @@ public class BaseDatos {
         }
         return false;
     }
-    
-    public boolean EliminarLike(String eliminar)throws IOException {
-        String sql = "DELETE FROM perfil_imagen WHERE cod_perfil_pi="+eliminar;
+
+    /**
+     * Metodo que permite rechazar un like de una imagen
+     *
+     * @param eliminar codigo del perfil que dio un like previamente y ahora lo
+     * retira
+     * @return boleano con el resutaldo de la inserción (true=correcto / false =
+     * incorrecto)
+     * @throws IOException
+     */
+    public boolean EliminarLike(String eliminar) throws IOException {
+        String sql = "DELETE FROM perfil_imagen WHERE cod_perfil_pi=" + eliminar;
         System.out.println(sql);
         PreparedStatement ps;
         try {
@@ -536,8 +672,14 @@ public class BaseDatos {
         }
         return false;
     }
-    
-    public int NumeroLikes()throws IOException{
+
+    /**
+     * Permite obtener un numero de like totales
+     *
+     * @return Entero con el numero de like totales
+     * @throws IOException
+     */
+    public int NumeroLikes() throws IOException {
         int total = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT COUNT(pi.id_perfil_imagen) AS suma FROM perfil_imagen pi");
@@ -550,9 +692,9 @@ public class BaseDatos {
         }
         return total;
     }
-    
-    public void UpdateLike(String valor, String id_imagen){
-        String sql = "UPDATE imagen SET me_gusta='"+valor+"' WHERE id_imagen ='"+id_imagen+"'";
+
+    public void UpdateLike(String valor, String id_imagen) {
+        String sql = "UPDATE imagen SET me_gusta='" + valor + "' WHERE id_imagen ='" + id_imagen + "'";
         PreparedStatement ps;
         try {
             ps = conexion.prepareStatement(sql);
@@ -560,18 +702,18 @@ public class BaseDatos {
             conexion.commit();
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        }
     }
-    
+
     public LinkedList<String> buscarPerfilImagen(String valor) throws IOException {
         LinkedList<String> prueba = new LinkedList();
         try {
-            ResultSet rs = st.executeQuery("SELECT * FROM perfil_imagen where cod_perfil_pi ='"+valor+"'");
+            ResultSet rs = st.executeQuery("SELECT * FROM perfil_imagen where cod_perfil_pi ='" + valor + "'");
             while (rs.next()) {
                 String idPerfilImagen = rs.getString("id_perfil_imagen");
                 String codPerfilPI = rs.getString("cod_perfil_pi");
                 String codImagenPI = rs.getString("cod_imagen_pi");
-                
+
                 prueba.add(idPerfilImagen);
                 prueba.add(codPerfilPI);
                 prueba.add(codImagenPI);
@@ -582,7 +724,7 @@ public class BaseDatos {
         }
         return prueba;
     }
-        
+
     public boolean insertarComentario(String idPerfil, String idImagen, String comentario) {
         String sql = "INSERT INTO comentario(mensaje,cod_perfil_comentario, cod_imagen_comentario) VALUES(?,?,?)";
         PreparedStatement ps = null;
@@ -609,20 +751,20 @@ public class BaseDatos {
 
     public LinkedList<LinkedList<String>> buscarComentariosPerfil(String idImagen) {
         LinkedList<LinkedList<String>> comentarios = new LinkedList();
-        
+
         try {
-            
+
             ResultSet rs = st.executeQuery("select * from comentario c, imagen i, perfil p where c.cod_imagen_comentario=i.id_imagen and c.cod_perfil_comentario=p.id_perfil and i.id_imagen=" + idImagen);
             while (rs.next()) {
                 LinkedList<String> infoComentarios = new LinkedList<>();
                 String nombrePerfil = rs.getString("nombre_perfil");
                 String comentario = rs.getString("mensaje");
-                
+
                 infoComentarios.add(nombrePerfil);
                 infoComentarios.add(comentario);
-                
-                comentarios.add((LinkedList<String>)infoComentarios.clone());
-                
+
+                comentarios.add((LinkedList<String>) infoComentarios.clone());
+
                 infoComentarios.clear();
             }
 
@@ -632,4 +774,3 @@ public class BaseDatos {
         return comentarios;
     }
 }
-

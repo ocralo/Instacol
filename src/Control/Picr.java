@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Control;
 
 import java.io.IOException;
@@ -16,12 +11,16 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-/**
- *
- * @author rodrigoescobarlopez
- */
 public class Picr extends Application {
 
+    /**
+     * Permite el cambio de una escena a otra por medio de un FXML
+     *
+     * @param fxml - vista nueva a cargar
+     * @param event - evento del mouse
+     * @throws IOException - excepción relacionada con la lectura y escritura
+     * del disco duro
+     */
     public static void changeScene(String fxml, MouseEvent event) throws IOException {
         Parent homeParent = FXMLLoader.load(Picr.class.getResource("/Vista/" + fxml));
         Scene homeScene = new Scene(homeParent);
@@ -31,6 +30,12 @@ public class Picr extends Application {
         appStage.show();
     }
 
+    /**
+     * Metodo que permite iniciar la ventana del palicativo
+     *
+     * @param stage - estado del app
+     * @throws Exception - Exceptión generica
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Vista/Inicio.fxml"));
@@ -42,7 +47,15 @@ public class Picr extends Application {
         stage.show();
     }
 
-   public static void changeScene(String fxml, ActionEvent event) throws IOException {
+    /**
+     * Permite el cambio de una escena a otra por medio de un FXML
+     *
+     * @param fxml - vista nueva a cargar
+     * @param event - evento del ActionEvent
+     * @throws IOException - excepción relacionada con la lectura y escritura
+     * del disco duro
+     */
+    public static void changeScene(String fxml, ActionEvent event) throws IOException {
         Parent homeParent = FXMLLoader.load(Picr.class.getResource("/Vista/" + fxml));
         Scene homeScene = new Scene(homeParent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -52,7 +65,9 @@ public class Picr extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     * Metodo que permite iniciar la aplicación
+     *
+     * @param args - Comando de la linea de argumentos
      */
     public static void main(String[] args) {
         launch(args);
