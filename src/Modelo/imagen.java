@@ -1,21 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
-import Control.BaseDatos;
 import java.awt.Image;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
-import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Momo
- */
 public class imagen {
 
     private Image imagen;
@@ -24,91 +11,126 @@ public class imagen {
     private String cod_perfil_imagen;
     private String ruta;
 
-    public imagen() {
-    }
-
-    public imagen(Image imagen,String me_gusta, String id_imagen, String cod_perfil_imagen) {
+    /**
+     * Permite crear una instancia de la clase Imagen que almancena una archivo
+     * Image
+     *
+     * @param imagen - Clase image que permite almacenar imagenes en tiempo de
+     * ejecucion
+     * @param me_gusta - numero de "Me gusta" que posee la imagen
+     * @param id_imagen - Identificador de la imagen (Debe proporcionarlo la
+     * base de datos)
+     * @param cod_perfil_imagen - Codigo del perfil que tiene asignada la imagen
+     */
+    public imagen(Image imagen, String me_gusta, String id_imagen, String cod_perfil_imagen) {
         this.imagen = imagen;
         this.me_gusta = me_gusta;
         this.id_imagen = id_imagen;
         this.cod_perfil_imagen = cod_perfil_imagen;
     }
 
-    public imagen( String cod_perfil_imagen, String ruta) {
+    /**
+     * Permite crear una imagen a partir de una ruta en el disco duro
+     *
+     * @param cod_perfil_imagen - Codigo del perfil que tiene asignada la imagen
+     * @param ruta - Cadena con la direción en el disco de la imagen que se
+     * desea crear
+     */
+    public imagen(String cod_perfil_imagen, String ruta) {
         this.cod_perfil_imagen = cod_perfil_imagen;
         this.ruta = ruta;
     }
 
-    public Image getImagen() {
-        return imagen;
-    }
-
-    public String getId_imagen() {
-        return id_imagen;
-    }
-
-    public String getCod_perfil_imagen() {
-        return cod_perfil_imagen;
-    }
-
-    public void setImagen(Image imagen) {
-        this.imagen = imagen;
-    }
-
-    public void setId_imagen(String id_imagen) {
-        this.id_imagen = id_imagen;
-    }
-
-    public void setCod_perfil_imagen(String cod_perfil_imagen) {
-        this.cod_perfil_imagen = cod_perfil_imagen;
-    }
-
-    public String getRuta() {
-        return ruta;
-    }
-
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
-    }
-
-    public String getMe_gusta() {
-        return me_gusta;
-    }
-
-    public void setMe_gusta(String me_gusta) {
-        this.me_gusta = me_gusta;
-    }
-
-    @Override
-    public String toString() {
-        return "imagen{" + "imagen=" + imagen +", me_gusta="+me_gusta+ ", id_imagen=" + id_imagen + ", cod_perfil_imagen=" + cod_perfil_imagen + '}';
-    }
-
-//    public boolean insertarImagen(LinkedList<imagen> imagen, String ruta) throws SQLException, FileNotFoundException {
-//
-//        String sql;
-//        BaseDatos objBases = new BaseDatos();
-//        boolean conexion;
-//        boolean insertar = false;
-//
-//        sql = "insert into imagen "
-//                + "(imagen,me_gusta_imagen,id_imagen,cod_perfil_imagen) values(?,?,?,?)";
-//        for (imagen imagen1 : imagen) {
-//            conexion = objBases.crearConexion();
-//            if (conexion) {
-//                insertar = objBases.sqlInsertImagen(sql,
-//                        imagen1.getImagen(),
-//                        imagen1.getMe_gusta(),
-//                        imagen1.getId_imagen(),
-//                        imagen1.getCod_perfil_imagen());
-//            }
-//        }
-//        return insertar;
-//    }
-
+    /**
+     * Metodo que transforma un imagenbyte a ImageIcon
+     *
+     * @param imagenbyte - arregloque se desea comvertir en ImageIcon
+     * @return El ImageIcon resultante del arreglo de byte
+     */
     public static ImageIcon byteAImagen(byte[] imagenbyte) {
         ImageIcon imageIcon = new ImageIcon(imagenbyte);
         return imageIcon;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters && Setters">
+    /**
+     * @return the imagen
+     */
+    public Image getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
+    }
+
+    /**
+     * @return the id_imagen
+     */
+    public String getId_imagen() {
+        return id_imagen;
+    }
+
+    /**
+     * @param id_imagen the id_imagen to set
+     */
+    public void setId_imagen(String id_imagen) {
+        this.id_imagen = id_imagen;
+    }
+
+    /**
+     * @return the me_gusta
+     */
+    public String getMe_gusta() {
+        return me_gusta;
+    }
+
+    /**
+     * @param me_gusta the me_gusta to set
+     */
+    public void setMe_gusta(String me_gusta) {
+        this.me_gusta = me_gusta;
+    }
+
+    /**
+     * @return the cod_perfil_imagen
+     */
+    public String getCod_perfil_imagen() {
+        return cod_perfil_imagen;
+    }
+
+    /**
+     * @param cod_perfil_imagen the cod_perfil_imagen to set
+     */
+    public void setCod_perfil_imagen(String cod_perfil_imagen) {
+        this.cod_perfil_imagen = cod_perfil_imagen;
+    }
+
+    /**
+     * @return the ruta
+     */
+    public String getRuta() {
+        return ruta;
+    }
+
+    /**
+     * @param ruta the ruta to set
+     */
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+//</editor-fold>
+
+    /**
+     * Permite convertir en String el objeto actual
+     *
+     * @return Cadena con la información de la lista
+     */
+    @Override
+    public String toString() {
+        return "imagen{" + "imagen=" + getImagen() + ", me_gusta=" + getMe_gusta() + ", id_imagen=" + getId_imagen() + ", cod_perfil_imagen=" + getCod_perfil_imagen() + '}';
+    }
 }
