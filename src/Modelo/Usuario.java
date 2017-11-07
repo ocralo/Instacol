@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Modelo;
 
 import Control.BaseDatos;
@@ -8,17 +13,16 @@ import java.util.ArrayList;
  * @author Momo
  */
 public class Usuario {
-    public static final int NOMBRE = 0;
-    public static final int CORREO = 2;
-    public static final int CLAVE = 3;
-    public static final int ID = 5;
-    //---------------------
+    
     private String nombre_usuario;
     private String apellido_usuario;
     private String correo;
     private String clave;
     private String fecha_nacimiento;
     private String id_usuario;
+    public static final int CLAVE = 3;
+    public static final int ID = 5;
+    public static final int CORREO = 2;
 
     public Usuario() {
     }
